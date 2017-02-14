@@ -1,3 +1,62 @@
+# tinyhsp tiny版
+<pre>
+dolphilia版TinyHSPからCUI用のinput、mes命令、実行時オプションなどを削りシェイプアップしたものです。
+使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
+
+TinyHSP
+https://github.com/dolphilia/tinyhsp
+
+neteruhsp
+https://github.com/exrd/neteruhsp
+
+[命令]
+
+wait
+stop
+title
+pset
+line
+boxf
+redraw
+pos
+color
+stick
+end
+return
+goto
+gosub
+repeat
+loop
+continue
+break
+if
+else
+dim
+ddim
+sdim
+randomize
+
+[関数]
+
+int
+double
+str
+rnd
+abs
+
+[システム変数]
+
+stat      命令や関数実行後のステータス(整数値)が格納される
+refdval	  実数型の戻り値はstatではなくrefdvalに格納される
+refstr	  文字列方の戻り値が格納される
+cnt	      repeat-loopのカウンタ値
+mousex	  マウスのx座標
+mousey	  マウスのy座標
+mousel	  マウスの左ボタンが押されていれば1、押されていなければ0
+mouser	  マウスの右ボタンが押されていれば1、押されていなければ0
+
+命令、関数、システム変数の所作は本家のHSPとほぼ同じですが、全部あわせても40個に満たない、
+まさにタイニーなプログラム言語となっています。
 こんなんで一体何ができるんでしょう？　マ、いろいろとやってみましょう(ﾟーﾟ)σビシッ
 
 [インストール方法]
