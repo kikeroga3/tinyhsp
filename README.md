@@ -53,7 +53,7 @@ randomize	randomize			乱数発生パターンを初期化
 [関数]
 
 int		int(p1)		p1を整数値として返す
-double	double(p1)	p1を実数値として返す
+double	double(p1)	p1を実数値(倍精度浮動小数点)として返す
 abs		abs(p1)		p1を絶対値として返す
 str		str(p1)		p1を文字列として返す
 rnd		rnd(p1)		0からp1-1までの乱数値を返す
