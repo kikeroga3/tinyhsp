@@ -38,11 +38,11 @@ randomize
 
 [関数]
 
-int
-double
-str
-rnd
-abs
+int		int(p1)		p1を整数値として返します。
+double	double(p1)	p1を実数値として返します。
+abs		abs(p1)		p1を絶対値として返します。
+str		str(p1)		p1を文字列として返します。
+rnd		rnd(p1)		0からp1-1までの乱数値を返します。
 
 [システム変数]
 
