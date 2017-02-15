@@ -21,7 +21,7 @@ redraw	redraw p1			p1が0なら再描画スイッチをオフに、1ならオン
 pos		pos p1,p2			座標p1,p2をカレントポジションに設定する
 color	color p1,p2,p3		RGBカラーp1,p2,p3をカレントカラーに設定する
 stick	stick p1			数値変数p1にキー情報を格納する。
-							本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作をする
+							(本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作)
 [キー情報]
    1   カーソルキー左(←)
    2   カーソルキー上(↑)
@@ -35,20 +35,20 @@ stick	stick p1			数値変数p1にキー情報を格納する。
  512   マウスの右ボタン
 1024   TABキー
 
-end
-return
-goto
-gosub
-repeat
-loop
-continue
-break
-if
-else
-dim
-ddim
-sdim
-randomize
+end			end					プログラムを終了
+goto		goto p1				ラベルp1へジャンプする
+gosub		gosub p1			サブルーチンのラベルp1へジャンプする
+return		return				サブルーチンから戻る
+repeat		repeat p1			repeat～loopで囲まれた範囲をp1回繰り返し処理する
+loop		loop				繰り返し処理の終端命令
+continue	continue			繰り返し処理中でrepeat命令まで戻る
+break		break				繰り返し処理から抜ける
+if			if p1				条件p1を満たしていればその行の以降の命令を実行する
+else		else				if条件が満たされなかった場合にelse命令以降が実行される
+dim			dim p1,p2			変数名p1、配列数p2の配列変数(整数)を作成する
+ddim		ddim p1,p2			変数名p1、配列数p2の配列変数(実数)を作成する
+sdim		sdim p1,p2,p3		変数名p1、文字数p2、配列数p3の文字列型配列変数を作成する
+randomize	randomize			乱数発生パターンを初期化
 
 [関数]
 
