@@ -11,16 +11,30 @@ https://github.com/exrd/neteruhsp
 
 [命令]
 
-wait
-stop
-title
-pset
-line
-boxf
-redraw
-pos
-color
-stick
+wait	wait p1				p1ミリ秒待つ
+stop	stop				ウィンドウが[×]でクローズされるまで待つ
+title	title p1			タイトルバーに文字列p1を表示する
+pset	pset p1,p2			座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
+line	line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで線を描画する
+boxf	line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで矩形を塗りつぶす
+redraw	redraw p1			p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
+pos		pos p1,p2			座標p1,p2をカレントポジションに設定する
+color	color p1,p2,p3		RGBカラーp1,p2,p3をカレントカラーに設定する
+stick	stick p1			数値変数p1にキー情報を格納する。本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作をする
+
+[キー情報]
+   1   カーソルキー左(←)
+   2   カーソルキー上(↑)
+   4   カーソルキー右(→)
+   8   カーソルキー下(↓)
+  16   スペースキー
+  32   Enterキー
+  64   Ctrlキー
+ 128   ESCキー
+ 256   マウスの左ボタン
+ 512   マウスの右ボタン
+1024   TABキー
+
 end
 return
 goto
@@ -38,11 +52,11 @@ randomize
 
 [関数]
 
-int		int(p1)		p1を整数値として返します。
-double	double(p1)	p1を実数値として返します。
-abs		abs(p1)		p1を絶対値として返します。
-str		str(p1)		p1を文字列として返します。
-rnd		rnd(p1)		0からp1-1までの乱数値を返します。
+int		int(p1)		p1を整数値として返す
+double	double(p1)	p1を実数値として返す
+abs		abs(p1)		p1を絶対値として返す
+str		str(p1)		p1を文字列として返す
+rnd		rnd(p1)		0からp1-1までの乱数値を返す
 
 [システム変数]
 
