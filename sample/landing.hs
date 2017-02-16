@@ -21,10 +21,10 @@
 	sc=sc+e :if sc>hi :hi=sc
 
 	; 着陸船 変数初期化
-	px=320 :py=15 :gx=0 :gy=0 :e=500
+	px=320 :py=15 :gx=0 :gy=0 :e=500 :key=0
 
 	; 画面表示
-	gosub *stgpr :x=px :y=py :gosub *ship
+	redraw 1 :gosub *stgpr :x=px :y=py :gosub *ship
 	title "STAGE:"+stg+" HIT SPACE KEY TO START!"
 	gosub *pause
 
@@ -44,7 +44,7 @@
 
 		; 当たり判定
 		if py>445 {
-			if abs(gy)<5 {
+			if abs(gy)<8 {
 				title "GOOD LANDING!" :wait 300 :goto *stgmk
 			} else {
 				gosub *bomb :gosub *pause :goto *start
