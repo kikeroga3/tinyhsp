@@ -1,4 +1,9 @@
 # tinyhsp tiny版
+
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
+
 <pre>
 dolphilia版TinyHSPからCUI用のinput、mes命令、実行時オプションなどを削りシェイプアップしたものです。
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
