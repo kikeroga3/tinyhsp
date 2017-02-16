@@ -1,9 +1,11 @@
 ;Landing Game
 
-*start
 	randomize
-	dim map,768				; 32×24=768
-	stg=0 :sc=0 :hi=0 :e=0
+	dim map,768		; 32×24=768
+	hi=0
+
+*start
+	stg=0 :sc=0 :e=0
 
 ; 面生成
 *stgmk
