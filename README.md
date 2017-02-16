@@ -5,7 +5,7 @@
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
 <pre>
-ただでさえタイニーな「dolphilia版TinyHSP」からCUI用のinput、mes命令、実行時オプションなどを削り
+ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り
 シェイプアップしたものです。画面処理こそglfw3ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
 
