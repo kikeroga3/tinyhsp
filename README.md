@@ -68,7 +68,7 @@ rnd		rnd(p1)		0からp1-1までの乱数値を返す
 
 stat      命令や関数実行後のステータス(整数値)が格納される
 refdval	  実数型の戻り値はstatではなくrefdvalに格納される
-refstr	  文字列方の戻り値が格納される
+refstr	  文字列型の戻り値が格納される
 cnt	      repeat-loopのカウンタ値
 mousex	  マウスのx座標
 mousey	  マウスのy座標
