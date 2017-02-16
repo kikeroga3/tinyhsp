@@ -23,9 +23,9 @@
 	; 着陸船 変数初期化
 	px=320 :py=15 :gx=0 :gy=0 :e=500
 
-	; 画面表示 待ち
+	; 画面表示
 	gosub *stgpr :x=px :y=py :gosub *ship
-	title "HIT SPACE KEY TO START!"
+	title "STAGE:"+stg+" HIT SPACE KEY TO START!"
 	gosub *pause
 
 ; メインループ
@@ -43,8 +43,8 @@
 		if py<0 :py=0
 
 		; 当たり判定
-		if py>450 {
-			if gy<9 {
+		if py>445 {
+			if abs(gy)<5 {
 				title "GOOD LANDING!" :wait 300 :goto *stgmk
 			} else {
 				gosub *bomb :gosub *pause :goto *start
@@ -64,6 +64,7 @@ stop
 
 ; スペースキー押下待ち
 *pause
+	wait 100
 	repeat
 		stick key :if key & 16 :break
 		wait 5
