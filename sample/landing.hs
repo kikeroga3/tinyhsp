@@ -90,19 +90,16 @@ stop
 	color 0,240,255
 	boxf x-3,y-2,x+3,y+3
 	color 255,255,0
+
 	stick key
-	if ((key&26)>0) and (e>1) {
-		e=e-2 :gy=gy-2 :if gy<-10 :gy=-10
-		boxf x-1,y+13,x+1,y+23+rnd(10)
-		line x,y+13,x+rnd(10)-5,y+13+rnd(10)
-	}
-	if ((key&1)>0) and (e>0) {
-		e=e-1 :gx=gx+(gx<20)
-		boxf x-18,y+11,x-20-rnd(6),y+13
-	}
-	if ((key&4)>1) and (e>0) {
-		e=e-1 :gx=gx-(gx>-20)
-		boxf x+18,y+11,x+20+rnd(6),y+13
+	if e>1 {
+		if key & 1 :e=e-1 :gx=gx+(gx<20) :boxf x-18,y+11,x-20-rnd(6),y+13
+		if key & 4 :e=e-1 :gx=gx-(gx>-20) :boxf x+18,y+11,x+20+rnd(6),y+13
+		if key & 26 {
+			e=e-2 :gy=gy-2*(gy>-10)
+			boxf x-1,y+13,x+1,y+23+rnd(10)
+			line x,y+13,x+rnd(10)-5,y+13+rnd(10)
+		}
 	}
 	return
 
