@@ -2,7 +2,8 @@
 // $ clang++ tinyhsp.cpp -o tinyhsp -std=c++11 -lglfw -framework OpenGL
 //
 // For MinGW:
-// $ g++ tinyhsp.cpp -o tinyhsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
+// $ g++ -static tinyhsp.cpp -o tinyhsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
+// $ g++ -static tinyhsp.cpp -o tinyhsp_c -std=gnu++11 -lglfw3dll -lopengl32
 // or -std=gnu++11
 // or -std=c++0x
 // or -std=gnu++0x
@@ -812,7 +813,7 @@ command_ddim(execute_environment_t* NHSP_UNUA(e), execute_status_t* s, int arg_n
 void
 command_sdim(execute_environment_t* NHSP_UNUA(e), execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
+	if (arg_num < 2 || arg_num > 3) {
 		raise_error("sdim: Array variable is one dimension only.");
 	}
 	const auto arg_start = -arg_num;
