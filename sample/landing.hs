@@ -5,7 +5,7 @@
 	hi=0
 
 *start
-	stg=0 :sc=0 :e=0
+	stg=0 :sc=0 :e=0 :ov=0
 
 ; 面生成
 *stgmk
@@ -47,13 +47,13 @@
 		; 当たり判定
 		if py>445 {
 			if abs(gy)<8 {
-				title "GOOD LANDING!" :wait 300 :goto *stgmk
+				title "GOOD LANDING!" :wait 300 :break
 			} else {
-				gosub *bomb :gosub *pause :goto *start
+				gosub *bomb :break
 			}
 		} else {
 			x=px/20 :y=py/20
-			if map(y*32+x)=1 :gosub *bomb :gosub *pause :goto *start
+			if map(y*32+x)=1 :gosub *bomb :break
 		}
 
 		x=px :y=py :gosub *ship
@@ -61,6 +61,9 @@
 		redraw 1
 		wait 10
 	loop
+
+	; GAME OVER なら *start へ
+	if ov=1 :goto *start :else :goto *stgmk
 
 stop
 
@@ -114,5 +117,6 @@ stop
 		boxf x,y,x+b,y+b
 	loop
 	redraw 1
+	gosub *pause :ov=1
 	return
 
