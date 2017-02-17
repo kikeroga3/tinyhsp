@@ -1,6 +1,6 @@
 title "TinyHSP Extra"
-pos 32, 32
-picload "miyuzu.jpg"
+pos 20, 10
+picload "tamarin.jpg"
 font "tiny.ttf",48
 pos 80, 360
 mes "Hello, World!?"
