@@ -123,12 +123,13 @@ tinyhsp_c start.hs
 3. 以後、メニューの「ツール」を選ぶと「tinyhsp_c」が追加されているはずですので、
    エディタにTinyHSPのプログラムを書いて、このメニューを選択すれば
    TeraPadで編集中のプログラムを実行できるようになります。
-</pre>
-![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
-<pre>
+
 軽快に動作するフリーのテキストエディター「TeraPad」
 http://forest.watch.impress.co.jp/library/software/terapad/
+</pre>
+![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
 
+<pre>
 [教育用言語としての適性について]
 「命令がいっぱいあってわかんなーい！」じゃなくて「これしかない」から始められるのが唯一最大のメリットです。
 ビギナーは命令や機能がたくさんあると気持ちが飽和してかえって迷うものです。
