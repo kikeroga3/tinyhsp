@@ -124,6 +124,8 @@ tinyhsp_c start.hs
    エディタにTinyHSPのプログラムを書いて、このメニューを選択すれば
    TeraPadで編集中のプログラムを実行できるようになります。
 
+![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
+
 軽快に動作するフリーのテキストエディター「TeraPad」
 http://forest.watch.impress.co.jp/library/software/terapad/
 
