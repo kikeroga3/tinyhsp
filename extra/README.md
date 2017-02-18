@@ -16,4 +16,19 @@ tinyhspx_c.exe (デバッグ用EXE)
 tinyhspx.exe と glfw3.dll と tiny.ttf を同じフォルダに置いてください。
 使い方は tinyhsp.exe と同じです。
 </pre>
+###スクリーンショット
+
 ![tinyhspx_ok](https://cloud.githubusercontent.com/assets/24917310/23071003/45e199a0-f570-11e6-8e74-21320d8e72de.jpg)
+
+###スクリプトの内容
+<pre>
+title "TinyHSP Extra"
+pos 20, 10
+picload "tamarin.jpg"
+font "tiny.ttf",48
+pos 80, 360
+mes "Hello, World!?"
+mes "文字と画像を表示します。"
+redraw 1
+stop
+</pre>
