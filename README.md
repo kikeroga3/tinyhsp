@@ -130,6 +130,23 @@ http://forest.watch.impress.co.jp/library/software/terapad/
 ![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
 
 <pre>
+[ソースのコンパイル方法のメモ]
+Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
+
+コンソールアプリケーション生成
+g++ -static tinyhsp.cpp -o tinyhsp_c -std=gnu++11 -lglfw3dll -lopengl32
+
+Windowsアプリケーション生成
+g++ -static tinyhsp.cpp -o tinyhsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
+
+macOSやLinux版の実行ファイルも作れるはずですが、私はまだどちらもコンパイルまで試せてません。
+各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
+もしmacOS版やLinux版の実行ファイルを作成された方がおりましたらぜひお知らせください。
+こちらのページに掲載させていただきたいと思っています。
+
+[MIT license]
+https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt0
+
 [提言：教育用プログラム言語としての適性について]
 プログラミングが義務教育化される可能性もあり、最近は子供向けのプログラミング教室も増えてきましたが、
 スクラッチ(Scratch)とかヴィジュアルな開発環境で実践されるところが多いようです。
@@ -152,21 +169,4 @@ TinyHSPは、見事なチョイスの最小の命令群と、工夫が活かせ�
 TinyHSPで「できた！」という成功体験をへて、TinyHSPに限界を感じてから次のプログラム言語へステップアップする。
 プログラミングのファーストステップとして楽しみ、利用してもらえればうれしく思います。
 …決して機能が少ないことへのいいわけではないですヨ(^^;
-
-[ソースのコンパイル方法のメモ]
-Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
-
-コンソールアプリケーション生成
-g++ -static tinyhsp.cpp -o tinyhsp_c -std=gnu++11 -lglfw3dll -lopengl32
-
-Windowsアプリケーション生成
-g++ -static tinyhsp.cpp -o tinyhsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
-
-macOSやLinux版の実行ファイルも作れるはずですが、私はまだどちらもコンパイルまで試せてません。
-各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
-もしmacOS版やLinux版の実行ファイルを作成された方がおりましたらぜひお知らせください。
-こちらのページに掲載させていただきたいと思っています。
-
-[MIT license]
-https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt0
 </pre>
