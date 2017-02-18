@@ -1,13 +1,15 @@
+	title "TINY TREK"
 	color :boxf 0,0,640,480
-	font "",20 :color 0,200,0
+	font "tiny_en.ttf",20 :color 0,200,0
 
 	randomize
 	dim map,200
-
+	sdim gyo,256,20
 ;---
 *startrek
-	y=2999
-	mes "DO YOU WANT A DIFFICULT GAME?  (Y OR N)":;input a,1,2
+	y=2999 :gi=0 :gs=0 :redraw 1
+	msg="DO YOU WANT A DIFFICULT GAME?  (Y OR N)" :gosub *lnset :gosub *lnprt
+	gosub *y_or_n
 	if a="Y" or a="y" :y=999
 
 	repeat
@@ -20,8 +22,8 @@
 		if b>1 and k>3 :break
 	loop
 
-	mes "STARDATE 3200:  YOUR MISSION IS TO DESTROY "+k+" KLINGONS IN 30 STARDATES."
-	mes "THERE ARE "+b+" STARBASES."
+	msg="STARDATE 3200:  YOUR MISSION IS TO DESTROY "+k+" KLINGONS IN 30 STARDATES." :gosub *lnset
+	msg="THERE ARE "+b+" STARBASES." :gosub *lnset
 	gosub *repair_ok :c=0 :h=k
 
 *ln40
@@ -61,11 +63,12 @@
 	mes "GOOD BYE." :stop
 ;---
 *captain
-	mes "CAPTAIN " :gosub *input
+	msg="CAPTAIN " :gosub *lnset :gosub *lnprt
+	gosub *input
 	if a="R" or a="r" :goto *report
-	if a="S" or a="s" :goto *sr_sensor
-	if a="L" or a="l" :goto *lr_sensor
-	if a="G" or a="g" :goto *galaxy_map
+	if ci=1 :goto *sr_sensor
+	if ci=2 :goto *lr_sensor
+	if ci=3 :goto *galaxy_map
 	if a="P" or a="p" :goto *phaser
 	if a="T" or a="t" :goto *torpedo
 	if a="W" or a="w" :goto *warp
@@ -101,12 +104,12 @@
 	map(a)=i :return
 
 *ln175
-	mes "ENTERPRISE IN Q-"+u+""+v+" S-"+x+""+y
+	msg="ENTERPRISE IN Q-"+u+""+v+" S-"+x+""+y :gosub *lnset
 	return
 ;---
 *galaxy_map
 	gosub *ln175 :j=2 :gosub *damaged :if i!0 :goto *captain
-	mes " OF GALAXY MAP"
+	msg=" OF GALAXY MAP" :gosub *lnset
 	repeat 8
 		i=cnt :z=""+(i+1)+":"
 		repeat 8
@@ -115,11 +118,10 @@
 			if q<10 :z=z+" "
 			z=z+" "+q
 		loop
-		mes ""+z
+		msg=""+z :gosub *lnset
 	loop
-	z="  " :repeat 8 :z=z+"  .." :loop :mes ""+z
-	z="  " :repeat 8 :z=z+"   "+(cnt+1) :loop :mes ""+z
-return
+	z="  " :repeat 8 :z=z+"  .." :loop :msg=""+z :gosub *lnset
+	z="  " :repeat 8 :z=z+"   "+(cnt+1) :loop :msg=""+z :gosub *lnset
 	goto *captain
 ;---
 *lr_sensor
@@ -133,7 +135,7 @@ return
 			if a<10 :z=z+" "
 			z=z+" "+a
 		loop
-		mes ""+z
+		msg=""+z :gosub *lnset
 	loop
 	goto *captain
 ;---
@@ -149,11 +151,11 @@ return
 			if m=3 :z=z+" *"
 			if m=4 :z=z+" E"
 		loop
-		mes ""+z
+		msg=""+z :gosub *lnset
 	loop
 	z=" "
 	repeat 8 :z=z+" "+(1+cnt) :loop
-	mes ""+z :goto *captain
+	msg=""+z :gosub *lnset :goto *captain
 ;---
 *phaser
 	j=4 :gosub *damaged :if i!0 :goto *captain
@@ -212,8 +214,8 @@ return
 	if j=5 :z="WARP ENGINE"
 	if j=6 :z="PHOTON TORPEDO TUBES"
 	if j=7 :z="SHIELD"
-	IF i=0 :mes ""+z :return
-	mes ""+z+" DAMAGED, "+i+" STARDATES ESTIMATED FOR REPAIR"
+	if i=0 :msg=""+z :gosub *lnset :return
+	msg=""+z+" DAMAGED, "+i+" STARDATES ESTIMATED FOR REPAIR" :gosub *lnset
 	return
 ;---
 *report
@@ -330,7 +332,30 @@ return
 	if q=3 :s=-i :t=-45
 	return
 
+*lnprt
+	redraw 0
+	color :boxf 0,0,640,420 :color 0,200,0
+	is=gi-gs :if is<0 :is=is+20
+	pos 0,0
+	repeat gs
+		ic=is+cnt :if ic>19 :ic=ic-20
+		mes gyo(ic)
+	loop
+	redraw 1
+	return
 
+*lnset
+	gyo(gi)=msg :gs=gs+(gs<19) :gi=gi+1 :if gi>19 :gi=0
+	return
+
+*y_or_n
+	repeat
+		wait 5
+		stick key
+		if key & 1 :a="Y" :break
+		if key & 4 :a="N" :break
+	loop
+	return
 
 *input
 	pos 10,400
@@ -340,11 +365,12 @@ return
 		cm(0)="REPORT" :cm(1)="SR. SENSOR" :cm(2)="LR. SENSOR" :cm(3)="GALAXY MAP"
 		cm(4)="PHASER" :cm(5)="ENERGY:"+pw :cm(6)="TORPEDO"    :cm(7)="COURSE:"+an
 		cm(8)="WARP"   :cm(9)="SPEED:"+sp :cm(10)="COURSE:"+vc
-		repeat 11 :x=100*(cnt\4) :y=16*(cnt/4)
+		repeat 11 :xx=100*(cnt\4) :yy=16*(cnt/4)
 			color 200*(cnt=ci),200,0
-			pos 10+x,420+y :mes cm(cnt)
+			pos 10+xx,420+yy :mes cm(cnt)
 			color 0,200,0
 		loop
+		wait 5
 		stick key
 		if key & 1 {
 			ci=ci-1 :if ci<0 :ci=10
@@ -365,7 +391,6 @@ return
 			vc=vc-5*(ci=10) :if vc<0 :vc=360
 		}
 		if key & 16 :break
-		wait 5
 		redraw 1
 	loop
 	return
