@@ -65,7 +65,7 @@
 *captain
 	msg="CAPTAIN " :gosub *lnset :gosub *lnprt
 	gosub *input
-	if a="R" or a="r" :goto *report
+	if ci=0 :goto *report
 	if ci=1 :goto *sr_sensor
 	if ci=2 :goto *lr_sensor
 	if ci=3 :goto *galaxy_map
@@ -219,19 +219,19 @@
 	return
 ;---
 *report
-	mes "STATUS REPORT:"
-	mes "STARDATE      "+(3230-D)
-	mes "TIME LEFT     "+D
+	msg="STATUS REPORT:" :gosub *lnset
+	msg="STARDATE      "+(3230-d) :gosub *lnset
+	msg="TIME LEFT     "+d :gosub *lnset
 	z="GREEN"
 	if o!0 :z="DOCKED"
 	if n!0 :z="RED"
 	if e<999 :z="YELLOW"
-	mes "CONDITION     "+z
-	mes "POSITION      Q-"+u+""+v+" S-"+x+""+y
-	mes "ENERGY        "+e
-	mes "TORPEDOES     "+f
-	mes "KLINGONS LEFT "+k
-	mes "STARBASES     "+b
+	msg="CONDITION     "+z :gosub *lnset
+	msg="POSITION      Q-"+u+""+v+" S-"+x+""+y :gosub *lnset
+	msg="ENERGY        "+e :gosub *lnset
+	msg="TORPEDOES     "+f :gosub *lnset
+	msg="KLINGONS LEFT "+k :gosub *lnset
+	msg="STARBASES     "+b :gosub *lnset
 	repeat 7 :j=1+cnt
 		if map(j+63) :gosub *damaged
 	loop
@@ -390,7 +390,7 @@
 			sp=sp-(ci=9) :if sp<0 :sp=0
 			vc=vc-5*(ci=10) :if vc<0 :vc=360
 		}
-		if key & 16 :break
+		if key & 48 :break
 		redraw 1
 	loop
 	return
