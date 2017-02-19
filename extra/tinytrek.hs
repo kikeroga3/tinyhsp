@@ -1,5 +1,9 @@
+; --- Key operation ---
+; Cursor key LEFT and RIGHT : Select Command, Select Yes or No
+; Cursor key UP and DOWN    : Seting Value(ENERGY/COURSE/SPEED)
+; SPACE or ENTER key        : Command execution
+
 	title "TINY TREK"
-	color :boxf 0,0,640,480
 	font "tiny_en.ttf",20 :color 0,200,0
 
 	randomize
@@ -7,7 +11,8 @@
 	sdim gyo,256,20
 ;---
 *startrek
-	y=2999 :gi=0 :gs=0 :redraw 1
+	color :boxf 0,0,640,480 :redraw 1 :wait 30
+	y=2999 :gi=0 :gs=0
 	msg="DO YOU WANT A DIFFICULT GAME?  (Y OR N)" :gosub *lnset :gosub *lnprt
 	gosub *y_or_n
 	if a="Y" or a="y" :y=999
@@ -42,25 +47,26 @@
 
 *ln65
 	gosub *dock :gosub *klingon_atk :if k!0 :goto *ln95
-	mes "\n" :mes "MISSION ACCOMPLISHED."
-	if d<3 :mes "BOY, YOU BARELY MADE IT."
-	if d>5 :mes "GOOD WORK..."
-	if d>9 :mes "FANTASTIC!"
-	if d>13 :mes "UNBELIEVABLE!"
-	d=30-d :i=h*100/d*10 :mes ""+H+" KLINGONS IN "+d+" STARDATES. ("+i+")"
-	j=100*(c=0)-5*c:mes ""+c+" CASUALTIES INCURRED. ("+j+")"
-	mes "YOUR SCORE:"+(i+j):goto *ln110
+	mes "\n" :msg="MISSION ACCOMPLISHED." :gosub *lnset
+	if d<3 :msg="BOY, YOU BARELY MADE IT." :gosub *lnset
+	if d>5 :msg="GOOD WORK..." :gosub *lnset
+	if d>9 :msg="FANTASTIC!" :gosub *lnset
+	if d>13 :msg="UNBELIEVABLE!" :gosub *lnset
+	d=30-d :i=h*100/d*10 :msg=""+h+" KLINGONS IN "+d+" STARDATES. ("+i+")" :gosub *lnset
+	j=100*(c=0)-5*c:msg=""+c+" CASUALTIES INCURRED. ("+j+")" :gosub *lnset
+	msg="YOUR SCORE:"+(i+j) :gosub *lnset :goto *ln110
 
 *ln95
-	if d<0 :mes "IT'S TOO LATE, THE FEDERATION HAS BEEN CONQUERED.":goto *ln110
+	if d<0 :msg="IT'S TOO LATE, THE FEDERATION HAS BEEN CONQUERED." :gosub *lnset :goto *ln110
 	if e>=0 :goto *captain
-	mes "ENTERPRISE DESTROYED"
-	if (h-k)>9 :mes "BUT YOU WERE A GOOD MAN"
+	msg="ENTERPRISE DESTROYED" :gosub *lnset
+	if (h-k)>9 :msg="BUT YOU WERE A GOOD MAN" :gosub *lnset
 
 *ln110
-	y=987:mes "\nANOTHERE GAME? (Y OR N)" :input a,1,2
+	y=987 :msg="ANOTHERE GAME? (Y OR N)" :gosub *lnset :gosub *lnprt
+	gosub *y_or_n
 	if a="Y" or a="y" :goto *startrek
-	mes "GOOD BYE." :stop
+	msg="GOOD BYE." :gosub *lnset :gosub *lnprt :stop
 ;---
 *captain
 	msg="CAPTAIN " :gosub *lnset :gosub *lnprt
@@ -69,8 +75,8 @@
 	if ci=1 :goto *sr_sensor
 	if ci=2 :goto *lr_sensor
 	if ci=3 :goto *galaxy_map
-	if a="P" or a="p" :goto *phaser
-	if a="T" or a="t" :goto *torpedo
+	if ci=4 :goto *phaser
+	if ci=6 :goto *torpedo
 	if ci=8 :goto *warp
 
 	msg="--- Key operation ---" :gosub *lnset
@@ -90,7 +96,7 @@
 	if aa :o=0 :return
 
 	if o=0 {
-		mes "SULU: CAPTAIN, WE ARE DOCKED AT STARBASE."
+		msg="SULU: CAPTAIN, WE ARE DOCKED AT STARBASE." :gosub *lnset
 	} else {
 		return
 	}
@@ -160,11 +166,11 @@
 ;---
 *phaser
 	j=4 :gosub *damaged :if i!0 :goto *captain
-	mes " ENERGIZED. UNITS TO FIRE" :input a,4,2
-	a=int(a)
+;	mes " ENERGIZED. UNITS TO FIRE" :input a,4,2
+	a=int(pw)
 	if a<1 :goto *captain
-	if a>e :mes "SPOCK: WE HAVE ONLY "+e+" UNITS." :goto *captain
-	e=e-a :if n<1 :mes "PHASER FIRED AT EMPTY SPACE." :goto *ln65
+	if a>e :msg="SPOCK: WE HAVE ONLY "+e+" UNITS." :gosub *lnset :goto *captain
+	e=e-a :if n<1 :msg="PHASER FIRED AT EMPTY SPACE." :gosub *lnset :goto *ln65
 	a=a/n
 	repeat 6 :m=135+cnt
 		if map(m)!0 {
@@ -174,31 +180,31 @@
 	goto *ln65
 
 *fire
-	if a>1090 :mes "...OVERLOADED.." :j=4 :map(67)=1 :a=9 :gosub *damaged
+	if a>1090 :msg="...OVERLOADED.." :gosub *lnset :j=4 :map(67)=1 :a=9 :gosub *damaged
 	i=map(m+6)-x:j=map(m+12)-y :s=a*30/(30+i*i+j*j)+1 :return
 
 *hits
 	z=z+"KLINGON AT S-"+map(m+6)+""+map(m+12)
 	map(m)=map(m)-s
-	if map(m)>0 :mes ""+z+" **DAMAGED**" :return
+	if map(m)>0 :msg=""+z+" **DAMAGED**" :gosub *lnset :return
 	map(m)=0 :i=8*u+v-9 :j=map(i)/abs(map(i)) :map(i)=map(i)-100*j :k=k-1
-	i=8*map(m+6)+map(m+12)+62 :map(i)=0 :n=n-1 :mes ""+z+" ***DESTROYED***" :return
+	i=8*map(m+6)+map(m+12)+62 :map(i)=0 :n=n-1 :msg=""+z+" ***DESTROYED***" :gosub *lnset :return
 
 *klingon_atk
 	if n=0 :return
-	mes "KLINGON ATTACK"
-	if o!0 :mes "STARBASE PROTECTS ENTERPRISE" :return
+	msg="KLINGON ATTACK" :gosub *lnset
+	if o!0 :msg="STARBASE PROTECTS ENTERPRISE" :gosub *lnset :return
 	t=0
 	repeat 6
 		m=135+cnt
 		if map(m)!0 {
 			a=(map(m)+rnd(map(m))+1)/2 :gosub *fire
 			t=t+s :i=map(m+6) :j=map(m+12)
-			mes " "+s+" UNITS HIT FROM KLINGON AT S-"+i+""+j
+			msg=" "+s+" UNITS HIT FROM KLINGON AT S-"+i+""+j :gosub *lnset
 		}
 	loop
-	e=e-t :if e<=0 :mes "*** BANG ***" :return
-	mes ""+e+" UNITS OF ENERGY LEFT."
+	e=e-t :if e<=0 :msg="*** BANG ***" :gosub *lnset :return
+	msg=""+e+" UNITS OF ENERGY LEFT." :gosub *lnset
 	if (rnd(e/4)+1)>t :return
 
 *casualties
@@ -245,10 +251,10 @@
 ;	mes "SECTOR DISTANCE" :input w,2,2
 	w=int(sp)
 	if w<1 :goto *captain
-	if i*(w>2) :msg="CHEKOV: WE CAN TRY 2 AT MOST, SIR." :gosub *lnset:goto *ln470
+	if i*(w>2) :msg="CHEKOV: WE CAN TRY 2 AT MOST, SIR." :gosub *lnset :goto *ln470
 	if w>91 :w=91 :msg="SPOCK: ARE YOU SURE, CAPTAIN?" :gosub *lnset
 	if e<(w*w/2) :msg="SCOTTY: SIR, WE DO NOT HAVE THE ENERGY." :gosub *lnset :goto *captain
-	gosub *course:if r=0 :goto *captain
+	i=vc :gosub *course :if r=0 :goto *captain
 	d=d-1 :e=e-w*w/2 :map(8*x+y+62)=0
 	repeat 7 :m=64+cnt :map(m)=(map(m)-1)*(map(m)>0) :loop
 	p=45*x+22 :g=45*y+22 :w=45*w
@@ -273,9 +279,9 @@
 ;---
 *torpedo
 	j=6 :gosub *damaged :if i!0 :goto *captain
-	if f=0 :mes " EMPTY" :goto *captain
-	mes " LOADED" :gosub *course :if r=0 :goto *captain
-	mes "TORPEDO TRACK " :z=""
+	if f=0 :msg=" EMPTY" :gosub *lnset :goto *captain
+	msg=" LOADED" :gosub *lnset :i=an :gosub *course :if r=0 :goto *captain
+	msg="TORPEDO TRACK " :gosub *lnset :z=""
 	f=f-1 :p=45*x+22 :g=45*y+22
 
 	q=0
@@ -283,7 +289,7 @@
 		p=p+s :g=g+t :i=p/45 :j=g/45
 		if (i<1)+(i>8)+(j<1)+(j>8)=0 {
 			l=8*i+j+62 :w=8*u+v-9 :r=map(w)/abs(map(w))
-			mes ""+i+""+j+" "
+			msg=""+i+""+j+" " :gosub *lnset
 			q=map(l) :if q>0 :break
 		}
 	loop
@@ -292,7 +298,7 @@
 	if q=3 :goto *ln600
 	if q=4 :goto *ln605
 	if q=5 :goto *ln610
-	mes "...MISSED" :goto *ln65
+	msg="...MISSED" :gosub *lnset :goto *ln65
 
 *ln590
 	s=rnd(99)+281
@@ -303,28 +309,28 @@
 
 *ln595
 	b=b-1 :map(l)=0 :map(w)=map(w)-10*r
-	mes "STARBASE DESTROYED"
-	mes "SPOCK: I OFTEN FIND HUMAN BEHAVIOUR FASCINATING."
+	msg="STARBASE DESTROYED" :gosub *lnset
+	msg="SPOCK: I OFTEN FIND HUMAN BEHAVIOUR FASCINATING." :gosub *lnset
 	goto *ln65
 
 *ln600
-	mes "HIT A STAR"
-	if rnd(9)<2 :mes "TORPEDO ABSORBED"
+	msg="HIT A STAR" :gosub *lnset
+	if rnd(9)<2 :msg="TORPEDO ABSORBED" :gosub *lnset
 	goto *ln65
 
 *ln605
 	map(l)=0 :map(w)=map(w)-r
-	if rnd(9)<5 :mes "STAR DESTROYED"
+	if rnd(9)<5 :msg="STAR DESTROYED" :gosub *lnset
 	goto *ln65
 
 *ln610
 	t=300
-	mes "IT NOVAS    ***RADIATION ALARM***" :gosub *casualties
+	msg="IT NOVAS    ***RADIATION ALARM***" :gosub *lnset :gosub *casualties
 	goto *ln65
 
 *course
 ;	mes "COURSE (0-360)" :input i,3,2
-	i=int(vc)
+	i=int(i)
 	if (i>360)+(i<0) :r=0 :return
 	s=(i+45)/90 :i=i-s*90 :r=(45+i*i)/110+45 :q=(s<4)*s
 	if q=0 :s=-45 :t=i
@@ -395,3 +401,4 @@
 		redraw 1
 	loop
 	return
+
