@@ -4,7 +4,7 @@
 ; SPACE or ENTER key        : Command execution
 
 	title "TINY TREK"
-	font "tiny_en.ttf",20 :color 0,200,0
+	font "tiny_en.ttf",20
 
 	randomize
 	dim map,200
@@ -14,8 +14,7 @@
 	color :boxf 0,0,640,480 :redraw 1 :wait 30
 	y=2999 :gi=0 :gs=0
 	msg="DO YOU WANT A DIFFICULT GAME?  (Y OR N)" :gosub *lnset :gosub *lnprt
-	gosub *y_or_n
-	if a="Y" or a="y" :y=999
+	gosub *y_or_n :if a="Y" or a="y" :y=999
 
 	repeat
 		k=0 :b=0 :d=30
@@ -27,7 +26,7 @@
 		if b>1 and k>3 :break
 	loop
 
-	msg="STARDATE 3200:  YOUR MISSION IS TO DESTROY "+k+" KLINGONS IN 30 STARDATES." :gosub *lnset
+	msg="STARDATE 3200: YOUR MISSION IS TO DESTROY "+k+" KLINGONS IN 30 STARDATES." :gosub *lnset
 	msg="THERE ARE "+b+" STARBASES." :gosub *lnset
 	gosub *repair_ok :c=0 :h=k
 
@@ -47,7 +46,7 @@
 
 *ln65
 	gosub *dock :gosub *klingon_atk :if k!0 :goto *ln95
-	mes "\n" :msg="MISSION ACCOMPLISHED." :gosub *lnset
+	msg="MISSION ACCOMPLISHED." :gosub *lnset
 	if d<3 :msg="BOY, YOU BARELY MADE IT." :gosub *lnset
 	if d>5 :msg="GOOD WORK..." :gosub *lnset
 	if d>9 :msg="FANTASTIC!" :gosub *lnset
@@ -61,6 +60,7 @@
 	if e>=0 :goto *captain
 	msg="ENTERPRISE DESTROYED" :gosub *lnset
 	if (h-k)>9 :msg="BUT YOU WERE A GOOD MAN" :gosub *lnset
+	gosub *lnprt :wait 30
 
 *ln110
 	y=987 :msg="ANOTHERE GAME? (Y OR N)" :gosub *lnset :gosub *lnprt
@@ -166,7 +166,6 @@
 ;---
 *phaser
 	j=4 :gosub *damaged :if i!0 :goto *captain
-;	mes " ENERGIZED. UNITS TO FIRE" :input a,4,2
 	a=int(pw)
 	if a<1 :goto *captain
 	if a>e :msg="SPOCK: WE HAVE ONLY "+e+" UNITS." :gosub *lnset :goto *captain
@@ -245,10 +244,9 @@
 	goto *captain
 ;---
 *warp
-	j=5 :gosub *damaged :;if i=0 :mes "\n"	HSPCL‚Å‚Í•s—v
+	j=5 :gosub *damaged
 
 *ln470
-;	mes "SECTOR DISTANCE" :input w,2,2
 	w=int(sp)
 	if w<1 :goto *captain
 	if i*(w>2) :msg="CHEKOV: WE CAN TRY 2 AT MOST, SIR." :gosub *lnset :goto *ln470
@@ -329,7 +327,6 @@
 	goto *ln65
 
 *course
-;	mes "COURSE (0-360)" :input i,3,2
 	i=int(i)
 	if (i>360)+(i<0) :r=0 :return
 	s=(i+45)/90 :i=i-s*90 :r=(45+i*i)/110+45 :q=(s<4)*s
