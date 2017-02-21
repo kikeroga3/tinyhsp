@@ -22,7 +22,7 @@ neteruhspをベースにGUI機能を追加したTinyHSP。dolphiliaさんはmacO
 https://github.com/exrd/neteruhsp
 
 コンソール版TinyHSPといえるもので、dolphiliaさんのTinyHSPのベースとなっています。
-GUI版でなくCUI版のクロスプラットフォームTinyHSPが欲しい人はここにいきましょう。
+GUI版でなくCUI版のクロスプラットフォームTinyHSPが欲しい人はこちらにいきましょう。
 
 <pre>
 [命令]
