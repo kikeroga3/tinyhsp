@@ -1,2 +1,0 @@
-title "Hello, World!"
-stop
