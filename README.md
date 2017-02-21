@@ -6,15 +6,23 @@
 
 <pre>
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り
-シェイプアップしたものです。画面処理こそglfw3ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
-使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
+シェイプアップしたもので、画面処理こそglfw3ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
+(その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)
 
+TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるクロスプラットフォームな処理系を目指した
+小さくシンプルなプログラム言語です。
+
+このページにある実行ファイル(tinyhsp.exe)はWindows版のみですが、tinyhspのソース(tinyhsp.cpp)を
+コンパイルすることで Linux, macOS 上でも実行可能なtinyhspを作成できるはずです。
+
+使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
+</pre>
 TinyHSP
 https://github.com/dolphilia/tinyhsp
 
 neteruhsp
 https://github.com/exrd/neteruhsp
-
+<pre>
 [命令]
 
 命令		書式					説明
