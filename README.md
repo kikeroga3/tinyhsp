@@ -168,7 +168,7 @@ macOSやLinux版の実行ファイルも作れるはずですが、私はまだ�
 各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
 もしmacOS版やLinux版の実行ファイルを作成された方がおりましたらぜひお知らせください。
 こちらのページに掲載させていただきたいと思っています。
-
+</pre>
+___
 [MIT license]
 https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt0
-</pre>
