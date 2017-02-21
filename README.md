@@ -1,10 +1,6 @@
 # tinyhsp tiny版
 
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
-<pre>
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り
 シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 (その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)
@@ -16,16 +12,15 @@ TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるク�
 コンパイルすることで Linux, macOS 上でも実行可能なtinyhspを作成できるはずです。
 
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも確認してみてください。
-</pre>
 
-TinyHSP
+####TinyHSP
 
 https://github.com/dolphilia/tinyhsp
 
 neteruhspをベースにGUI機能を追加したTinyHSP。dolphiliaさんはmacOSで開発されました。
 本ページのTinyHSPはこちらをほんのちょっと弄っただけのWindows版実行ファイルです。
 
-neteruhsp
+####neteruhsp
 
 https://github.com/exrd/neteruhsp
 
