@@ -6,7 +6,7 @@
 
 <pre>
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り
-シェイプアップしたもので、画面処理こそglfw3ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
+シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 (その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)
 
 TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるクロスプラットフォームな処理系を目指した
