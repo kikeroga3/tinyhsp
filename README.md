@@ -130,7 +130,6 @@ http://forest.watch.impress.co.jp/library/software/terapad/
 ![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
 
 ###提言：教育用プログラム言語としての適性について
-																		<b>2017.02.18 kikeroga3</b>
 <pre>
 プログラミングが義務教育化される可能性もあり、最近は子供向けのプログラミング教室も増えてきましたが、
 スクラッチ(Scratch)とかヴィジュアルな開発環境で実践されるところが多いようです。
