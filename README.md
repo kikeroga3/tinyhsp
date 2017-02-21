@@ -1,5 +1,8 @@
 # tinyhsp tiny版
 
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削りシェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 (その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)
@@ -139,11 +142,8 @@ tinyhsp_c start.hs
    エディタにTinyHSPのプログラムを書いて、このメニューを選択すれば
    TeraPadで編集中のプログラムを実行できるようになります。
 </pre>
-
-![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
-
 軽快に動作するフリーのテキストエディター「TeraPad」
-
+![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
 http://forest.watch.impress.co.jp/library/software/terapad/
 
 ___
