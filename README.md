@@ -128,7 +128,7 @@ tinyhsp_c start.hs
 http://forest.watch.impress.co.jp/library/software/terapad/
 </pre>
 ![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
-
+___
 ###提言：教育用プログラム言語としての適性について
 <pre>
 プログラミングが義務教育化される可能性もあり、最近は子供向けのプログラミング教室も増えてきましたが、
@@ -153,7 +153,7 @@ TinyHSPで「できた！」という成功体験をへて、TinyHSPに限界を
 プログラミングのファーストステップとして楽しみ、利用してもらえればうれしく思います。
 …決して機能が少ないことへのいいわけではないですヨ(^^;
 </pre>
-
+___
 ###ソース「tinyhsp.cpp」のコンパイル方法のメモ
 <pre>
 Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
