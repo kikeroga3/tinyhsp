@@ -9,7 +9,7 @@ font		font p1,p2,p3	フォントの設定を行います。p1は使用するTTF�
 mes			mes p1			文字列p1を画面に描画します。
 picload		picload p1		p1で指定した画像ファイルを読み込み、画面に表示します。
 </pre>
-####実行ファイル
+###実行ファイル
 <pre>
 tinyhspx.exe
 tinyhspx_c.exe (デバッグ用EXE)
