@@ -4,8 +4,7 @@
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
-ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削りシェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
-(その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)
+ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り(その他にはWindowsコンソールのSJIS仕様に合わせてエラーメッセ―ジを英字に変更)シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 
 TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるクロスプラットフォームな処理系を目指した小さくシンプルなプログラム言語です。
 
