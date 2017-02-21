@@ -196,4 +196,4 @@ macOSやLinux版の実行ファイルも作れるはずですが、私はまだ�
 ___
 ###MIT license
 
-https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt0
+https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt
