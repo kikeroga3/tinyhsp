@@ -189,9 +189,9 @@ g++ -static tinyhsp.cpp -o tinyhsp_c -std=gnu++11 -lglfw3dll -lopengl32
 Windowsアプリケーション生成
 g++ -static tinyhsp.cpp -o tinyhsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
 </pre>
-macOSやLinux版の実行ファイルも作れるはずですが、私はまだどちらもコンパイルまで試せてません。
+macOS版の実行ファイルも作れるはずですが、私はmacを持っていないため、コンパイルまで試せてません。
 各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
-もしmacOS版やLinux版の実行ファイルを作成された方がおりましたらぜひお知らせください。
+もしmacOS版の実行ファイルを作成された方がおりましたらぜひお知らせください。
 こちらのページに掲載させていただきたいと思っています。
 ___
 ###MIT license
