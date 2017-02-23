@@ -12,3 +12,9 @@ tinyhsp tiny版との違いは、コンソール版ではウィンドウ画面�
 input   input p1    変数p1にキーボード入力値を格納する。
 mes     mes p1      文字列p1をコンソール画面に出力する。
 </pre>
+
+##実行方法
+コンソール画面を開き、以下コマンドを実行。
+<pre>
+tinyhspcl start.hs
+</pre>
