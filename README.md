@@ -7,6 +7,7 @@
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">dolphilia版TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り(その他にはWindowsコンソールのSJIS仕様でも文字化けしないようエラーメッセ―ジを半角英字に変更)シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 
 TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるクロスプラットフォームな処理系を目指した小さくシンプルなプログラム言語です。
+(実行ファイル本体のソースプログラムも共通です)
 
 このページにある実行ファイル(tinyhsp.exe)はWindows版のみですが、tinyhspのソース(tinyhsp.cpp)をコンパイルすることで Linux, macOS 上でも実行可能なtinyhspを作成できるはずです。
 
