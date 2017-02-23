@@ -1,6 +1,6 @@
 #TinyHSPコンソール版
 
-中身は <a href="https://github.com/exrd/neteruhsp">neteruhsp</a> とほぼ同じですが、実行時オプションを削り、WindowsコンソールのSJIS仕様でも文字化けしないようエラーメッセ―ジを英字に変更しています。
+中身は <a href="https://github.com/exrd/neteruhsp">neteruhsp</a> とほぼ同じですが、実行時オプションを削り、WindowsコンソールのSJIS仕様でも文字化けしないようエラーメッセ―ジを半角英字に変更しています。
 
 tinyhsp tiny版との違いは、コンソール版ではウィンドウ画面がないのでまずstop命令がありません。
 マウス入力、リアルタイム性もないのでstickやwait命令もなし。
