@@ -20,3 +20,4 @@ mes     mes p1            文字列p1をコンソール画面に出力する�
 <pre>
 tinyhspcl start.hs
 </pre>
+glfw3.dll は不要。tinyhspcl.exe 単体で動きます。
