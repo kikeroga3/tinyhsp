@@ -13,4 +13,6 @@ g++ tinyhsp.cpp -o tinyhsp
 
 g++ tinyhspx.cpp -o tinyhspx
   -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
+
+g++ -static tinyhspcl.c -o tinyhspcl -std=c++11
 </pre>
