@@ -17,6 +17,8 @@ tinyhspx_c.exe (デバッグ用EXE)
 tinyhspx.exe と glfw3.dll と tiny.ttf を同じフォルダに置いてください。
 使い方は tinyhsp.exe と同じです。
 
+※ tinytrek.hs を実行する場合は tiny_en.ttf (等幅フォント)が必要です。
+
 ###スクリーンショット
 
 ![tinyhspx_ok](https://cloud.githubusercontent.com/assets/24917310/23071003/45e199a0-f570-11e6-8e74-21320d8e72de.jpg)
