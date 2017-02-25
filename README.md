@@ -18,14 +18,14 @@ TinyHSPは Windows, macOS, Linux で同じスクリプトが実行できるク�
 https://github.com/dolphilia/tinyhsp
 
 neteruhspをベースにGUI機能を追加したTinyHSP。dolphiliaさんはmacOSで開発されました。
-本ページのTinyHSPはこちらをほんのちょっと弄っただけのWindows版実行ファイルです。
+本ページのTinyHSPはこちらをほんのちょっと弄っただけのWindows, Linux版実行ファイルです。
 
 ####neteruhsp
 
 https://github.com/exrd/neteruhsp
 
-コンソール版TinyHSPといえるもので、dolphiliaさんのTinyHSPのベースとなっています。
-GUI版でなくCUI版のクロスプラットフォームTinyHSPが欲しい人はこちらにいきましょう。
+コンソール版TinyHSPといえるもので、dolphiliaさんのTinyHSPのベースともなっています。
+exrdさんが作った、このクロスプラットフォームなソースがなければ今のTinyHSPはなかったと思います。
 
 ###命令
 <pre>
