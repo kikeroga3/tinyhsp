@@ -1,2 +1,2 @@
-#TinyHSP Userwork Archive
+#TinyHSP Artwork Archive
 ___
