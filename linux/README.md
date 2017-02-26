@@ -28,6 +28,7 @@ echo $GEDIT_CURRENT_DOCUMENT_PATH
 「ツール」→「External Tools」→「tinyhspx」と選択しないといけないので
 ショートカットキーを設定しておいたほうが便利です。
 
+![gedit_tool](https://cloud.githubusercontent.com/assets/24917310/23336405/a954a68c-fc12-11e6-93f1-81154568583f.png)
 
 ##コンパイル方法のメモ
 <pre>
