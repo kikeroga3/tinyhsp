@@ -21,7 +21,7 @@ tinyhspx.exe と glfw3.dll と tiny.ttf を同じフォルダに置いてくだ�
 
 ###スクリーンショット
 
-![tinyhspx_ok](https://cloud.githubusercontent.com/assets/24917310/23071003/45e199a0-f570-11e6-8e74-21320d8e72de.jpg)
+![cutehspx_ok](https://cloud.githubusercontent.com/assets/24917310/23577156/751e972c-00fb-11e7-9e9f-187855a24823.png)
 
 ###スクリプトの内容
 <pre>
