@@ -4,7 +4,7 @@
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
-##改名しました！
+###※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り(その他にはWindowsコンソールのSJIS仕様でも文字化けしないようエラーメッセ―ジを半角英字に変更)シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、実行ファイルの本体サイズは100KB以下。
 
