@@ -144,7 +144,9 @@ http://forest.watch.impress.co.jp/library/software/terapad/
 
 ###補足3：エラーメッセージ
 自分でプログラムを組みながら試すとき、もしプログラムに間違いがあれば、実行時にタイトルバーにエラーが表示されます。
-
+<pre>
+sdim 10,256,16	;(誤)第1引数は変数を指定すべき！
+</pre>
 ![titlebar_err](https://cloud.githubusercontent.com/assets/24917310/23577677/d4099b26-0108-11e7-9373-4bee9a60621e.png)
 
 ※エラーメッセージは英文
