@@ -127,9 +127,7 @@ cutehsp
 
 ###補足2：エラーメッセージ
 自分でスクリプトを組んで実行しながら試すとき、もしスクリプトに間違いがあればタイトルバーにエラー表示されるようになってます。
-<pre>
-tinyhsp_c start.hs
-</pre>
+![titlebar_err](https://cloud.githubusercontent.com/assets/24917310/23577677/d4099b26-0108-11e7-9373-4bee9a60621e.png)
 
 ###補足3：TeraPadから実行
 <a href="http://forest.watch.impress.co.jp/library/software/terapad/">TeraPad</a>なら「ツールの設定」から実行コマンドを追加すればプログラムをエディタ上で編集しながら実行することができます。
