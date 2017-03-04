@@ -31,7 +31,7 @@ exrdさんが作った、このクロスプラットフォームなソースが�
 
 ###命令
 <pre>
-命令		書式					説明
+命令			書式					説明
 end			end					プログラムを終了
 goto		goto p1				ラベルp1へジャンプする
 gosub		gosub p1			サブルーチンのラベルp1へジャンプする
@@ -46,17 +46,17 @@ dim			dim p1,p2			変数名p1、配列数p2の配列変数(整数)を作成す�
 ddim		ddim p1,p2			変数名p1、配列数p2の配列変数(実数)を作成する
 sdim		sdim p1,p2,p3		変数名p1、文字数p2、配列数p3の文字列型配列変数を作成する
 randomize	randomize			乱数発生パターンを初期化
-wait	wait p1				p1ミリ秒待つ
-stop	stop				ウィンドウが[×]でクローズされるまで待つ
-title	title p1			タイトルバーに文字列p1を表示する
-pset	pset p1,p2			座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
-line	line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで線を描画する
-boxf	line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで矩形を塗りつぶす
-redraw	redraw p1			p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
-pos		pos p1,p2			座標p1,p2をカレントポジションに設定する
-color	color p1,p2,p3		RGBカラーp1,p2,p3をカレントカラーに設定する
-stick	stick p1			数値変数p1にキー情報を格納する。
-							(本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作)
+wait	wait p1					p1ミリ秒待つ
+stop	stop					ウィンドウが[×]でクローズされるまで待つ
+title	title p1				タイトルバーに文字列p1を表示する
+pset	pset p1,p2				座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
+line	line p1,p2,p3,p4		座標p1,p2から座標p3,p4まで線を描画する
+boxf	line p1,p2,p3,p4		座標p1,p2から座標p3,p4まで矩形を塗りつぶす
+redraw	redraw p1				p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
+pos		pos p1,p2				座標p1,p2をカレントポジションに設定する
+color	color p1,p2,p3			RGBカラーp1,p2,p3をカレントカラーに設定する
+stick	stick p1				数値変数p1にキー情報を格納する。
+								(本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作)
 [キー情報]
    1   カーソルキー左(←)
    2   カーソルキー上(↑)
@@ -74,11 +74,11 @@ stick	stick p1			数値変数p1にキー情報を格納する。
 ###関数
 <pre>
 命令		書式				説明
-int		int(p1)		p1を整数値として返す
-double	double(p1)	p1を実数値(倍精度浮動小数点)として返す
-abs		abs(p1)		p1を絶対値として返す
-str		str(p1)		p1を文字列として返す
-rnd		rnd(p1)		0からp1-1までの乱数値を返す
+int		int(p1)			p1を整数値として返す
+double	double(p1)		p1を実数値(倍精度浮動小数点)として返す
+abs		abs(p1)			p1を絶対値として返す
+str		str(p1)			p1を文字列として返す
+rnd		rnd(p1)			0からp1-1までの乱数値を返す
 </pre>
 ###システム変数
 <pre>
