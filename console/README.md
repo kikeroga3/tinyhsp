@@ -2,10 +2,10 @@
 
 中身は <a href="https://github.com/exrd/neteruhsp">neteruhsp</a> とほぼ同じですが、実行時オプションを削り、WindowsコンソールのSJIS仕様でも文字化けしないようエラーメッセ―ジを半角英字に変更しています。
 
-tinyhsp tiny版との違いは、コンソール版ではウィンドウ画面がないのでまずstop命令がありません。
-マウス入力、リアルタイム性もないのでstickやwait命令もなし。
+CuteHSP ミニマムとの違いは、コンソール版ではウィンドウ画面がないのでまずstop命令がなく。
+マウス入力、リアルタイム性もない処理系なのでstickやwait命令もありません。
 
-代わりというわけではないですが、inputとmes命令があります。
+その代わりというわけではないのですが、inputとmes命令があります。
 
 <pre>
 命令      書式              説明
@@ -18,6 +18,6 @@ mes     mes p1            文字列p1をコンソール画面に出力する�
 ##実行方法
 コンソール画面を開き、以下コマンドを実行。
 <pre>
-tinyhspcl start.hs
+cutehspcl start.hs
 </pre>
-glfw3.dll は不要。tinyhspcl.exe 単体で動きます。
+glfw3.dll は不要。cutehspcl.exe 単体で動きます。
