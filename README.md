@@ -7,7 +7,7 @@
 ###※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
 CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さくてキュートなトイプログラム言語です。
-(実行ファイル本体のソースプログラムも Windows, macOS, Linux で共通です)
+(実行ファイル本体のソースプログラムも Windows, macOS, Linux で共通！)
 
 ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り、シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、ミニマム版の実行ファイル本体サイズは100KB以下になっています。
 
