@@ -1,3 +1,5 @@
+; for cutehspx
+
 ; --- Key operation ---
 ; Cursor key LEFT and RIGHT : Select Command, Select Yes or No
 ; Cursor key UP and DOWN    : Seting Value(ENERGY/COURSE/SPEED)
@@ -64,7 +66,8 @@
 
 *ln110
 	y=987 :msg="ANOTHERE GAME? (Y OR N)" :gosub *lnset :gosub *lnprt
-	gosub *y_or_n :if a="Y" or a="y" :goto *startrek
+	gosub *y_or_n
+	if a="Y" or a="y" :goto *startrek
 	msg="GOOD BYE." :gosub *lnset :gosub *lnprt :stop
 ;---
 *captain
@@ -353,14 +356,16 @@
 
 *y_or_n
 	repeat
-		wait 5 :stick key
+		wait 5
+		stick key
 		if key & 1 :a="Y" :break
 		if key & 4 :a="N" :break
 	loop
 	return
 
 *input
-	pos 10,400 :mes "***PLEASE USE ONE OF THESE COMMANDS***"
+	pos 10,400
+	mes "***PLEASE USE ONE OF THESE COMMANDS***"
 	repeat
 		redraw 0 :color :boxf 10,420,640,480
 		cm(0)="REPORT" :cm(1)="SR. SENSOR" :cm(2)="LR. SENSOR" :cm(3)="GALAXY MAP"
