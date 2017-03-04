@@ -143,7 +143,7 @@ tinyhsp_c start.hs
    TeraPadで編集中のプログラムを実行できるようになります。
 </pre>
 軽快に動作するフリーのテキストエディター「TeraPad」
-![terapad_tool](https://cloud.githubusercontent.com/assets/24917310/23092822/a8580e56-f616-11e6-8746-0e344295c9bd.png)
+![terapad_tool_set](https://cloud.githubusercontent.com/assets/24917310/23577155/751abdfa-00fb-11e7-8938-ac2b754ff8d8.png)
 http://forest.watch.impress.co.jp/library/software/terapad/
 
 ___
