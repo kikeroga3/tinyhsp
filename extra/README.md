@@ -10,18 +10,18 @@ font		font p1,p2,p3	フォントの設定を行います。p1は使用するTTF�
 							p3はスムージングの指定(0でスムージングなし、16でスムージングあり)です。
 mes			mes p1			文字列p1を画面に描画します。
 picload		picload p1		p1で指定した画像ファイルを読み込み、画面に表示します。
-bload
-poke
+bload		bload p1,p2		ファイル名p1の内容を文字型変数p2に読み込む。
+poke		poke p1,p2,p3	文字型変数p1のp2バイトめにバイト値p3を書き込む。
 </pre>
 ###関数
 <pre>
 命令		書式					説明
-peek		peek(p1,p2)		p1を整数値として返す
+peek		peek(p1,p2)		文字型変数p1のp2バイトめのバイト値を取得して返す。
 </pre>
 ###システム変数
 <pre>
 変数名		説明
-strsize	  bload命令で読み込んだファイルのバイト数が格納される。
+strsize		bload命令で読み込んだファイルのバイト数が格納される。
 </pre>
 
 ###実行ファイル
