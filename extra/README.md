@@ -1,4 +1,4 @@
-# CuteHSP エクストラ
+# CuteHSP エクストラ <img src="https://raw.githubusercontent.com/kikeroga3/tinyhsp/master/source/cutehsp.ico">
 
 CuteHSP ミニマムに下記の命令、関数、システム変数を追加したもの。
 
