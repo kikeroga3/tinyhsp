@@ -40,5 +40,5 @@ g++ cutehsp.cpp -o cutehsp
 g++ cutehspx.cpp -o cutehspx
   -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
 
-g++ -static cutehspcl.c -o cutehspcl -std=c++11
+g++ cutehspcl.c -o cutehspcl -std=c++11
 </pre>
