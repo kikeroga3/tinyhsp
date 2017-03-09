@@ -32,9 +32,10 @@ echo $GEDIT_CURRENT_DOCUMENT_PATH
 <b>geditの外部コマンド設定画面</b>
 ![gedit_tool](https://cloud.githubusercontent.com/assets/24917310/23336405/a954a68c-fc12-11e6-93f1-81154568583f.png)
 
-参考情報：
-gedit - 外部コマンドで利用できる環境変数の一覧
+参考情報：gedit - 外部コマンドで利用できる環境変数の一覧
+
 https://kledgeb.blogspot.jp/2014/09/ubuntu-gedit-76.html
+
 
 ##コンパイル方法のメモ
 <pre>
