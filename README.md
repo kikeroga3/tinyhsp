@@ -4,7 +4,7 @@
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
-###※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
+### ※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
 CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さくてキュートなトイプログラム言語です。
 (実行ファイル本体のソースも Windows, macOS, Linux で共通！)
@@ -15,48 +15,48 @@ CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるク�
 
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも参照してみてください。
 
-####TinyHSP
+#### TinyHSP
 
 https://github.com/dolphilia/tinyhsp
 
 neteruhspをベースにGUI機能を追加したTinyHSP。dolphiliaさんはmacOSで開発されました。
 本ページのCuteHSPはこちらをほんのちょっと弄っただけのWindows, Linux版の実行ファイルです。
 
-####neteruhsp
+#### neteruhsp
 
 https://github.com/exrd/neteruhsp
 
 コンソール版TinyHSPといえるもので、dolphiliaさんのTinyHSPのベースともなっています。
-exrdさんが作った、このクロスプラットフォームなソースがなければ今のTinyHSPはなかったと思います。
+exrdさんが作った、このクロスプラットフォームなソースがなければ今のTinyHSPもなかったと思います。
 
-###命令
+### 命令
 <pre>
-命令			書式					説明
-end			end					プログラムを終了
-goto		goto p1				ラベルp1へジャンプする
-gosub		gosub p1			サブルーチンのラベルp1へジャンプする
-return		return				サブルーチンから戻る
-repeat		repeat p1			repeat～loopで囲まれた範囲をp1回繰り返し処理する
-loop		loop				繰り返し処理の終端命令
-continue	continue			繰り返し処理中でrepeat命令まで戻る
-break		break				繰り返し処理から抜ける
-if			if p1				条件p1を満たしていればその行の以降の命令を実行する
-else		else				if条件が満たされなかった場合にelse命令以降が実行される
-dim			dim p1,p2			変数名p1、配列数p2の配列変数(整数)を作成する
-ddim		ddim p1,p2			変数名p1、配列数p2の配列変数(実数)を作成する
+命令		書式			説明
+end		end			プログラムを終了
+goto		goto p1			ラベルp1へジャンプする
+gosub		gosub p1		サブルーチンのラベルp1へジャンプする
+return		return			サブルーチンから戻る
+repeat		repeat p1		repeat～loopで囲まれた範囲をp1回繰り返し処理する
+loop		loop			繰り返し処理の終端命令
+continue	continue		繰り返し処理中でrepeat命令まで戻る
+break		break			繰り返し処理から抜ける
+if		if p1			条件p1を満たしていればその行の以降の命令を実行する
+else		else			if条件が満たされなかった場合にelse命令以降が実行される
+dim		dim p1,p2		変数名p1、配列数p2の配列変数(整数)を作成する
+ddim		ddim p1,p2		変数名p1、配列数p2の配列変数(実数)を作成する
 sdim		sdim p1,p2,p3		変数名p1、文字数p2、配列数p3の文字列型配列変数を作成する
-randomize	randomize			乱数発生パターンを初期化
-wait		wait p1				p1ミリ秒待つ
-stop		stop				ウィンドウが[×]でクローズされるまで待つ
-title		title p1			タイトルバーに文字列p1を表示する
-pset		pset p1,p2			座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
+randomize	randomize		乱数発生パターンを初期化
+wait		wait p1			p1ミリ秒待つ
+stop		stop			ウィンドウが[×]でクローズされるまで待つ
+title		title p1		タイトルバーに文字列p1を表示する
+pset		pset p1,p2		座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
 line		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで線を描画する
 boxf		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで矩形を塗りつぶす
-redraw		redraw p1			p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
-pos			pos p1,p2			座標p1,p2をカレントポジションに設定する
+redraw		redraw p1		p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
+pos		pos p1,p2		座標p1,p2をカレントポジションに設定する
 color		color p1,p2,p3		RGBカラーp1,p2,p3をカレントカラーに設定する
-stick		stick p1			数値変数p1にキー情報を格納する。
-								(本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作)
+stick		stick p1		数値変数p1にキー情報を格納する。
+					(本家HSPの stick p1,1+2+4+8+16+32+64+128+256+512+1024 相当の動作)
 [キー情報]
    1   カーソルキー左(←)
    2   カーソルキー上(↑)
@@ -71,26 +71,26 @@ stick		stick p1			数値変数p1にキー情報を格納する。
 1024   TABキー
 </pre>
 
-###関数
+### 関数
 <pre>
-命令		書式				説明
+命令		書式			説明
 int		int(p1)			p1を整数値として返す
-double	double(p1)		p1を実数値(倍精度浮動小数点)として返す
+double		double(p1)		p1を実数値(倍精度浮動小数点)として返す
 abs		abs(p1)			p1を絶対値として返す
 str		str(p1)			p1を文字列として返す
 rnd		rnd(p1)			0からp1-1までの乱数値を返す
 </pre>
-###システム変数
+### システム変数
 <pre>
 変数名		説明
-stat      命令や関数実行後のステータス(整数値)が格納される
-refdval	  実数型の戻り値はstatではなくrefdvalに格納される
-refstr	  文字列型の戻り値が格納される
-cnt	      repeat-loopのカウンタ値
-mousex	  マウスのx座標
-mousey	  マウスのy座標
-mousel	  マウスの左ボタンが押されていれば1、押されていなければ0
-mouser	  マウスの右ボタンが押されていれば1、押されていなければ0
+stat		命令や関数実行後のステータス(整数値)が格納される
+refdval		実数型の戻り値はstatではなくrefdvalに格納される
+refstr		文字列型の戻り値が格納される
+cnt		repeat-loopのカウンタ値
+mousex		マウスのx座標
+mousey		マウスのy座標
+mousel		マウスの左ボタンが押されていれば1、押されていなければ0
+mouser		マウスの右ボタンが押されていれば1、押されていなければ0
 </pre>
 
 表示画面は640×480ドット固定の1枚だけ、命令(24個)、関数(5個)、システム変数(8個)の所作は<a href="http://hsp.tv/">本家のHSP(Hot Soup Processor)</a>とほぼ同じですが、全部あわせても40個に満たない、まさにタイニーなプログラム言語となっています。
@@ -101,10 +101,10 @@ mouser	  マウスの右ボタンが押されていれば1、押されていな�
 
 マー、とりあえず始めてみてください(ﾟーﾟ)σビシッ
 
-###インストール方法
+### インストール方法
 任意のフォルダでよいので cutehsp.exe と glfw3.dll を同じフォルダに置いてください。
 
-###実行方法
+### 実行方法
 プログラムファイル(例：start.hs)を cutehsp.exe にドラッグ＆ドロップするか、
 拡張子「.hs」を cutehsp.exe に関連付けしてプログラムファイルをダブルクリックします。
 (※プログラムファイルは文字コードUTF-8のテキスト形式です)
@@ -120,11 +120,11 @@ cutehsp
 </pre>
 と入力するだけでもプログラム「start.hs」の内容が実行されます。
 
-###補足1：サンプルプログラム
+### 補足1：サンプルプログラム
 「sample」フォルダにサンプルプログラムがいくつか入っています。
 試してみるだけでも何が出来るのか、ざっとわかると思いますので一通り実行してみましょう。
 
-###補足2：TeraPadから実行
+### 補足2：TeraPadから実行
 <a href="http://forest.watch.impress.co.jp/library/software/terapad/">TeraPad</a>なら「ツールの設定」から実行コマンドを追加すればプログラムをエディタ上で編集しながら実行することができます。
 <pre>
 1. TeraPadを開いてメニューの「ツール」→「ツールの設定」→「追加」を選択。
@@ -141,7 +141,7 @@ cutehsp
 ![terapad_tool_set](https://cloud.githubusercontent.com/assets/24917310/23577155/751abdfa-00fb-11e7-8938-ac2b754ff8d8.png)
 http://forest.watch.impress.co.jp/library/software/terapad/
 
-###補足3：エラーメッセージ
+### 補足3：エラーメッセージ
 自分でプログラムを組みながら試すとき、もしプログラムに間違いがあれば、実行時にタイトルバーにエラーが表示されます。
 <pre>
 sdim 10,256,16	;(誤)第1引数は変数を指定すべき！
@@ -151,7 +151,7 @@ sdim 10,256,16	;(誤)第1引数は変数を指定すべき！
 ※エラーメッセージは英文
 
 ___
-###提言：教育用プログラム言語としての適性について
+### 提言：教育用プログラム言語としての適性について
 
 プログラミングが義務教育化される可能性もあり、最近は子供向けのプログラミング教室も増えてきましたが、
 スクラッチ(Scratch)とかスクイーク(Squeak etoys)のようなヴィジュアルな開発環境で実践されるところが多いようです。
@@ -185,7 +185,7 @@ CuteHSPで「できた！」という成功体験をへて、CuteHSPに限界を
 …決して機能が少ないことへのいいわけではないですヨ(^^;
 
 ___
-###ソース「cutehsp.cpp」のコンパイル方法のメモ
+### ソース「cutehsp.cpp」のコンパイル方法のメモ
 Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
 <pre>
 コンソール付アプリケーション生成
@@ -199,6 +199,6 @@ macOS版の実行ファイルも作れるはずですが、私はmacを持って
 もしmacOS版の実行ファイルを作成された方がおりましたらぜひお知らせください。
 こちらのページに掲載させていただきたいと思っています。
 ___
-###MIT license
+### MIT license
 
 https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt
