@@ -1,8 +1,8 @@
 # CuteHSP ミニマム <img src="https://raw.githubusercontent.com/kikeroga3/tinyhsp/master/source/cutehsp.ico">
 
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="30%" height="30%" alt="kakiget">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="30%" height="30%" alt="landing">
+<img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="30%" height="30%" alt="maze">
 
 ### ※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
@@ -49,7 +49,8 @@ randomize	randomize		乱数発生パターンを初期化
 wait		wait p1			p1ミリ秒待つ
 stop		stop			ウィンドウが[×]でクローズされるまで待つ
 title		title p1		タイトルバーに文字列p1を表示する
-pset		pset p1,p2		座標p1,p2にドットを描画する。p1,p2が省略された場合はカレントポジションに描画する
+pset		pset p1,p2		座標p1,p2にドットを描画する。
+					p1,p2が省略された場合はカレントポジションに描画する
 line		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで線を描画する
 boxf		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで矩形を塗りつぶす
 redraw		redraw p1		p1が0なら再描画スイッチをオフに、1ならオンにする。p1が省略されたらオンにする
