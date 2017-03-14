@@ -1,14 +1,12 @@
-#CuteHSP for Linux
+# CuteHSP for Linux
 
 こちらはLinux版の実行ファイルです。同じサンプルプログラムを動かせます。
 
-##実行画面
-<img src="https://cloud.githubusercontent.com/assets/24917310/23199814/193572da-f914-11e6-9665-ed890d633750.png" width="35%" height="35%" alt="tinyhsp_linux">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23199813/1932d106-f914-11e6-8fa5-33a6a8674876.png" width="35%" height="35%" alt="tinyhspx_linux">
-<img src="https://cloud.githubusercontent.com/assets/24917310/23306131/5f1a4960-fae5-11e6-88a0-2d58cea2b206.png" width="29%" height="29%" alt="tinyhspcl_linux">
+## 実行画面
+<img src="https://cloud.githubusercontent.com/assets/24917310/23199814/193572da-f914-11e6-9665-ed890d633750.png" width="35%" height="35%" alt="tinyhsp_linux"><img src="https://cloud.githubusercontent.com/assets/24917310/23199813/1932d106-f914-11e6-8fa5-33a6a8674876.png" width="35%" height="35%" alt="tinyhspx_linux"><img src="https://cloud.githubusercontent.com/assets/24917310/23306131/5f1a4960-fae5-11e6-88a0-2d58cea2b206.png" width="29%" height="29%" alt="tinyhspcl_linux">
 
 
-###補足：geditから実行
+### 補足：geditから実行
 
 Linuxでは定番のテキストエディタ「gedit」で「外部コマンド」を有効にすればプログラムをエディタ上で編集しながら実行することができます。
 
@@ -21,9 +19,9 @@ Linuxでは定番のテキストエディタ「gedit」で「外部コマンド�
 <pre>
 #!/bin/sh
 echo $GEDIT_CURRENT_DOCUMENT_PATH
-/home/userid/cutehsp/cutehspx $GEDIT_CURRENT_DOCUMENT_PATH
+/home/userid/cutehsp/cutehsp $GEDIT_CURRENT_DOCUMENT_PATH
 </pre>
-/home/userid/cutehsp/cutehspx の部分は自分で実行ファイル「cutehspx」を置いたパスを指定。
+/home/userid/cutehsp/cutehsp の部分は自分で実行ファイル「cutehspx」を置いたパスを指定。
 
 ※ショートカットキーを指定しない場合、geditのメニューから
 「ツール」→「External Tools」→「cutehspx」と選択しないといけないので
@@ -36,7 +34,7 @@ echo $GEDIT_CURRENT_DOCUMENT_PATH
 https://kledgeb.blogspot.jp/2014/09/ubuntu-gedit-76.html
 
 
-##コンパイル方法のメモ
+## コンパイル方法のメモ
 <pre>
 g++ cutehsp.cpp -o cutehsp
   -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
