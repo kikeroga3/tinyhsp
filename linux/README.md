@@ -21,10 +21,10 @@ Linuxでは定番のテキストエディタ「gedit」で「外部コマンド�
 echo $GEDIT_CURRENT_DOCUMENT_PATH
 /home/userid/cutehsp/cutehsp $GEDIT_CURRENT_DOCUMENT_PATH
 </pre>
-/home/userid/cutehsp/cutehsp の部分は自分で実行ファイル「cutehspx」を置いたパスを指定。
+/home/userid/cutehsp/cutehsp の部分は自分で実行ファイル「cutehsp」を置いたパスを指定。
 
 ※ショートカットキーを指定しない場合、geditのメニューから
-「ツール」→「External Tools」→「cutehspx」と選択しないといけないので
+「ツール」→「External Tools」→「cutehsp」と選択しないといけないので
 ショートカットキーを設定しておいたほうが便利。
 
 <b>geditの外部コマンド設定画面</b>
