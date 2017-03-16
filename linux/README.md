@@ -12,23 +12,23 @@ Linuxでは定番のテキストエディタ「gedit」で「外部コマンド�
 
 1. 設定画面の「プラグイン」タブで「外部コマンド」にチェックを入れる。
 2. 「Manage External Tools...」から「外部ツールの管理」を開き、左下にある「＋」で新規コマンドを追加。
-3. 任意のコマンド名(例:cutehspx)を設定し、実行する外部コマンドの内容を記述する。
+3. 任意のコマンド名(例:CuteHSP実行)を設定し、実行する外部コマンドの内容を記述する。
 4. ショートカットキーを F5 (※)に設定。
 
 例）外部コマンドの内容
 <pre>
 #!/bin/sh
 echo $GEDIT_CURRENT_DOCUMENT_PATH
-/home/userid/cutehsp/cutehsp $GEDIT_CURRENT_DOCUMENT_PATH
+/home/userid/cutehsp_lnx/cutehsp $GEDIT_CURRENT_DOCUMENT_PATH
 </pre>
-/home/userid/cutehsp/cutehsp の部分は自分で実行ファイル「cutehsp」を置いたパスを指定。
+/home/userid/cutehsp_lnx/cutehsp の部分は自分で実行ファイル「cutehsp」を置いたパスを指定。
 
 ※ショートカットキーを指定しない場合、geditのメニューから
-「ツール」→「External Tools」→「cutehsp」と選択しないといけないので
+「ツール」→「External Tools」→「CuteHSP実行」と選択しないといけないので
 ショートカットキーを設定しておいたほうが便利。
 
 <b>geditの外部コマンド設定画面</b>
-![gedit_tool](https://cloud.githubusercontent.com/assets/24917310/23336405/a954a68c-fc12-11e6-93f1-81154568583f.png)
+![gedit_cmd](https://cloud.githubusercontent.com/assets/24917310/24007396/c3f20f04-0ab1-11e7-8500-c54c364aa6ed.png)
 
 <b>参考情報：gedit - 外部コマンドで利用できる環境変数の一覧</b><br>
 https://kledgeb.blogspot.jp/2014/09/ubuntu-gedit-76.html
