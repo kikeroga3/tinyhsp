@@ -33,6 +33,8 @@ cutehspx.exe と glfw3.dll と tiny.ttf を同じフォルダに置いてくだ�
 
 ※ tinytrek.hs を実行する場合は tiny_en.ttf (等幅フォント)が必要です。
 
+※ font命令、mes命令を使用しなければ tiny.ttf は不要です。
+
 ### スクリーンショット
 
 ![cutehspx_ok](https://cloud.githubusercontent.com/assets/24917310/23577156/751e972c-00fb-11e7-9e9f-187855a24823.png)
