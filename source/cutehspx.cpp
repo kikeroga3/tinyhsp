@@ -60,7 +60,7 @@ GLFWwindow* window;
 bool redraw_flag;
 bool close_flag;
 stbtt_fontinfo font; //フォント情報
-char font_ttf_buffer[5000000]; // フォントバッファ
+char font_ttf_buffer[2000000]; // フォントバッファ
 int font_ascent = 0;
 float font_scale = 0.0;
 int font_baseline = 0;
@@ -1298,7 +1298,8 @@ command_bload(execute_environment_t* NHSP_UNUA(e), execute_status_t* s, int arg_
 
     // 指定された変数に一時的な変数から代入する
     void* data_ptr = v->variable_->data_;
-    uint8_t* data_ptr_u8 = reinterpret_cast<uint8_t*>(data_ptr);
+//    uint8_t* data_ptr_u8 = reinterpret_cast<uint8_t*>(data_ptr);
+	uint8_t* data_ptr_u8 = (uint8_t*)data_ptr;
     for(int i = 0; i < size; i++ ) {
         data_ptr_u8[i] = tmp[i];
     }
@@ -1588,7 +1589,7 @@ command_font(execute_environment_t* NHSP_UNUA(e), execute_status_t* s, int arg_n
 		if (fp == nullptr) {
 			raise_error("font: Font %s cannot be opened.",name);
 		}
-		fread(font_ttf_buffer, 1, 5000000, fp);
+		fread(font_ttf_buffer, 1, 2000000, fp);
 		fclose(fp);
 		int offset = stbtt_GetFontOffsetForIndex((unsigned char *)font_ttf_buffer, 0);
 		stbtt_InitFont(&font, (unsigned char *)font_ttf_buffer, offset);
@@ -1635,12 +1636,14 @@ function_peek(execute_environment_t* NHSP_UNUA(e), execute_status_t* s, int arg_
 	if (arg_num != 2) {
 		raise_error("peek: Invalid argument.");
 	}
+	const auto arg_start = -arg_num;
 	// ２つめの引数を取得する
-	const auto n = stack_peek(s->stack_, arg_num);
+	const auto n = stack_peek(s->stack_, arg_start + 1);
 	const auto i = value_calc_int(*n);
 	// １つめの引数を取得する
-	const auto m = stack_peek(s->stack_, arg_num - 1);
-	const auto p = value_calc_string(*m);
+	const auto m = stack_peek(s->stack_, arg_start);
+	value_isolate(*m);
+	char* p = m->svalue_;
 	const auto r = p[i];
 
 	stack_pop(s->stack_, arg_num);
@@ -4909,6 +4912,8 @@ main(int argc, const char* argv[])
 		fclose(file);
 	}
 	assert(script != nullptr);
+
+/*
 	// フォントの初期化
 	{
 		FILE* fp = fopen("tiny.ttf", "rb");
@@ -4916,7 +4921,7 @@ main(int argc, const char* argv[])
 			printf("ERROR : cannot read such file tiny.ttf\n");
 			return -1;
 		}
-		fread(font_ttf_buffer, 1, 5000000, fp);
+		fread(font_ttf_buffer, 1, 2000000, fp);
 		fclose(fp);
 
 		int offset = stbtt_GetFontOffsetForIndex((unsigned char *)font_ttf_buffer, 0);
@@ -4926,6 +4931,7 @@ main(int argc, const char* argv[])
 		stbtt_GetFontVMetrics(&font, &font_ascent, 0, 0);
 		font_baseline = (int)(font_ascent * font_scale);
 	}
+*/
 
 	// 描画処理
 	{
