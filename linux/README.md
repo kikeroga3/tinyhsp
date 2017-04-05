@@ -46,7 +46,7 @@ https://kledgeb.blogspot.jp/2014/09/ubuntu-gedit-76.html
 g++ cutehsp.cpp -o cutehsp
   -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
 
-g++ cutehspx.cpp -o cutehspx -lopenal32
+g++ cutehspx.cpp -o cutehspx -lopenal
   -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
 
 g++ cutehspcl.c -o cutehspcl -std=c++11
