@@ -1,0 +1,19 @@
+title "Beep Music!"
+beep 440,500
+beep 440,500
+beep 440,500
+beep 349,350
+beep 523,150
+beep 440,500
+beep 349,350
+beep 523,150
+beep 440,1000
+beep 659,500
+beep 659,500
+beep 659,500
+beep 698,350
+beep 523,150
+beep 415,500
+beep 349,350
+beep 523,150
+beep 440,1000
