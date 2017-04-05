@@ -28,7 +28,7 @@ strsize		bload命令で読み込んだファイルのバイト数が格納され
 <pre>
 cutehspx.exe
 </pre>
-cutehspx.exe と glfw3.dll と tiny.ttf を同じフォルダに置いてください。
+cutehspx.exe と glfw3.dll と OpenAL32.dll と tiny.ttf を同じフォルダに置いてください。
 使い方は cutehsp.exe と同じです。
 
 ※ tinytrek.hs を実行する場合は tiny_en.ttf (等幅フォント)が必要です。
