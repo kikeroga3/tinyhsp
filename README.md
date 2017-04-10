@@ -4,10 +4,10 @@
 
 ### ※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
-CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さくてキュートなトイプログラム言語です。
+CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さなトイ言語です。
 (実行ファイル本体のソースも Windows, macOS, Linux で共通！)
 
-ただでさえタイニーな「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」からCUI用のinput、mes命令、実行時オプションなどを削り、シェイプアップしたもので、画面処理こそ<a href="http://www.glfw.org/index.html">GLFW</a>ライブラリ頼りですが、ミニマム版の実行ファイル本体サイズは100KB以下になっています。
+画面処理・サウンド処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、OpenALライブラリを使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしており、ミニマム版の実行ファイルサイズは100KB以下となっています。
 
 このページにある実行ファイルは今のところ Windows, Linux版のみですが、cutehspのソースをコンパイルすることで macOS上でも実行可能なcutehspを作成できるはずです。
 
@@ -17,20 +17,21 @@ CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるク�
 
 https://github.com/dolphilia/tinyhsp
 
-neteruhspをベースにGUI機能を追加したTinyHSP。dolphiliaさんはmacOSで開発されました。
-本ページのCuteHSPはこちらをほんのちょっと弄っただけのWindows, Linux版の実行ファイルです。
+neteruhspをベースにGUI機能を追加したTinyHSP。作者のdolphiliaさんは元々はmacOSで開発され、さらにソースをC++からC言語化しています。
+本ページのCuteHSPはこちらをほんのちょっと弄っただけのWindows, Linux版の実行ファイルとなってます。
 
 #### neteruhsp
 
 https://github.com/exrd/neteruhsp
 
 コンソール版TinyHSPといえるもので、dolphiliaさんのTinyHSPのベースともなっています。
-exrdさんが作った、このクロスプラットフォームなソースがなければ今のTinyHSPもなかったと思います。
+exrdさんが(気まぐれで？)作った、このクロスプラットフォームなソースがなければ今のTinyHSPもなかったと思われます。
 
 ### 命令
 <pre>
 命令		書式			説明
 end		end			プログラムを終了
+run		run p1		現在実行中のプログラムを破棄して、p1で指定したプログラムファイルを読み込んで実行する
 goto		goto p1			ラベルp1へジャンプする
 gosub		gosub p1		サブルーチンのラベルp1へジャンプする
 return		return			サブルーチンから戻る
@@ -44,6 +45,8 @@ dim		dim p1,p2		変数名p1、配列数p2の配列変数(整数)を作成する
 ddim		ddim p1,p2		変数名p1、配列数p2の配列変数(実数)を作成する
 sdim		sdim p1,p2,p3		変数名p1、文字数p2、配列数p3の文字列型配列変数を作成する
 randomize	randomize		乱数発生パターンを初期化
+bload		bload p1,p2		ファイル名p1の内容を文字型変数p2に読み込む。
+poke		poke p1,p2,p3		文字型変数p1のp2バイトめにバイト値p3を書き込む。
 wait		wait p1			p1ミリ秒待つ
 stop		stop			ウィンドウが[×]でクローズされるまで待つ
 title		title p1		タイトルバーに文字列p1を表示する
@@ -78,6 +81,8 @@ double		double(p1)		p1を実数値(倍精度浮動小数点)として返す
 abs		abs(p1)			p1を絶対値として返す
 str		str(p1)			p1を文字列として返す
 rnd		rnd(p1)			0からp1-1までの乱数値を返す
+powf	powf(p1,p2)		p1のp2乗(べき乗)の結果を実数値で返す。
+peek		peek(p1,p2)	文字型変数p1のp2バイトめのバイト値を取得して返す。
 </pre>
 ### システム変数
 <pre>
@@ -85,6 +90,7 @@ rnd		rnd(p1)			0からp1-1までの乱数値を返す
 stat		命令や関数実行後のステータス(整数値)が格納される
 refdval		実数型の戻り値はstatではなくrefdvalに格納される
 refstr		文字列型の戻り値が格納される
+strsize		bload命令で読み込んだファイルのバイト数が格納される。
 cnt		repeat-loopのカウンタ値
 mousex		マウスのx座標
 mousey		マウスのy座標
@@ -92,7 +98,7 @@ mousel		マウスの左ボタンが押されていれば1、押されていな�
 mouser		マウスの右ボタンが押されていれば1、押されていなければ0
 </pre>
 
-表示画面は640×480ドット固定の1枚だけ、命令(24個)、関数(5個)、システム変数(8個)の所作は<a href="http://hsp.tv/">本家のHSP(Hot Soup Processor)</a>とほぼ同じですが、全部あわせても40個に満たない、まさにタイニーなプログラム言語となっています。
+表示画面は640×480ドット固定の1枚だけ、命令(28個)、関数(7個)、システム変数(9個)の所作は<a href="http://hsp.tv/">本家のHSP(Hot Soup Processor)</a>とほぼ同じですが、全部あわせても50にも満たない、まさにタイニーなプログラム言語となっています。
 
 こんなに少ない機能で一体何ができるんでしょう？
 
@@ -133,8 +139,8 @@ cutehsp
 	「コマンドラインパラメータ」に %t を指定
 	最後に「OK」で設定を保存します。
 3. 以後、メニューの「ツール」を選ぶと「CuteHSP実行」が追加されているはずです。
-   エディタ上でCuteHSPのプログラムを書いて、このメニューを選択すれば
-   TeraPadで編集中のプログラムを実行できるようになります。
+   エディタ上でCuteHSPのプログラムを書いて、このメニューを選択すれば
+   TeraPadで編集中のプログラムを実行できるようになります。
 </pre>
 軽快に動作するフリーのテキストエディター「TeraPad」
 ![terapad_tool_set](https://cloud.githubusercontent.com/assets/24917310/23577155/751abdfa-00fb-11e7-8938-ac2b754ff8d8.png)
@@ -186,13 +192,15 @@ CuteHSPで「できた！」という成功体験をへて、CuteHSPに限界を
 ___
 ### ソース「cutehsp.cpp」のコンパイル方法のメモ
 Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
+
 <pre>
 コンソール付アプリケーション生成
-g++ -static cutehsp.cpp -o cutehsp_c -std=gnu++11 -lglfw3dll -lopengl32
+gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll
 
 Windowsアプリケーション生成
-g++ -static cutehsp.cpp -o cutehsp -std=gnu++11 -lglfw3dll -lopengl32 -mwindows
+gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll -mwindows
 </pre>
+
 macOS版の実行ファイルも作れるはずですが、私はmacを持っていないため、コンパイルまで試せてません。
 各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
 もしmacOS版の実行ファイルを作成された方がおりましたらぜひお知らせください。
@@ -201,3 +209,4 @@ ___
 ### MIT license
 
 https://github.com/YukinobuKurata/YouTubeMagicBuyButton/blob/master/MIT-LICENSE.txt
+
