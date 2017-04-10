@@ -43,11 +43,13 @@ https://kledgeb.blogspot.jp/2014/09/ubuntu-gedit-76.html
 
 ## コンパイル方法のメモ
 <pre>
-g++ cutehsp.cpp -o cutehsp
-  -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
+コンソール版
+gcc -static cutehsp.c -o cutehspcl -lm
 
-g++ cutehspx.cpp -o cutehspx -lopenal
-  -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl
+ミニマム版
+gcc cutehsp.c -o cutehsp -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
 
-g++ cutehspcl.c -o cutehspcl -std=c++11
+エクストラ版
+gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
 </pre>
+
