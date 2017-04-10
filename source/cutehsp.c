@@ -1,6 +1,6 @@
-﻿#define __HSPCUI__
+﻿//#define __HSPCUI__
 //#define __HSPSTD__
-//#define __HSPEXT__
+#define __HSPEXT__
 
 /*
 上記のどれか１つを定義(コメントイン)する
@@ -543,6 +543,7 @@ typedef enum
 	COMMAND_SDIM,
 	COMMAND_RANDOMIZE,
 	COMMAND_BLOAD,
+	COMMAND_BSAVE,
 	COMMAND_POKE,
 	COMMAND_RUN,
 #ifdef __HSPCUI__
@@ -562,6 +563,7 @@ typedef enum
 	COMMAND_LINE,
 	COMMAND_BOXF,
 	COMMAND_STICK,
+	COMMAND_CIRCLE,
 #ifdef __HSPEXT__
 	COMMAND_FONT,
 	COMMAND_PICLOAD,
@@ -763,6 +765,42 @@ void fill_rect_rgb_slow(uint8_t *pixel_data,
 				minx + x, miny + y,
 				color_red, color_green, color_blue,
 				canvas_size_width, canvas_size_height);
+		}
+	}
+}
+
+void fill_circle_rgb(uint8_t *pixel_data,
+	int32_t start_point_x, int32_t start_point_y,
+	int32_t end_point_x, int32_t end_point_y,
+	uint8_t color_red, uint8_t color_green, uint8_t color_blue,
+	int32_t canvas_size_width, int32_t canvas_size_height)
+{
+	if (start_point_x >= end_point_x || start_point_y >= end_point_y) return;
+
+	double _x1 = start_point_x;
+	double _y1 = start_point_y;
+	double _x2 = end_point_x;
+	double _y2 = end_point_y;
+
+	//幅の半径を求める
+	double widthRadius = (_x2 - _x1) / 2.0;
+	double heightRadius = (_y2 - _y1) / 2.0;//widthRadius / ratioHeight;
+	double x, y;
+	double ratioHeightReverse = (_y2 - _y1) / (_x2 - _x1);
+
+	for (int iy = start_point_y; iy < end_point_y + heightRadius; iy++)
+	{
+		for (int ix = start_point_x; ix < end_point_x + widthRadius; ix++)
+		{
+			x = ix - start_point_x - widthRadius;
+			y = iy - start_point_y - heightRadius;
+			y /= ratioHeightReverse;
+			if (x * x + y * y < widthRadius * widthRadius) {
+				set_pixel_rgb(pixel_data,
+					ix, iy,
+					color_red, color_green, color_blue,
+					canvas_size_width, canvas_size_height);
+			}
 		}
 	}
 }
@@ -1489,6 +1527,53 @@ command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
 }
 
 void
+command_bsave(execute_environment_t* e, execute_status_t* s, int arg_num)
+{
+	// 引数の数をチェックする
+	if (arg_num != 2) {
+		raise_error("bsave: Invalid argument.");
+	}
+	const int arg_start = -arg_num;
+
+	// １つ目の引数を取得する
+	value_t* m = stack_peek(s->stack_, arg_start);
+	value_isolate(m);
+	if (m->type_ != VALUE_STRING) {
+		raise_error("bsave: Argument should specify a string type.");
+	}
+	char* fnm = m->svalue_;
+
+	// ２つめの引数を取得する
+	const value_t* v = stack_peek(s->stack_, arg_start + 1);
+	if (v->type_ != VALUE_VARIABLE) {
+		raise_error("bsave: Argument should be a variable.");
+	}
+
+	// ファイルをオープンする
+	FILE* fp = fopen(fnm, "wb");
+	if (fp == NULL) {
+		raise_error("bsave: file could not be opened [%s]", fnm);
+		exit(1);
+	}
+
+	// 指定した変数の内容をdata_ptrに代入する
+	void* data_ptr = v->variable_->data_;
+
+	// データサイズを取得する
+	const long size = strlen(data_ptr);
+
+	// ファイルにdata_ptrの内容を書き込む
+	fwrite(data_ptr, size, 1, fp);
+
+	// 書き込んだサイズをシステム変数に代入
+	s->strsize_ = size;
+
+	// クローズ処理
+	fclose(fp);
+	stack_pop(s->stack_, arg_num);
+}
+
+void
 command_poke(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	// 引数の数をチェックする
@@ -1789,6 +1874,33 @@ command_stick(execute_environment_t* e, execute_status_t* s, int arg_num)
 	void* data_ptr = v->variable_->data_;
 	int* tmp = (int*)data_ptr;
 	tmp[0] = key;
+	stack_pop(s->stack_, arg_num);
+}
+
+void
+command_circle(execute_environment_t* e, execute_status_t* s, int arg_num)
+{
+	if (arg_num < 4) {
+		raise_error("circle: Invalid argument.");
+	}
+	const int arg_start = -arg_num;
+
+	const value_t* p1 = stack_peek(s->stack_, arg_start);
+	const int x0 = value_calc_int(p1);
+	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
+	const int y0 = value_calc_int(p2);
+	const value_t* p3 = stack_peek(s->stack_, arg_start + 2);
+	const int x1 = value_calc_int(p3);
+	const value_t* p4 = stack_peek(s->stack_, arg_start + 3);
+	const int y1 = value_calc_int(p4);
+
+	fill_circle_rgb(
+		pixel_data, x0, y0, x1, y1,
+		current_color_r, current_color_g, current_color_b,
+		screen_width, screen_height);
+
+	if (redraw_flag) redraw();
+
 	stack_pop(s->stack_, arg_num);
 }
 
@@ -5140,6 +5252,9 @@ query_command(const char* s)
 			COMMAND_BLOAD, "bload",
 		},
 		{
+			COMMAND_BSAVE, "bsave",
+		},
+		{
 			COMMAND_POKE, "poke",
 		},
 		{
@@ -5186,6 +5301,9 @@ query_command(const char* s)
 		{
 			COMMAND_STICK, "stick",
 		},
+		{
+			COMMAND_CIRCLE, "circle",
+		},
 #ifdef __HSPEXT__
 		{
 			COMMAND_FONT, "font",
@@ -5219,6 +5337,7 @@ get_command_delegate(builtin_command_tag command)
 		&command_sdim,
 		&command_randomize,
 		&command_bload,
+		&command_bsave,
 		&command_poke,
 		&command_run,
 #ifdef __HSPCUI__
@@ -5238,6 +5357,7 @@ get_command_delegate(builtin_command_tag command)
 		&command_line,
 		&command_boxf,
 		&command_stick,
+		&command_circle,
 #ifdef __HSPEXT__
 		&command_font,
 		&command_picload,
