@@ -31,7 +31,7 @@ exrdさんが(気まぐれで？)作った、このクロスプラットフォ�
 <pre>
 命令		書式			説明
 end		end			プログラムを終了
-run		run p1			実行中のプログラムを破棄し、p1で指定したプログラムファイルを読み込んで実行する
+run		run p1			実行中のプログラムを破棄してプログラムファイルp1を読み込み、実行する
 goto		goto p1			ラベルp1へジャンプする
 gosub		gosub p1		サブルーチンのラベルp1へジャンプする
 return		return			サブルーチンから戻る
@@ -46,6 +46,7 @@ ddim		ddim p1,p2		変数名p1、配列数p2の配列変数(実数)を作成す�
 sdim		sdim p1,p2,p3		変数名p1、文字数p2、配列数p3の文字列型配列変数を作成する
 randomize	randomize		乱数発生パターンを初期化
 bload		bload p1,p2		ファイル名p1の内容を文字型変数p2に読み込む。
+bsave		bsave p1,p2		文字型変数p2の内容をファイル名p1で保存する
 poke		poke p1,p2,p3		文字型変数p1のp2バイトめにバイト値p3を書き込む。
 wait		wait p1			p1ミリ秒待つ
 stop		stop			ウィンドウが[×]でクローズされるまで待つ
@@ -54,6 +55,7 @@ pset		pset p1,p2		座標p1,p2にドットを描画する。
 					p1,p2が省略された場合はカレントポジションに描画する
 line		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで線を描画する
 boxf		line p1,p2,p3,p4	座標p1,p2から座標p3,p4まで矩形を塗りつぶす
+circle		circle p1,p2,p3,p4	座標p1,p2から座標p3,p4までの矩形内に収まる円形を描く
 redraw		redraw p1		p1が0なら再描画スイッチをオフに、1またはp1が省略されたらオンにする
 pos		pos p1,p2		座標p1,p2をカレントポジションに設定する
 color		color p1,p2,p3		RGBカラーp1,p2,p3をカレントカラーに設定する
