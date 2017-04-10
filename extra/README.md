@@ -24,8 +24,7 @@ beep		beep p1,p2,p3,p4	p1は周波数、p2は再生する長さ(ミリ秒)、p3�
 <pre>
 cutehspx.exe
 </pre>
-上記の実行ファイル cutehspx.exe と glfw3.dll, OpenAL32.dll, tiny.ttf を同じフォルダに置いてください。
-使い方は cutehsp.exe と同じです。
+上記の実行ファイルと glfw3.dll, OpenAL32.dll, tiny.ttf を同じフォルダに置いてください。使い方は cutehsp.exe と同じです。
 
 ※ tinytrek.hs を実行する場合は tiny_en.ttf (等幅フォント)が必要です。
 
