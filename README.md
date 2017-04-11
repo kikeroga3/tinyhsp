@@ -147,7 +147,9 @@ cutehsp
    TeraPadで編集中のプログラムを実行できるようになります。
 </pre>
 軽快に動作するフリーのテキストエディター「TeraPad」
+
 ![terapad_tool_set](https://cloud.githubusercontent.com/assets/24917310/23577155/751abdfa-00fb-11e7-8938-ac2b754ff8d8.png)
+
 http://forest.watch.impress.co.jp/library/software/terapad/
 
 ### 補足3：エラーメッセージ
