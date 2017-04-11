@@ -34,7 +34,9 @@ end		end			プログラムを終了
 run		run p1			実行中のプログラムを破棄してプログラムファイルp1を読み込み、実行する
 goto		goto p1			ラベルp1へジャンプする
 gosub		gosub p1		サブルーチンのラベルp1へジャンプする
-return		return			サブルーチンから戻る
+return		return p1		サブルーチンから戻る
+					returnで戻る際にp1を指定(省略可)するとシステム変数にその値が代入される。
+					値が整数型ならstat,浮動小数点型ならrefdval,文字列型ならrefstrに代入される
 repeat		repeat p1		repeat～loopで囲まれた範囲をp1回繰り返し処理する
 loop		loop			繰り返し処理の終端命令
 continue	continue		繰り返し処理中でrepeat命令まで戻る
