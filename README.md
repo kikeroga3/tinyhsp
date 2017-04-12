@@ -196,15 +196,15 @@ CuteHSPで「できた！」という成功体験をへて、CuteHSPに限界を
 …決して機能が少ないことへのいいわけではないですヨ(^^;
 
 ___
-### ソース「cutehsp.cpp」のコンパイル方法のメモ
+### ソース「cutehsp.c」のコンパイル方法のメモ
 Windowsでの例ですが、MinGW(gcc)とGLFW3で開発環境をつくって以下コマンドでコンパイルします。
 
 <pre>
 コンソール付アプリケーション生成
-gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll
+gcc -static cutehsp.c -o cutehsp -lopengl32 -lglfw3dll
 
 Windowsアプリケーション生成
-gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll -mwindows
+gcc -static cutehsp.c -o cutehsp -lopengl32 -lglfw3dll -mwindows
 </pre>
 
 macOS版の実行ファイルも作れるはずですが、私はmacを持っていないため、コンパイルまで試せてません。
