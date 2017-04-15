@@ -2184,7 +2184,7 @@ function_peek(execute_environment_t* e, execute_status_t* s, int arg_num)
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
 	char* p = m->svalue_;
-	const char r = p[i];
+	unsigned char r = p[i];
 
 	stack_pop(s->stack_, arg_num);
 	stack_push(s->stack_, create_value(r));
