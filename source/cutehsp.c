@@ -871,6 +871,7 @@ void redraw()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glRasterPos2i(-1, -1);
 
+//Retina暫定対応
 #ifdef __MACOS__
 
 	int samplesPerPixel = 3;
