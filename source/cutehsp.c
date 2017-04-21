@@ -593,23 +593,28 @@ function_delegate get_function_delegate(builtin_function_tag command);
 void
 raise_error(const char* message, ...)
 {
+	char c[512];
+	for (int i = 0; i < 512; i++) {
+		c[i] = '\0';
+	}
 	va_list args;
-	va_start( args, message );
-#ifdef __HSPCUI__
-	printf("Error Occurred!\n");
-	vfprintf( stderr, message, args );
-	printf("\nPress Enter key to continue...");
-	fgetc(stdin);
-#else
+	va_start(args, message);
+	vsprintf(c, message, args);
+
+#ifdef __HSPGUI__
 	// タイトルバーにエラー表示する
-	char msg[256];
-	sprintf(msg, message, *args);
-	glfwSetWindowTitle(window, msg );
+	glfwSetWindowTitle(window, c);
 	// 画面クローズまで待つ
 	while (!glfwWindowShouldClose(window)) {
-	    glfwPollEvents();
+		glfwPollEvents();
 	}
+#else
+	printf("Error Occurred!\n");
+	vfprintf(stderr, message, args);
+	printf("\nPress Enter key to continue...");
+	fgetc(stdin);
 #endif
+
 	va_end(args);
 	exit(-1);
 }
