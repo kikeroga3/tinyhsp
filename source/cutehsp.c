@@ -1,5 +1,5 @@
-﻿//#define __HSPCUI__
-#define __HSPSTD__
+﻿#define __HSPCUI__
+//#define __HSPSTD__
 //#define __HSPEXT__
 
 /*
@@ -23,7 +23,7 @@ macOSの場合:
 - エクストラ版: clang cutehsp.c -o cutehspx -lglfw -framework OpenGL -framework OpenAL
 
 Linuxの場合:
-- コンソール版: gcc -static cutehsp.c -o cutehspcl -lm
+- コンソール版: gcc cutehsp.c -o cutehspcl -lm
 -   ミニマム版: gcc cutehsp.c -o cutehsp -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
 - エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
 
@@ -537,11 +537,9 @@ void execute(execute_environment_t* e);
 typedef void(*command_delegate)(execute_environment_t* e, execute_status_t* s, int arg_num);
 typedef enum
 {
-	COMMAND_DEVTERM = 0, // デバッグ用の隠し
-	COMMAND_DIM,
+	COMMAND_DIM = 0,
 	COMMAND_DDIM,
 	COMMAND_SDIM,
-	COMMAND_RANDOMIZE,
 	COMMAND_BLOAD,
 	COMMAND_BSAVE,
 	COMMAND_POKE,
@@ -1229,12 +1227,6 @@ search_label(execute_environment_t* e, const char* name)
 
 // コマンド実体
 void
-command_devterm(execute_environment_t* e, execute_status_t* s, int arg_num)
-{
-	stack_pop(s->stack_, arg_num);
-}
-
-void
 command_dim(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num != 2) {
@@ -1481,24 +1473,6 @@ command_input(execute_environment_t* e, execute_status_t* s, int arg_num)
 	stack_pop(s->stack_, arg_num);
 }
 #endif
-
-void
-command_randomize(execute_environment_t* e, execute_status_t* s, int arg_num)
-{
-	if (arg_num > 1) {
-		raise_error("randomize: Invalid argument.");
-	}
-	unsigned int seed = 0;
-	if (arg_num == 0) {
-		seed = (unsigned int)time(NULL);
-	}
-	else {
-		const value_t* m = stack_peek(s->stack_, -1);
-		seed = value_calc_int(m);
-	}
-	srand(seed);
-	stack_pop(s->stack_, arg_num);
-}
 
 void
 command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
@@ -1826,7 +1800,7 @@ void
 command_boxf(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num != 4) {
-		raise_error("line: Invalid argument.");
+		raise_error("boxf: Invalid argument.");
 	}
 	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
@@ -5263,7 +5237,6 @@ query_command(const char* s)
 		int tag_;
 		const char* word_;
 	} table[] = {
-		{ COMMAND_DEVTERM, "devterm" },
 		{
 			COMMAND_DIM, "dim",
 		},
@@ -5272,9 +5245,6 @@ query_command(const char* s)
 		},
 		{
 			COMMAND_SDIM, "sdim",
-		},
-		{
-			COMMAND_RANDOMIZE, "randomize",
 		},
 		{
 			COMMAND_BLOAD, "bload",
@@ -5359,11 +5329,9 @@ command_delegate
 get_command_delegate(builtin_command_tag command)
 {
 	static const command_delegate commands[] = {
-		&command_devterm,
 		&command_dim,
 		&command_ddim,
 		&command_sdim,
-		&command_randomize,
 		&command_bload,
 		&command_bsave,
 		&command_poke,
@@ -5612,6 +5580,11 @@ re_run:
 	}
 	assert(script != NULL);
 
+	// 乱数の初期化
+	{
+		unsigned int seed = (unsigned int)time(NULL);
+		srand(seed);
+	}
 	// 実行
 	{
 		execute_environment_t* env = create_execute_environment();
