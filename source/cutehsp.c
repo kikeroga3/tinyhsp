@@ -1613,7 +1613,8 @@ command_run(execute_environment_t* e, execute_status_t* s, int arg_num)
 	if (arg_num != 1) {
 		raise_error("run: Invalid argument.");
 	}
-	const value_t* m = stack_peek(s->stack_, -1);
+	value_t* m = stack_peek(s->stack_, -1);
+	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
 		raise_error("run: Argument should specify a string type.");
 	}
