@@ -1,6 +1,6 @@
-﻿#define __HSPCUI__
+﻿//#define __HSPCUI__
 //#define __HSPSTD__
-//#define __HSPEXT__
+#define __HSPEXT__
 
 /*
 上記のどれか１つを定義(コメントイン)する
@@ -1515,7 +1515,7 @@ command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
 	// バイナリを一時的な変数に読み込む
 	fseek(fp, 0, SEEK_SET); // ファイル位置表示子をファイルの始めに位置付ける
 	uint8_t* tmp = (uint8_t*)calloc(size, sizeof(uint8_t));
-	fread(tmp, sizeof(uint8_t), (int)size, fp);
+	long dmy = fread(tmp, sizeof(uint8_t), (int)size, fp);
 
 	// 指定された変数に一時的な変数から代入する
 	void* data_ptr = v->variable_->data_;
@@ -1945,7 +1945,7 @@ command_font(execute_environment_t* e, execute_status_t* s, int arg_num)
 		if (fp == NULL) {
 			raise_error("font: Font %s cannot be opened.", name);
 		}
-		fread(font_ttf_buffer, 1, 2000000, fp);
+		long dmy = fread(font_ttf_buffer, 1, 2000000, fp);
 		fclose(fp);
 		int offset = stbtt_GetFontOffsetForIndex((unsigned char *)font_ttf_buffer, 0);
 		stbtt_InitFont(&font, (unsigned char *)font_ttf_buffer, offset);
