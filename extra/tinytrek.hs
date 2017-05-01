@@ -8,7 +8,6 @@
 	title "TINY TREK"
 	font "tiny_en.ttf",20
 
-	randomize
 	dim map,200
 	sdim gyo,256,20
 ;---
@@ -364,20 +363,21 @@
 	return
 
 *input
-	pos 10,400
-	mes "***PLEASE USE ONE OF THESE COMMANDS***"
+	redraw 0
+	pos 10,400 :mes "***PLEASE USE ONE OF THESE COMMANDS***"
+	color :boxf 10,420,640,480
+	cm(0)="REPORT" :cm(1)="SR. SENSOR" :cm(2)="LR. SENSOR" :cm(3)="GALAXY MAP"
+	cm(4)="PHASER" :cm(5)="ENERGY:"+pw :cm(6)="TORPEDO"    :cm(7)="COURSE:"+an
+	cm(8)="WARP"   :cm(9)="SPEED:"+sp :cm(10)="COURSE:"+vc
+	repeat 11 :xx=100*(cnt\4) :yy=16*(cnt/4)
+		color 200*(cnt=ci),200,0
+		pos 10+xx,420+yy :mes cm(cnt)
+		color 0,200,0
+	loop
+	redraw 1
+
 	repeat
-		redraw 0 :color :boxf 10,420,640,480
-		cm(0)="REPORT" :cm(1)="SR. SENSOR" :cm(2)="LR. SENSOR" :cm(3)="GALAXY MAP"
-		cm(4)="PHASER" :cm(5)="ENERGY:"+pw :cm(6)="TORPEDO"    :cm(7)="COURSE:"+an
-		cm(8)="WARP"   :cm(9)="SPEED:"+sp :cm(10)="COURSE:"+vc
-		repeat 11 :xx=100*(cnt\4) :yy=16*(cnt/4)
-			color 200*(cnt=ci),200,0
-			pos 10+xx,420+yy :mes cm(cnt)
-			color 0,200,0
-		loop
-		wait 5
-		stick key
+		wait 5 :stick key
 		if key & 1 {
 			ci=ci-1 :if ci<0 :ci=10
 		}
@@ -396,8 +396,7 @@
 			sp=sp-(ci=9) :if sp<0 :sp=0
 			vc=vc-5*(ci=10) :if vc<0 :vc=360
 		}
-		if key & 48 :break
-		redraw 1
+		if key & 63 :break
 	loop
+	if key & 15 :goto *input
 	return
-
