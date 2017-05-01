@@ -1,6 +1,5 @@
 ; for cutehspcl
 
-	randomize
 	dim map,200
 ;---
 *startrek
@@ -233,7 +232,7 @@
 	goto *captain
 ;---
 *warp
-	j=5 :gosub *damaged :;if i=0 :mes "\n"	HSPCL�ł͕s�v
+	j=5 :gosub *damaged :;if i=0 :mes "\n"	HSPCL‚Å‚Í•s—v
 
 *ln470
 	mes "SECTOR DISTANCE" :input w,2,2
@@ -326,4 +325,3 @@
 	if q=2 :s=45 :t=-i
 	if q=3 :s=-i :t=-45
 	return
-
