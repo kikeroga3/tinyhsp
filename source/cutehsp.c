@@ -1,6 +1,6 @@
-﻿//#define __HSPCUI__
+﻿#define __HSPCUI__
 //#define __HSPSTD__
-#define __HSPEXT__
+//#define __HSPEXT__
 
 /*
 上記のどれか１つを定義(コメントイン)する
@@ -13,19 +13,19 @@ __HSPEXT__ : エクストラ版
 # コンパイル方法
 
 Windows(MinGW)の場合:
-- コンソール版: gcc -static cutehsp.c -o cutehspcl
--   ミニマム版: gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows
-- エクストラ版: gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows
+- コンソール版: gcc -static cutehsp.c -o cutehspcl -Os
+-   ミニマム版: gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows -Os
+- エクストラ版: gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows -Os
 
 macOSの場合:
-- コンソール版: clang cutehsp.c -o cutehspcl
--   ミニマム版: clang cutehsp.c -o cutehsp -lglfw -framework OpenGL
-- エクストラ版: clang cutehsp.c -o cutehspx -lglfw -framework OpenGL -framework OpenAL
+- コンソール版: clang cutehsp.c -o cutehspcl -Os
+-   ミニマム版: clang cutehsp.c -o cutehsp  -lglfw -framework OpenGL -Os
+- エクストラ版: clang cutehsp.c -o cutehspx -lglfw -framework OpenGL -framework OpenAL -Os
 
 Linuxの場合:
-- コンソール版: gcc cutehsp.c -o cutehspcl -lm
--   ミニマム版: gcc cutehsp.c -o cutehsp -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
-- エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
+- コンソール版: gcc cutehsp.c -o cutehspcl -lm -Os
+-   ミニマム版: gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+- エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
 
 */
 //=============================================================
@@ -562,6 +562,7 @@ typedef enum
 	COMMAND_BOXF,
 	COMMAND_STICK,
 	COMMAND_CIRCLE,
+	COMMAND_PAINT,
 #ifdef __HSPEXT__
 	COMMAND_FONT,
 	COMMAND_PICLOAD,
@@ -807,6 +808,14 @@ void fill_circle_rgb(uint8_t *pixel_data,
 		}
 	}
 }
+
+// paint命令用
+struct BufStr {
+	int sx; /* 領域右端のX座標 */
+	int sy; /* 領域のY座標 */
+};
+struct BufStr buff[1024]; /* シード登録用バッファ */
+struct BufStr *sIdx, *eIdx;  /* buffの先頭・末尾ポインタ */
 
 #ifdef __HSPEXT__
 typedef struct {
@@ -1909,6 +1918,96 @@ command_circle(execute_environment_t* e, execute_status_t* s, int arg_num)
 
 	if (redraw_flag) redraw();
 
+	stack_pop(s->stack_, arg_num);
+}
+
+/* 点描画用関数 */
+void dot_set(int x, int y, unsigned int col)
+{
+	unsigned int col_r = col / 65536;
+	unsigned int col_g = (col & 0x00ff00) / 256;
+	unsigned int col_b = col;
+	set_pixel_rgb(pixel_data, x, y, col_r, col_g, col_b, screen_width, screen_height);
+}
+
+/* 色コードの取得 */
+unsigned int dot_get(int x, int y)
+{
+	color_t col = get_pixel_color(pixel_data, x, y, screen_width, screen_height);
+	return (65536 * col.red + 256 * col.green + col.blue);
+}
+
+/* 線分からシードを探索してバッファに登録する */
+void scanLine(int lx, int rx, int y, unsigned int col)
+{
+	while (lx <= rx) {
+		/* 非領域色を飛ばす */
+		for (; lx <= rx ; lx++)
+			if (dot_get(lx, y) == col) break;
+		if (dot_get(lx, y) != col) break;
+		/* 領域色を飛ばす */
+		for (; lx <= rx ; lx++)
+			if (dot_get(lx, y) != col) break;
+		eIdx->sx = lx - 1;
+		eIdx->sy = y;
+		if (++eIdx == &buff[1024]) eIdx = buff;
+	}
+}
+
+void
+command_paint(execute_environment_t* e, execute_status_t* s, int arg_num)
+{
+	if (arg_num != 2) raise_error("paint: Invalid argument.");
+
+	const int arg_start = -arg_num;
+	const value_t* p1 = stack_peek(s->stack_, arg_start);
+	const int x = value_calc_int(p1);
+	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
+	const int y = value_calc_int(p2);
+	// 閉領域の色(領域色)
+	unsigned int col = dot_get(x, y);
+	// 塗り潰す時の色(描画色)
+	unsigned int paintCol = 65536 * current_color_r + 256 * current_color_g + current_color_b;
+	// 領域色と描画色が等しければ処理不要
+	if (col == paintCol) return;
+
+	int lx, rx; // 塗り潰す線分の両端のX座標
+	int ly;     // 塗り潰す線分のY座標
+	int i;
+
+	sIdx = buff;
+	eIdx = buff + 1;
+	sIdx->sx = x;
+	sIdx->sy = y;
+
+	do {
+		lx = rx = sIdx->sx;
+		ly = sIdx->sy;
+		if (++sIdx == &buff[1024]) sIdx = buff;
+		// 処理済のシードなら無視
+		if (dot_get(lx, ly) != col) continue;
+		// 右方向の境界を探す
+		while (rx < 639) {
+			if (dot_get(rx + 1, ly) != col) break;
+			rx++;
+		}
+		// 左方向の境界を探す
+		while (lx > 0) {
+			if (dot_get(lx - 1, ly) != col) break;
+			lx--;
+		}
+		// lx-rxの線分を描画
+		for (i = lx ; i <= rx ; i++)
+			dot_set(i, ly, paintCol);
+		// 真上のスキャンラインを走査する
+		if (ly - 1 >= 0)
+			scanLine(lx, rx, ly - 1, col);
+		// 真下のスキャンラインを走査する
+		if (ly + 1 <= 479)
+			scanLine(lx, rx, ly + 1, col);
+	} while ( sIdx != eIdx );
+
+	if (redraw_flag) redraw();
 	stack_pop(s->stack_, arg_num);
 }
 
@@ -5308,6 +5407,9 @@ query_command(const char* s)
 		{
 			COMMAND_CIRCLE, "circle",
 		},
+		{
+			COMMAND_PAINT, "paint",
+		},
 #ifdef __HSPEXT__
 		{
 			COMMAND_FONT, "font",
@@ -5360,6 +5462,7 @@ get_command_delegate(builtin_command_tag command)
 		&command_boxf,
 		&command_stick,
 		&command_circle,
+		&command_paint,
 #ifdef __HSPEXT__
 		&command_font,
 		&command_picload,
