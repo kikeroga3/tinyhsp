@@ -1,0 +1,148 @@
+{\rtf1\ansi\ansicpg932\deff0\deflang1033\deflangfe1041{\fonttbl{\f0\fnil\fcharset0 Consolas;}}
+{\colortbl ;\red0\green0\blue255;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\b\f0\fs18 What's CuteHSP\par
+\b0 CuteHSP is a very easy programming language.\par
+The executable platform is Windows / macOS / Linux.\par
+\par
+\b Instructions\par
+\b0 --------------------------------------------------------------------------------\par
+\b Usage               Description\par
+\b0 end                 End the program.\par
+run p1              Discard the currently executing program, read the file p1,        -                   and execute it.\par
+goto p1             Jump to label p1.\par
+gosub p1            Jump to label p1 of the subroutine.\par
+return              Return from the subroutine.\par
+repeat p1           Repeats the range enclosed by repeat-loop.\par
+loop                End instruction of iterative processing.\par
+continue            It returns to the repeat command while repeating processing.\par
+break               Exit from iterative processing.\par
+if p1               If condition p1 is satisfied, the subsequent instructions of    -                   that line are executed.\par
+else                When the if condition is not satisfied, else instruction and     -                   after are executed.\par
+dim p1,p2           Create an array variable (integer) with variable name p1 and              -                   array number p2.\par
+ddim p1,p2          Create an array variable (real number) with variable name p1 and -                   array number p2.\par
+sdim p1,p2,p3       Create a string type array variable with variable name p1,      -                   number of characters p2, number of array p3.\par
+font p1,p2,p3       Specify the font. p1 is the TTF filename, p2 is the font size,   -                   and p3 is the smoothing specification (0 or 16).\par
+mes p1              Display the character string p1 on the screen.\par
+picload p1          Read the image file p1 and display it on the screen.\par
+input p1,p2,p3      Get key input value. p1: Variable name to store the input value.                 -                   p2: Maximum number of characters assigned to variable.           -                   p3: Line feed code recognition flag (0=none, 1=LF, 2=CR+LF).\par
+beep p1,p2,p3,p4    p1 is the frequency, p2 is the playback length(ms), p3 is the     -                   waveform type, p4 is the volume (0 to 30000) and sounds.\par
+                      [Type of waveform (Default:2)]\par
+                           0:Sine wave    1:sawtooth wave    2:Square wave\par
+                           3:Triangular wave    4:White noise\par
+bload p1,p2         Read contents of filename p1 into character type variable p2.\par
+bsave p1,p2         Save the contents of character type variable p2 as filename p1.\par
+poke p1,p2,p3       Write byte value p3 to p2 byte of character type variable p1.\par
+wait p1             Wait for p1 milliseconds.\par
+stop                Wait until the window is closed with [x] button.\par
+title p1            Display character string p1 in title bar.\par
+pset p1,p2          Draw a dot on the coordinates (p1,p2).\par
+line p1,p2,p3,p4    Draw a line from coordinates (p1,p2) to coordinates (p3,p4).\par
+boxf p1,p2,p3,p4    Fill rectangle from coordinates (p1,p2) to coordinates (p3,p4).\par
+circle p1,p2,p3,p4  Draws a circle that fits within the rectangle from coordinates     -                   (p1,p2) to coordinates (p3,p4).\par
+paint p1,p2         Fill the closed region containing the coordinates (p1,p2)         -                   with the current color.\par
+redraw p1           Set the redraw switch to ON (1) or OFF (0).\tab\par
+pos p1,p2           Set the coordinates (p1,p2) to the current position.\par
+color p1,p2,p3      Set the RGB color (p1,p2,p3) as the current color.\par
+stick p1            Store key information in numeric variable p1.\par
+\tab\tab\tab  [Key information]\par
+\tab\tab\tab     1  Cursor left            2  Cursor up\par
+\tab\tab\tab     4  Cursor right           8  Cursor down\par
+\tab\tab\tab    16  Space                 32  Enter\par
+\tab\tab\tab    64  Ctrl                 128  ESC\par
+\tab\tab\tab   256  Left mouse button    512  Right mouse button\par
+\tab\tab\tab  1024  TAB\par
+--------------------------------------------------------------------------------\par
+\b\par
+Functions\b0\par
+--------------------------------------------------------------------------------\par
+\b Usage           Description\b0\par
+int(p1)         Return p1 as an integer value.\par
+double(p1)      Return p1 as a real number (double precision floating point).\par
+abs(p1)         Return p1 as absolute value.\par
+str(p1)         Return p1 as a string.\par
+rnd(p1)         Returns a random number from 0 to p1-1.\par
+powf(p1,p2)     Returns the result of p1 raised to the power of p2.\par
+peek(p1,p2)     Get the byte value of p2 byte of character type variable p1.\par
+--------------------------------------------------------------------------------\par
+\par
+\b System variables\b0\par
+--------------------------------------------------------------------------------\par
+\b Name              Description\b0\par
+stat              Status (integer) after instruction or function execution stored.\par
+refdval           The real type return value is stored in refdval.\par
+refstr            String type return value is stored.\par
+cnt               Counter value of repeat-loop.\par
+strsize           The number of bytes of the file read by the bload is stored.\par
+mousex            X coordinate of mouse cursor.\par
+mousey            Y coordinate of mouse cursor.\par
+mousel            1 if the left mouse button is pressed, 0 if not pressed.\par
+mouser            1 if the right mouse button is pressed, 0 if not pressed.\par
+--------------------------------------------------------------------------------\par
+\par
+\b Sample programs\par
+\b0 A text file with the extension ".hs" is a sample program.\par
+\par
+\b Program execution method\b0\par
+From the console (command line), make the following entries.\par
+\par
+\tab C:\par
+\tab cd \\cutehsp_win\par
+\tab cutehsp kakiget.hs\par
+\par
+Specify program file name as argument.\par
+If you omit the program file name, "start.hs" is given as an argument.\par
+\par
+\b Type of executable file\b0\par
+\par
+\b CuteHSP Minimum\b0\par
+CuteHSP standard version.\par
+The window screen 640 x 480 dots, the displayable color is 16.77 million colors.\par
+Executable file name "cutehsp" (* Windows version requires the DLL file "glfw3.dll")\par
+Unusable instructions: input, picload, font, mes, beep\par
+\par
+\b CuteHSP Extra\b0\par
+CuteHSP extended version.\par
+The window screen 640 x 480 dots, the displayable color is 16.77 million colors.\par
+Executable file name "cutehspx" (* Windows version requires the DLL file "glfw3.dll" and "OpenAL32.dll")\par
+When displaying characters on the window screen, a font file such as "tiny.ttf" is also necessary.\par
+Unusable instructions: input\par
+\par
+\b CuteHSP Console\b0\par
+CuteHSP console version.\par
+User I/O is standard input/output, without a window screen.\par
+Executable file name "cutehspcl"\par
+Unusable instructions: picload, font, beep, title, stop, stick, wait, color, pos, pset, line, boxf, circle, redraw\par
+\par
+\b Recommended editor for programming\b0\par
+Like CuteHSP, we recommend the cross-platform editor "Geany" which runs on Windows / macOS / Linux.\par
+\par
+\b Geany\b0\par
+{\field{\*\fldinst{HYPERLINK "https://www.geany.org/Download/Releases"}}{\fldrslt{\ul\cf1 https://www.geany.org/Download/Releases}}}\f0\fs18\par
+\par
+For Linux, you can install from the following command.\par
+\par
+\tab sudo apt-get install geany\par
+\par
+Below is a method to execute while editing a program with Geany.\par
+\par
+1. Launch Geany and select "Set Build Commands" from the menu "Build".\par
+\par
+2. Set the external execution command to "Execute commands".\par
+   For example, enter 'C:\\cutehsp_win\\cutehspx.exe "%f"'.\par
+\par
+3. After that, you can execute the program being edited by "Run" on the toolbar or F5 key.\par
+\par
+\b CuteHSP Homepage\b0\par
+{\field{\*\fldinst{HYPERLINK "https://github.com/kikeroga3/tinyhsp"}}{\fldrslt{\ul\cf1 https://github.com/kikeroga3/tinyhsp}}}\f0\fs18\par
+\par
+\b E-mail\par
+\b0 cutehsp@outlook.jp\par
+\par
+\b The MIT License\b0\par
+Copyright (c) 2017 Kikeroga\par
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\par
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\par
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\par
+\par
+}
+ 
