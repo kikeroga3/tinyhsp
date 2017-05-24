@@ -79,6 +79,54 @@ mousel            1 if the left mouse button is pressed, 0 if not pressed.\par
 mouser            1 if the right mouse button is pressed, 0 if not pressed.\par
 --------------------------------------------------------------------------------\par
 \par
+\b Assignment to variable\b0\par
+\par
+a=12            ;Assign integer\par
+b=12.3          ;Assign real number\par
+c="message"     ;Assign a string\par
+\par
+\b Arithmetic operators\b0\par
+\par
+a=10+4          Addition\par
+b=12.8-6.3      Subtraction\par
+c=9*4           Multiplication\par
+d=8/2           Division\par
+e=15\\7          Remainder\par
+\par
+\b Comparison operators\b0\par
+\par
+12>5        12 is greater than 5\par
+12>=5       12 is greater than or equal to 5\par
+12<5        12 is less than 5\par
+12<=5       12 is less than or equal to 5\par
+12=5        12 is equal to 5\par
+12!5        12 is not equal to 5\par
+\par
+\b Logical operators\b0\par
+\par
+12&5        AND\par
+12|5        OR\par
+\par
+\b Annotation description\b0\par
+If you write a ";" (semicolon), subsequent statements will not be executed.\par
+\par
+pos 30,20    ;This part will not be executed.\par
+\par
+\b Colon\b0\par
+Multiple instructions can be described on one line by using ":" (colon).\par
+\par
+pos 50,100:mes "Coordinate specification and character display."\par
+\par
+\b Label\b0\par
+You can use labels as jump destinations for goto or gosub instructions.\par
+Label name is "*" (asterisk) followed by an arbitrary name with alphanumeric characters.\par
+\par
+\tab gosub *la001\par
+\tab stop\par
+*la001\par
+\tab mes "Sub Routine"\par
+\tab return\par
+\par
 \b Sample programs\par
 \b0 A text file with the extension ".hs" is a sample program.\par
 \par
