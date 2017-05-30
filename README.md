@@ -7,9 +7,9 @@
 CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さなトイ言語です。
 (実行ファイル本体のソースも Windows, macOS, Linux で共通！)
 
-画面処理・サウンド処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしており、ミニマム版の実行ファイルサイズは100KB以下となっています。
+画面処理・サウンド処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしており、ミニマム版の実行ファイルのサイズは何とわずか100KB以下となっています。
 
-このページにある実行ファイルは今のところ Windows, Linux版のみですが、cutehspのソースをコンパイルすることで macOS上でも実行可能なcutehspを作成できるはずです。
+このページにある実行ファイルは今のところ Windows, Linux(x86), macOS版のみですが、C言語で書かれたCuteHSPのソースをコンパイルできる環境であれば、実行可能なバイナリを作成できるはずです。
 
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも参照してみてください。
 
@@ -207,10 +207,8 @@ Windowsアプリケーション生成
 gcc -static cutehsp.c -o cutehsp -lopengl32 -lglfw3dll -mwindows
 </pre>
 
-macOS版の実行ファイルも作れるはずですが、私はmacを持っていないため、コンパイルまで試せてません。
 各環境用のコンパイル方法については<a href="https://github.com/dolphilia/tinyhsp">dolphiliaさんのページ</a>が詳しいです。
-もしmacOS版の実行ファイルを作成された方がおりましたらぜひお知らせください。
-こちらのページに掲載させていただきたいと思っています。
+
 ___
 ### The MIT license
 Copyright (c) 2017 Kikeroga3
