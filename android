@@ -1,0 +1,10 @@
+cutehspcl for android
+
+Execution method
+
+cp cutehspcl /data/local/tmp/
+cp start.hs /data/local/tmp/
+cd /data/local/tmp/
+chmod 755 cutehspcl
+./cutehspcl
+
