@@ -27,6 +27,11 @@ Linuxの場合:
 -   ミニマム版: gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
 - エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
 
+RasPi3(Jessie)の場合:
+- コンソール版: gcc cutehsp.c -o cutehspcl -lm -Os -std=c11
+-   ミニマム版: gcc cutehsp.c -o cutehsp  -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp          -Os
+- エクストラ版: gcc cutehsp.c -o cutehspx -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp -lopenal -Os
+
 */
 //=============================================================
 
