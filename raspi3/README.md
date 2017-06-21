@@ -2,7 +2,7 @@
 
 This is the executable file of Raspberry Pi 3 (Jessie) version.
 
-Installation of GLFW3 is necessary.
+* Installation of GLFW3 is necessary.
 
 <pre>
 sudo apt-get install libglfw3-dev
