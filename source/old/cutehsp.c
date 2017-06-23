@@ -13,19 +13,19 @@ __HSPEXT__ : エクストラ版
 # コンパイル方法
 
 Windows(MinGW)の場合:
-- コンソール版: gcc -static cutehsp.c -o cutehspcl
--   ミニマム版: gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows
-- エクストラ版: gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows
+- コンソール版: gcc -static cutehsp.c -o cutehspcl -Os
+-   ミニマム版: gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows -Os
+- エクストラ版: gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows -Os
 
 macOSの場合:
-- コンソール版: clang cutehsp.c -o cutehspcl
--   ミニマム版: clang cutehsp.c -o cutehsp -lglfw -framework OpenGL
-- エクストラ版: clang cutehsp.c -o cutehspx -lglfw -framework OpenGL -framework OpenAL
+- コンソール版: clang cutehsp.c -o cutehspcl -Os
+-   ミニマム版: clang cutehsp.c -o cutehsp  -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -Os
+- エクストラ版: clang cutehsp.c -o cutehspx -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenAL -Os
 
 Linuxの場合:
-- コンソール版: gcc cutehsp.c -o cutehspcl -lm
--   ミニマム版: gcc cutehsp.c -o cutehsp -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
-- エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm
+- コンソール版: gcc cutehsp.c -o cutehspcl -lm -Os
+-   ミニマム版: gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+- エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
 
 */
 //=============================================================
@@ -562,6 +562,7 @@ typedef enum
 	COMMAND_BOXF,
 	COMMAND_STICK,
 	COMMAND_CIRCLE,
+	COMMAND_PAINT,
 #ifdef __HSPEXT__
 	COMMAND_FONT,
 	COMMAND_PICLOAD,
@@ -807,6 +808,14 @@ void fill_circle_rgb(uint8_t *pixel_data,
 		}
 	}
 }
+
+// paint命令用
+struct BufStr {
+	int sx; // 領域右端のX座標
+	int sy; // 領域のY座標
+};
+struct BufStr buff[1024]; // シード登録用バッファ
+struct BufStr *sIdx, *eIdx;  // buffの先頭・末尾ポインタ
 
 #ifdef __HSPEXT__
 typedef struct {
@@ -1234,9 +1243,8 @@ search_label(execute_environment_t* e, const char* name)
 void
 command_dim(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
-		raise_error("dim: Array variable is one dimension only.");
-	}
+	if (arg_num != 2) raise_error("dim: Array variable is one dimension only.");
+
 	const int arg_start = -arg_num;
 	const value_t* v = stack_peek(s->stack_, arg_start);
 	if (v->type_ != VALUE_VARIABLE) {
@@ -1257,9 +1265,8 @@ command_dim(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_ddim(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
-		raise_error("ddim: Array variable is one dimension only.");
-	}
+	if (arg_num != 2) raise_error("ddim: Array variable is one dimension only.");
+
 	const int arg_start = -arg_num;
 	const value_t* v = stack_peek(s->stack_, arg_start);
 	if (v->type_ != VALUE_VARIABLE) {
@@ -1280,9 +1287,9 @@ command_ddim(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_sdim(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num < 2 || arg_num > 3) {
+	if (arg_num < 2 || arg_num > 3)
 		raise_error("sdim: Array variable is one dimension only.");
-	}
+
 	const int arg_start = -arg_num;
 	const value_t* v = stack_peek(s->stack_, arg_start);
 	if (v->type_ != VALUE_VARIABLE) {
@@ -1305,9 +1312,8 @@ command_sdim(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("mes: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("mes: Invalid argument.");
+
 	value_t* m = stack_peek(s->stack_, -1);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
@@ -1322,15 +1328,11 @@ command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
+	if (arg_num != 1) raise_error("mes: Invalid argument.");
 
-	if (arg_num != 1) {
-		raise_error("mes: Invalid argument.");
-	}
 	value_t* m = stack_peek(s->stack_, -1);
 	value_isolate(m);
-	if (m->type_ != VALUE_STRING) {
-		raise_error("mes: Invalid value.");
-	}
+	if (m->type_ != VALUE_STRING) raise_error("mes: Invalid value.");
 
 	// 文字列を描画
 	{
@@ -1426,9 +1428,9 @@ command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_input(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num < 2 || arg_num > 3) {
+	if (arg_num < 2 || arg_num > 3)
 		raise_error("input: Invalid argument.");
-	}
+
 	const int arg_start = -arg_num;
 	const value_t* v = stack_peek(s->stack_, arg_start);
 	if (v->type_ != VALUE_VARIABLE) {
@@ -1483,24 +1485,21 @@ void
 command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	// 引数の数をチェックする
-	if (arg_num != 2) {
-		raise_error("bload: Invalid argument.");
-	}
+	if (arg_num != 2) raise_error("bload: Invalid argument.");
+
 	const int arg_start = -arg_num;
 
 	// １つ目の引数を取得する
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
-	if (m->type_ != VALUE_STRING) {
+	if (m->type_ != VALUE_STRING)
 		raise_error("bload: Argument should specify a string type.");
-	}
 
 	char* name = m->svalue_;
 	// ２つめの引数を取得する
 	const value_t* v = stack_peek(s->stack_, arg_start + 1);
-	if (v->type_ != VALUE_VARIABLE) {
+	if (v->type_ != VALUE_VARIABLE)
 		raise_error("bload: Argument should be a variable.");
-	}
 
 	// ファイルをオープンする
 	FILE* fp = fopen(name, "rb");
@@ -1537,9 +1536,8 @@ void
 command_bsave(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	// 引数の数をチェックする
-	if (arg_num != 2) {
-		raise_error("bsave: Invalid argument.");
-	}
+	if (arg_num != 2) raise_error("bsave: Invalid argument.");
+
 	const int arg_start = -arg_num;
 
 	// １つ目の引数を取得する
@@ -1584,9 +1582,8 @@ void
 command_poke(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	// 引数の数をチェックする
-	if (arg_num != 3) {
-		raise_error("poke: Invalid argument.");
-	}
+	if (arg_num != 3) raise_error("poke: Invalid argument.");
+
 	const int arg_start = -arg_num;
 	// １つ目の引数を取得する
 	const value_t* v = stack_peek(s->stack_, arg_start);
@@ -1610,9 +1607,8 @@ command_poke(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_run(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("run: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("run: Invalid argument.");
+
 	value_t* m = stack_peek(s->stack_, -1);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
@@ -1628,9 +1624,8 @@ command_run(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_wait(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("wait: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("wait: Invalid argument.");
+
 	double wait_time = 0.0;
 	const value_t* m = stack_peek(s->stack_, -1);
 	wait_time = value_calc_double(m);
@@ -1651,9 +1646,8 @@ command_wait(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_stop(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num >= 1) {
-		raise_error("stop: Invalid argument.");
-	}
+	if (arg_num >= 1) raise_error("stop: Invalid argument.");
+
 	for (;;) { // ウィンドウを閉じるまで
 		if (glfwWindowShouldClose(window)) {
 			s->is_end_ = true;
@@ -1667,9 +1661,8 @@ command_stop(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_title(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("title: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("title: Invalid argument.");
+
 	value_t* m = stack_peek(s->stack_, -1);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
@@ -1682,9 +1675,8 @@ command_title(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_pset(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num > 2) {
-		raise_error("pset: Invalid argument.");
-	}
+	if (arg_num > 2) raise_error("pset: Invalid argument.");
+
 	if (arg_num <= 0) { // 引数が省略されば場合
 		set_pixel_rgb(pixel_data,
 			current_pos_x, current_pos_y,
@@ -1711,9 +1703,8 @@ command_pset(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_redraw(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num > 1) {
-		raise_error("redraw: Invalid argument.");
-	}
+	if (arg_num > 1) raise_error("redraw: Invalid argument.");
+
 	if (arg_num <= 0) { // 引数が省略された
 		redraw_flag = true;
 		redraw();
@@ -1737,9 +1728,8 @@ command_redraw(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_pos(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
-		raise_error("pos: Invalid argument.");
-	}
+	if (arg_num != 2) raise_error("pos: Invalid argument.");
+
 	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
 	const int x = value_calc_int(p1);
@@ -1753,9 +1743,8 @@ command_pos(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_color(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num > 3) {
-		raise_error("color: Invalid argument.");
-	}
+	if (arg_num > 3) raise_error("color: Invalid argument.");
+
 	if (arg_num <= 0) { // 引数が省略された場合
 		current_color_r = 0;
 		current_color_g = 0;
@@ -1779,9 +1768,8 @@ command_color(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_line(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 4) {
-		raise_error("line: Invalid argument.");
-	}
+	if (arg_num != 4) raise_error("line: Invalid argument.");
+
 	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
 	const int sx = value_calc_int(p1);
@@ -1805,9 +1793,8 @@ command_line(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_boxf(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 4) {
-		raise_error("boxf: Invalid argument.");
-	}
+	if (arg_num != 4) raise_error("boxf: Invalid argument.");
+
 	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
 	const int x0 = value_calc_int(p1);
@@ -1831,52 +1818,27 @@ command_boxf(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_stick(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num < 1 || arg_num > 2) {
-		raise_error("stick: Invalid argument.");
-	}
+	if (arg_num < 1 || arg_num > 2) raise_error("stick: Invalid argument.");
+
 	const int arg_start = -arg_num;
 	const value_t* v = stack_peek(s->stack_, arg_start);
-	if (v->type_ != VALUE_VARIABLE) {
+	if (v->type_ != VALUE_VARIABLE)
 		raise_error("stick: Argument should be a variable.");
-	}
-	if (v->index_ > 0) {
-		raise_error("stick: Array variables cannot be specified.");
-	}
+
+	if (v->index_ > 0) raise_error("stick: Array variables cannot be specified.");
 
 	int key = 0;
-	if (glfwGetKey(window, GLFW_KEY_LEFT)) {
-		key += 1;
-	}
-	if (glfwGetKey(window, GLFW_KEY_UP)) {
-		key += 2;
-	}
-	if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
-		key += 4;
-	}
-	if (glfwGetKey(window, GLFW_KEY_DOWN)) {
-		key += 8;
-	}
-	if (glfwGetKey(window, GLFW_KEY_SPACE)) {
-		key += 16;
-	}
-	if (glfwGetKey(window, GLFW_KEY_ENTER)) {
-		key += 32;
-	}
-	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) || glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)) {
-		key += 64;
-	}
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE)) {
-		key += 128;
-	}
-	if (current_mouse_down_left == 1) {
-		key += 256;
-	}
-	if (current_mouse_down_right == 1) {
-		key += 512;
-	}
-	if (glfwGetKey(window, GLFW_KEY_TAB)) {
-		key += 1024;
-	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT))   key +=    1;
+	if (glfwGetKey(window, GLFW_KEY_UP))     key +=    2;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT))  key +=    4;
+	if (glfwGetKey(window, GLFW_KEY_DOWN))   key +=    8;
+	if (glfwGetKey(window, GLFW_KEY_SPACE))  key +=   16;
+	if (glfwGetKey(window, GLFW_KEY_ENTER))  key +=   32;
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) || glfwGetKey(window, GLFW_KEY_RIGHT_CONTROL)) key += 64;
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE)) key +=  128;
+	if (current_mouse_down_left == 1)        key +=  256;
+	if (current_mouse_down_right == 1)       key +=  512;
+	if (glfwGetKey(window, GLFW_KEY_TAB))    key += 1024;
 
 	// 指定された変数に代入
 	void* data_ptr = v->variable_->data_;
@@ -1888,11 +1850,9 @@ command_stick(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_circle(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num < 4) {
-		raise_error("circle: Invalid argument.");
-	}
-	const int arg_start = -arg_num;
+	if (arg_num < 4) raise_error("circle: Invalid argument.");
 
+	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
 	const int x0 = value_calc_int(p1);
 	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
@@ -1912,13 +1872,103 @@ command_circle(execute_environment_t* e, execute_status_t* s, int arg_num)
 	stack_pop(s->stack_, arg_num);
 }
 
+// 点描画用関数
+void dot_set(int x, int y, unsigned int col)
+{
+	unsigned int col_r = col / 65536;
+	unsigned int col_g = (col & 0x00ff00) / 256;
+	unsigned int col_b = col;
+	set_pixel_rgb(pixel_data, x, y, col_r, col_g, col_b, screen_width, screen_height);
+}
+
+// 色コードの取得
+unsigned int dot_get(int x, int y)
+{
+	color_t col = get_pixel_color(pixel_data, x, y, screen_width, screen_height);
+	return (65536 * col.red + 256 * col.green + col.blue);
+}
+
+// 線分からシードを探索してバッファに登録する
+void scanLine(int lx, int rx, int y, unsigned int col)
+{
+	while (lx <= rx) {
+		// 非領域色を飛ばす
+		for (; lx <= rx ; lx++)
+			if (dot_get(lx, y) == col) break;
+		if (dot_get(lx, y) != col) break;
+		// 領域色を飛ばす
+		for (; lx <= rx ; lx++)
+			if (dot_get(lx, y) != col) break;
+		eIdx->sx = lx - 1;
+		eIdx->sy = y;
+		if (++eIdx == &buff[1024]) eIdx = buff;
+	}
+}
+
+void
+command_paint(execute_environment_t* e, execute_status_t* s, int arg_num)
+{
+	if (arg_num != 2) raise_error("paint: Invalid argument.");
+
+	const int arg_start = -arg_num;
+	const value_t* p1 = stack_peek(s->stack_, arg_start);
+	const int x = value_calc_int(p1);
+	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
+	const int y = value_calc_int(p2);
+	// 閉領域の色(領域色)
+	unsigned int col = dot_get(x, y);
+	// 塗り潰す時の色(描画色)
+	unsigned int paintCol = 65536 * current_color_r + 256 * current_color_g + current_color_b;
+
+	// 領域色と描画色が等しければ処理不要
+	if (col != paintCol) {
+		int lx, rx; // 塗り潰す線分の両端のX座標
+		int ly;     // 塗り潰す線分のY座標
+		int i;
+
+		sIdx = buff;
+		eIdx = buff + 1;
+		sIdx->sx = x;
+		sIdx->sy = y;
+
+		do {
+			lx = rx = sIdx->sx;
+			ly = sIdx->sy;
+			if (++sIdx == &buff[1024]) sIdx = buff;
+			// 処理済のシードなら無視
+			if (dot_get(lx, ly) != col) continue;
+			// 右方向の境界を探す
+			while (rx < 639) {
+				if (dot_get(rx + 1, ly) != col) break;
+				rx++;
+			}
+			// 左方向の境界を探す
+			while (lx > 0) {
+				if (dot_get(lx - 1, ly) != col) break;
+				lx--;
+			}
+			// lx-rxの線分を描画
+			for (i = lx ; i <= rx ; i++)
+				dot_set(i, ly, paintCol);
+			// 真上のスキャンラインを走査する
+			if (ly - 1 >= 0)
+				scanLine(lx, rx, ly - 1, col);
+			// 真下のスキャンラインを走査する
+			if (ly + 1 <= 479)
+				scanLine(lx, rx, ly + 1, col);
+		} while ( sIdx != eIdx );
+	}
+
+	if (redraw_flag) redraw();
+	stack_pop(s->stack_, arg_num);
+}
+
 #ifdef __HSPEXT__
 void
 command_font(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num > 3 || arg_num <= 0) {
-		raise_error("font: Invalid argument.");
-	}
+	if (arg_num > 3 || arg_num <= 0) raise_error("font: Invalid argument.");
+
 	char* name = (char*)"";
 	int size = font_size;
 	int style = 16;
@@ -1971,9 +2021,8 @@ command_font(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_picload(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("picload: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("picload: Invalid argument.");
+
 	value_t* m = stack_peek(s->stack_, -1);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
@@ -1994,9 +2043,8 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 	int waveform = 2; // 0 - 4
 	int16_t volume = 3000;
 
-	if (arg_num > 4) {
-		raise_error("beep: Invalid argument.");
-	}
+	if (arg_num > 4) raise_error("beep: Invalid argument.");
+
 	const int arg_start = -arg_num;
 
 	// 引数が省略された場合
@@ -2097,9 +2145,8 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_int(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("int: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("int: Invalid argument.");
+
 	const value_t* m = stack_peek(s->stack_, -1);
 	const int r = value_calc_int(m);
 	stack_pop(s->stack_, arg_num);
@@ -2109,9 +2156,8 @@ function_int(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_double(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("double: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("double: Invalid argument.");
+
 	const value_t* m = stack_peek(s->stack_, -1);
 	int r = (int)value_calc_double(m);
 	stack_pop(s->stack_, arg_num);
@@ -2121,9 +2167,8 @@ function_double(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_str(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("str: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("str: Invalid argument.");
+
 	const value_t* m = stack_peek(s->stack_, -1);
 	char* r = value_calc_string(m);
 	stack_pop(s->stack_, arg_num);
@@ -2133,9 +2178,8 @@ function_str(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_rnd(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("rnd: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("rnd: Invalid argument.");
+
 	const value_t* m = stack_peek(s->stack_, -1);
 	const int r = value_calc_int(m);
 	if (r < 1) {
@@ -2149,9 +2193,8 @@ function_rnd(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_abs(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 1) {
-		raise_error("abs: Invalid argument.");
-	}
+	if (arg_num != 1) raise_error("abs: Invalid argument.");
+
 	const value_t* m = stack_peek(s->stack_, -1);
 	const int r = value_calc_int(m);
 	stack_pop(s->stack_, arg_num);
@@ -2162,11 +2205,9 @@ function_abs(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_powf(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
-		raise_error("powf: Invalid argument.");
-	}
-	const int arg_start = -arg_num;
+	if (arg_num != 2) raise_error("powf: Invalid argument.");
 
+	const int arg_start = -arg_num;
 	const value_t* p1 = stack_peek(s->stack_, arg_start);
 	double x = value_calc_double(p1);
 	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
@@ -2179,15 +2220,12 @@ function_powf(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 function_peek(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	if (arg_num != 2) {
-		raise_error("peek: Invalid argument.");
-	}
-	const int arg_start = -arg_num;
+	if (arg_num != 2) raise_error("peek: Invalid argument.");
 
+	const int arg_start = -arg_num;
 	// ２つめの引数を取得する
 	const value_t* n = stack_peek(s->stack_, arg_start + 1);
 	const int i = value_calc_int(n);
-
 	// １つめの引数を取得する
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
@@ -5308,6 +5346,9 @@ query_command(const char* s)
 		{
 			COMMAND_CIRCLE, "circle",
 		},
+		{
+			COMMAND_PAINT, "paint",
+		},
 #ifdef __HSPEXT__
 		{
 			COMMAND_FONT, "font",
@@ -5360,6 +5401,7 @@ get_command_delegate(builtin_command_tag command)
 		&command_boxf,
 		&command_stick,
 		&command_circle,
+		&command_paint,
 #ifdef __HSPEXT__
 		&command_font,
 		&command_picload,
