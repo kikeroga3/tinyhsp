@@ -2,14 +2,12 @@
 
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget"><img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing"><img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
-### ※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
-
 CuteHSPは Windows, macOS, Linux, Raspberry Pi で同じプログラムが実行できるクロスプラットフォームなトイ言語です。
 (一つの共通ソースファイルを各プラットフォーム用にビルドし、実行ファイルを生成しています)
 
 画面処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、サウンド処理に<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしています。
 
-ミニマム版の実行ファイルサイズは100KBに満たないとてもコンパクトな処理系となっています。
+特に、ミニマム版の実行ファイルサイズは100KBに満たないとてもコンパクトな処理系となっています。
 
 このページにある実行ファイルは今のところ Windows, Linux(x86), macOS, Raspberry Pi版ですが、C言語で書かれたCuteHSPのソースをコンパイルできる環境であれば、実行可能なバイナリを作成できるはずです。
 
