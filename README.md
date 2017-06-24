@@ -4,12 +4,14 @@
 
 ### ※改名しました！(tinyhsp tiny版 → CuteHSP ミニマム)
 
-CuteHSPは Windows, macOS, Linux で同じプログラムが実行できるクロスプラットフォームな処理系を目指した小さなトイ言語です。
-(実行ファイルのソースは Windows, macOS, Linux で共通です)
+CuteHSPは Windows, macOS, Linux, Raspberry Pi で同じプログラムが実行できるクロスプラットフォームなトイ言語です。
+(一つの共通ソースファイルを各プラットフォーム用にビルドし、実行ファイルを生成しています)
 
-画面処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、サウンド処理に<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしており、ミニマム版の実行ファイルのサイズは何とわずか100KB以下となっています。
+画面処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、サウンド処理に<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしています。
 
-このページにある実行ファイルは今のところ Windows, Linux(x86), macOS版のみですが、C言語で書かれたCuteHSPのソースをコンパイルできる環境であれば、実行可能なバイナリを作成できるはずです。
+ミニマム版の実行ファイルサイズは100KBに満たないとてもコンパクトな処理系となっています。
+
+このページにある実行ファイルは今のところ Windows, Linux(x86), macOS, Raspberry Pi版ですが、C言語で書かれたCuteHSPのソースをコンパイルできる環境であれば、実行可能なバイナリを作成できるはずです。
 
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも参照してみてください。
 
