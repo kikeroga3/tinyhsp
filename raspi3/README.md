@@ -2,6 +2,8 @@
 
 ![rpi3_cutehsp](https://user-images.githubusercontent.com/24917310/27611683-2a97e5d6-5bce-11e7-8d1d-c69951b15a6e.png)
 
+![rpi3_cutehspcl_run](https://user-images.githubusercontent.com/24917310/27611603-c99f098a-5bcd-11e7-98e0-fb44762dac03.png)
+
 This is the executable file of Raspberry Pi 3 (Jessie) version.
 
 * Installation of GLFW3 is necessary.
