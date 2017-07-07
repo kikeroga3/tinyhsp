@@ -11,6 +11,8 @@ CuteHSPは Windows, macOS, Linux, Raspberry Pi で同じプログラムが実行
 
 このページにある実行ファイルは今のところ Windows, Linux(x86), macOS, Raspberry Pi版ですが、C言語で書かれたCuteHSPのソースをコンパイルできる環境であれば、実行可能なバイナリを作成できるはずです。
 
+言語仕様は、20年以上もライトユーザの支持を得ているHSP(Hot Soup Processor)を元に、実装する命令や機能を絞り、最小、軽量化を目指してつくられました。
+
 使い方、導入方法、仕様など、もしこのページで不足のものがあったら下記ページも参照してみてください。
 
 #### TinyHSP
