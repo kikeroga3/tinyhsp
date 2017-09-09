@@ -1,3 +1,9 @@
+CuteHSPの本が出ました。
+
+![cutehsp_book](https://user-images.githubusercontent.com/24917310/30237393-2f2eeb30-956c-11e7-8b4e-76f250fcedc7.jpg)
+
+<a href="https://www.amazon.co.jp/CuteHSP-%E3%81%A7%E3%81%AF%E3%81%98%E3%82%81%E3%82%8B%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80-I-O-BOOKS-%E5%B1%B1%E7%94%B0-%E5%8F%8B%E6%A2%A8/dp/4777520153">「CuteHSP」ではじめるプログラミング入門 (I・O BOOKS)</a>
+
 # CuteHSP ミニマム <img src="https://raw.githubusercontent.com/kikeroga3/tinyhsp/master/source/cutehsp.ico">
 
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget"><img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing"><img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
