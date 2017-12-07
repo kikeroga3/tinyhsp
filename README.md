@@ -9,9 +9,9 @@ CuteHSPの本が出ました。
 <img src="https://cloud.githubusercontent.com/assets/24917310/23020538/e2142540-f48a-11e6-9019-a880e5599b8c.png" width="33%" height="33%" alt="kakiget"><img src="https://cloud.githubusercontent.com/assets/24917310/23020539/e214b8b6-f48a-11e6-8bf0-03d504987fa6.png" width="33%" height="33%" alt="landing"><img src="https://cloud.githubusercontent.com/assets/24917310/23020537/e212ccc2-f48a-11e6-91f9-b4ba683c5cf4.png" width="33%" height="33%" alt="maze">
 
 CuteHSPは Windows, macOS, Linux, Raspberry Pi で同じプログラムが実行できるクロスプラットフォームなトイ言語です。
-(一つの共通ソースファイルを各プラットフォーム用にビルドし、実行ファイルを生成しています)
+(一つの共通ソースファイルを各プラットフォーム上でビルドし、実行ファイルを生成しています) ※ココ重要！
 
-画面処理に<a href="http://www.glfw.org/index.html">GLFW(OpenGL)</a>、サウンド処理に<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、dolphiliaさんがお作りになった「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしています。
+画面処理には<a href="http://www.glfw.org/index.html">GLFW3(OpenGL)</a>、サウンド処理に<a href="https://www.openal.org/">OpenALライブラリ</a>を使用し、dolphiliaさんがお作りになった「<a href="https://github.com/dolphilia/tinyhsp">TinyHSP</a>」を母体としてちょっとだけカスタマイズしています。
 
 特に、ミニマム版の実行ファイルサイズは100KBに満たないとてもコンパクトな処理系となっています。
 
@@ -19,7 +19,7 @@ CuteHSPは Windows, macOS, Linux, Raspberry Pi で同じプログラムが実行
 
 言語仕様は、20年以上もライトユーザの支持を得ている<a href="http://hsp.tv/">HSP(Hot Soup Processor)</a>を元に、実装する命令や機能を絞り、最小、軽量化を目指してつくられました。
 
-初心者にとって覚えやすい言語仕様かどうかは、<a href="http://hsp.tv/">本家HSP</a>の長年の実績が証明していますが、CuteHSPはさらに最小限の構成に絞ることで全体を把握しやすくし、利用環境も広くするため、クロスプラットフォーム対応を目指して設計されているのが特徴です。
+初心者にとって覚えやすい言語仕様かどうかは、<a href="http://hsp.tv/">本家HSP</a>の長年の実績が証明していますが、CuteHSPはさらに最小限の構成に絞ることで全体を把握しやすくし、利用環境も広くするため、ソースレベルでクロスプラットフォーム対応を目指して設計されているのが特徴です。
 
 CuteHSPを構成するソースは標準C言語とオープンな２つのライブラリ「GLFW3(OpenGL)」と「OpenAL」のみです。
 
