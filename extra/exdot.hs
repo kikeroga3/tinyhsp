@@ -2,7 +2,7 @@
 
 	;文字型変数bfにキャラクターデータを読み込む
 	sdim bf,64000
-	bload "chr.bin",bf			;"chr1～3.bin"のどれかを指定
+	bload "chr.bin",bf			;"ex_doted.hs"で作成したキャラクターデータを指定
 	title "strsize="+strsize
 
 	redraw 0 :color :boxf 0,0,640,480
