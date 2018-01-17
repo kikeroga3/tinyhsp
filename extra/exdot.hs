@@ -1,8 +1,7 @@
 ;Extra Dot Character Draw
 
 	;文字型変数bfにキャラクターデータを読み込む
-	sdim bf,64000
-	bload "chr.bin",bf			;"ex_doted.hs"で作成したキャラクターデータを指定
+	sdim bf,64000 :bload "chr1.bin",bf
 	title "strsize="+strsize
 
 	redraw 0 :color :boxf 0,0,640,480
@@ -12,9 +11,9 @@
 		;cno=キャラクター番号
 		;x,y=表示する座標
 		;sz=1ドットのサイズ
-		;sw=左右上下反転スイッチ
+		;sw=左右上下反転回転スイッチ
 
-		sz=5 :sw=rnd(4) :x=rnd(640) :y=rnd(480) :cno=cnt\13 :gosub *chrput
+		sz=5 :sw=rnd(8) :x=rnd(640) :y=rnd(480) :cno=cnt\13 :gosub *chrput
 	loop
 
 	redraw 1
@@ -36,8 +35,12 @@
 		c1=peek(bf,adr+4+cnt) :c2=peek(bf,adr+4+m+cnt)
 		a=64
 		repeat 7
-			if (sw&1)>0 :xx=x+(xs*sz/2)-(i\xs)*sz :else :xx=x-(xs*sz/2)+(i\xs)*sz
-			if (sw&2)>0 :yy=y+(xs*sz/2)-(i/xs)*sz :else :yy=y-(xs*sz/2)+(i/xs)*sz
+			;sw不要なら以下1行だけでよい
+			;xx=x-(xs*sz/2)+(i\xs)*sz :yy=y-(xs*sz/2)+(i/xs)*sz
+			;sw使用なら以下if文3行で制御
+			if (sw&1)>0 :xx=(xs*sz/2)-(i\xs)*sz :else :xx=(i\xs)*sz-(xs*sz/2)		;左右反転
+			if (sw&2)>0 :yy=(xs*sz/2)-(i/xs)*sz :else :yy=(i/xs)*sz-(xs*sz/2)		;上下反転
+			if (sw&4)>0 { c=xx :xx=x+yy :yy=y+c } else { xx=x+xx :yy=y+yy }		;90度回転
 			c=((c1&a)>0)+2*((c2&a)>0)
 			if c>0 {
 				color r(c-1),g(c-1),b(c-1)
