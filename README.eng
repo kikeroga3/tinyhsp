@@ -6,7 +6,7 @@ The executable platform is Windows / macOS / Linux / Raspberry Pi.
 
 Instructions
 --------------------------------------------------------------------------------
-Usage               Description
+[Usage]             [Description]
 end                 End the program.
 run p1              Discard the currently executing program, read the file p1,
 -                   and execute it.
@@ -68,7 +68,7 @@ stick p1            Store key information in numeric variable p1.
 
 Functions
 --------------------------------------------------------------------------------
-Usage           Description
+[Usage]         [Description]
 int(p1)         Return p1 as an integer value.
 double(p1)      Return p1 as a real number (double precision floating point).
 abs(p1)         Return p1 as absolute value.
@@ -81,7 +81,7 @@ peek(p1,p2)     Get the byte value of p2 byte of character type variable p1.
 
 System variables
 --------------------------------------------------------------------------------
-Name              Description
+[Name]            [Description]
 stat              Status (integer) after instruction or function execution stored.
 refdval           The real type return value is stored in refdval.
 refstr            String type return value is stored.
