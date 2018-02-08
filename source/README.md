@@ -1,4 +1,12 @@
 <pre>
+Build method
+
+Comment in (To enable) the version you want to build on the first three lines of "cutehsp.c" before compiling.
+
+#define __HSPCUI__
+//#define __HSPSTD__
+//#define __HSPEXT__
+
 The part corresponding to CuteHSP console version (__HSPCUI__) of this source (cutehsp.c)
 Since it is organized using only the following C99 compliant library,
 Compile and build as it is in C language environment compliant with this standard.
