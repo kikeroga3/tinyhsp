@@ -1,7 +1,6 @@
-【補足】
-本ソース(cutehsp.c)のCuteHSPコンソール版(__HSPCUI__)にあたる箇所は
-下記のC99準拠のライブラリのみを使用して組まれているので、
-同規格準拠のC言語環境であればそのままコンパイル・ビルドが可能です。
+The part corresponding to CuteHSP console version (__HSPCUI__) of this source (cutehsp.c)
+Since it is organized using only the following C99 compliant library,
+Compile and build as it is in C language environment compliant with this standard.
 
 #include <assert.h>
 #include <stdarg.h>
@@ -14,5 +13,5 @@
 #include <time.h>
 #include <math.h>
 
-CuteHSPミニマム版(__HSPSTD__)はGLFW3を利用できるプラットフォームに限定され、
-さらにCuteHSPエクストラ版(__HSPEXT__)はGLFW3、OpenALを利用できるプラットフォームに限定されます。
+The CuteHSP minimum version (__HSPSTD__) is limited to platforms that can use GLFW3,
+In addition, the CuteHSP extra version (__HSPEXT__) is limited to platforms that can use GLFW3, OpenAL.
