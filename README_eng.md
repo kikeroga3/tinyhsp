@@ -217,18 +217,21 @@ Below is a method to execute while editing a program with Geany.
 
 1. Launch Geany and select "Set Build Commands" from the menu "Build".
 
-2. Set the external execution command to "Execute commands".
+2. Set the external execution command to "Execute commands".  
    For example, enter 'C:\cutehsp_win\cutehspx.exe "%f"'.
 
 3. After that, you can execute the program being edited by "Execute" on the toolbar or F5 key.
 
 
-CuteHSP Homepage  
+
+### CuteHSP Homepage  
 http://cutehsp.blogspot.jp
 
 
-E-mail:  
+
+### E-mail:  
 cutehsp@outlook.jp
+
 
 
 ### The MIT License  
