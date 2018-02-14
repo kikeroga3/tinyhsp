@@ -224,17 +224,17 @@ Below is a method to execute while editing a program with Geany.
 
 
 
-### CuteHSP Homepage  
+### CuteHSP Homepage
 http://cutehsp.blogspot.jp
 
 
 
-### E-mail:  
+### E-mail:
 cutehsp@outlook.jp
 
 
 
-### The MIT License  
+### The MIT License
 
 Copyright (c) 2017 Kikeroga
 
