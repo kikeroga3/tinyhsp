@@ -1,0 +1,193 @@
+How to build CuteHSP
+
+CuteHSP consists only of "cutehsp.c", and the source code is about 5000 lines.
+CuteHSP can create three kinds of binary by compile flag.
+
+__HSPCUI__: Console version
+__HSPSTD__: Minimum version
+__HSPEXT__: Extra version
+
+
+
+Development environment
+
+The minimum version uses the OpenGL and GLFW3 libraries. In addition to that, the extra version uses the OpenAL library.
+When building the console version, libraries other than standard are unnecessary.
+
+The procedure to introduce is as follows.
+
+
+For Windows (MinGW)
+
+OpenGL is included in MinGW from the beginning.
+
+To introduce GLFW3 to MinGW, follow the procedure below.
+
+Download GLFW:
+The GLFW library is obtained from the download page of GLFW. GLFW has 32 bit version and 64 bit version.
+Proceed with talking about downloading 32 bit version.
+
+Copy the GLFW folder in include to include folder in MinGW:
+The include folder is included in the downloaded folder.
+Since there is a GLFW folder in this, copy that GLFW folder to the include folder of MinGW.
+
+Copy the two ".a" files to lib folder in MinGW:
+There is a lib-mingw-w32 folder in the downloaded folder.
+Copy the two ".a" files named "libglfw3.a" and "libglfw3dll.a" in this folder to the lib folder of MinGW.
+
+Copy "glfw3.dll" to the project folder:
+Copy the file "glfw3.dll" in the lib-mingw-w32 folder into the folder for the project you want to create.
+For example, copy "glfw3.dll" to the same location as the folder containing "cutehsp.c".
+
+
+The way to introduce OpenAL in MinGW is as follows.
+
+Get OpenAL.
+(OpenAL 1.1 Core SDK and OpenAL 1.1 Windows Installer)
+
+Extract the above two files, run the installer and install.
+
+Copy "include" in "C:/Program Files(x86)/OpenAL 1.1 SDK" to "MinGW/include".
+
+Copy "libs/Win32" in "C:/Program Files(x86)/OpenAL 1.1 SDK" to "MinGW/lib".
+
+Copy "OpenAL32.dll" to the project folder.
+
+
+
+For macOS
+
+macOS has both OpenGL and OpenAL from the beginning.
+
+The procedure for introducing GLFW3 to macOS is as follows.
+
+We will introduce Homebrew.
+(Paste the script on the Homebrew website to the terminal and run it)
+
+Homebrew's website
+https://brew.sh/index_ja.html
+
+Script
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Run "brew install glfw3" at the terminal.
+
+
+
+For Linux(Ubuntu)
+
+The procedure for installing GLFW3 is as follows.
+
+Execute "sudo apt-get build-dep glfw3" at the terminal.
+
+
+When building from the source and introducing it
+
+Execute "sudo apt-get install cmake xorg-dev libglu1-mesa-dev".
+
+Execute the following command.
+
+git clone https://github.com/glfw/glfw.git
+mkdir build
+cd build/
+cmake ..
+make -j 8
+sudo make install
+
+
+The procedure for introducing OpenAL is as follows.
+
+Execute "sudo apt-get install libopenal-dev".
+
+
+
+Copy the following CuteHSP source code to the project folder.
+
+cutehsp.c        CuteHSP body source
+stb_image.h      for use with CuteHSP standard version, extended version
+stb_truetype.h   for use with CuteHSP standard version, extended version
+
+
+
+Compile
+
+At the beginning of "cutehsp.c" is a symbolic constant for the compile flag.
+
+#define __HSPCUI__
+//#define __HSPSTD__
+//#define __HSPEXT__
+
+__HSPCUI__ is the console version, __HSPSTD__ is the standard version, and _HSPEXT__ is the extended version.
+Please comment in one of them.
+
+
+
+Compile according to each environment as follows.
+
+note)
+The character code of "cutehsp.c" must be UTF-8.
+
+Windows(MinGW):
+- Console : gcc -static cutehsp.c -o cutehspcl -Os
+- Minimum : gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows -Os
+- Extra   : gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows -Os
+
+macOS:
+- Console : clang cutehsp.c -o cutehspcl -Os
+- Minimum : clang cutehsp.c -o cutehsp  -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -Os
+- Extra   : clang cutehsp.c -o cutehspx -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenAL -Os
+
+Linux(Lubuntu):
+- Console : gcc cutehsp.c -o cutehspcl -lm -Os
+- Minimum : gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+- Extra   : gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+
+Raspberry Pi(Jessie):
+- Console : gcc cutehsp.c -o cutehspcl -lm -Os -std=c11
+- Minimum : gcc cutehsp.c -o cutehsp  -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp          -Os
+- Extra   : gcc cutehsp.c -o cutehspx -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp -lopenal -Os
+
+
+
+How to build a static with macOS?
+
+1. Obtain GLFW from the official website in source code
+
+2. Introducing CMake
+
+"brew install cmake" or "brew upgrade cmake"
+
+3. Compile CuteHSP
+
+clang cutehsp.c -o cutehsp -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -Os
+
+If the compile option is "-lglfw", the dynamic library of GLFW installed by Homebrew will be used.
+If the compile option is "-lglfw3", the static library "libglfw3.a" of GLFW installed from the source code will be used.
+
+
+
+About execution authority
+
+If you want to run binaries built on macOS or Linux on another PC, you need to set permissions.
+Set as follows.
+
+chmod 777 cutehspcl
+chmod 777 cutehsp
+chmod 777 cutehspx
+
+
+
+Run CuteHSP
+
+If you do not specify anything on the command line like "./cutehsp", you will read and execute "start.hs" in the same directory as the executable file.
+You can also execute it by specifying a file name like "./cutehsp start.hs".
+
+Sample script
+
+Below is a picture drawing script that works with minimum version / extra version.
+
+repeat
+	stick k
+	if k=256 :circle mousex-4,mousey-4,mousex+4,mousey+4
+	wait 1
+loop
