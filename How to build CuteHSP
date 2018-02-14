@@ -184,7 +184,24 @@ You can also execute it by specifying a file name like "./cutehsp start.hs".
 
 Sample script
 
-Below is a picture drawing script that works with minimum version / extra version.
+The most common Hello world program
+
+When executing with CuteHSP console version
+
+mes "Hello World!"
+
+When executing with CuteHSP Extra version
+
+font "tiny.ttf",16
+mes "Hello World!"
+stop
+
+Since there is no mes command in the minimum version, it is displayed in the title bar.
+
+title "Hello World!"
+stop
+
+Below is a drawing program that can be executed with CuteHSP minimum and extra version.
 
 repeat
 	stick k
