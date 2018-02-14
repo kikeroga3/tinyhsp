@@ -74,7 +74,7 @@ Run "brew install glfw3" at the terminal.
 
 
 
-For Linux(Ubuntu)
+For Linux(Ubuntu, Jessie)
 
 The procedure for installing GLFW3 is as follows.
 
