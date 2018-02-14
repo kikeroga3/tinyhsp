@@ -1,4 +1,4 @@
-* How to build CuteHSP *
+# How to build CuteHSP
 
 CuteHSP consists only of "cutehsp.c", and the source code is about 5000 lines.
 CuteHSP can create three kinds of binary by compile flag.
