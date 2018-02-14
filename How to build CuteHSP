@@ -51,7 +51,7 @@ Copy "include" in "C:/Program Files(x86)/OpenAL 1.1 SDK" to "MinGW/include".
 
 Copy "libs/Win32" in "C:/Program Files(x86)/OpenAL 1.1 SDK" to "MinGW/lib".
 
-Copy "OpenAL32.dll" to the project folder.
+Copy "C:/Windows/System32/OpenAL32.dll" to the project folder.
 
 
 
