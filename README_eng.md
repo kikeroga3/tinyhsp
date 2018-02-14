@@ -1,6 +1,6 @@
-# What's CuteHSP
+## What's CuteHSP
 
-CuteHSP is a very easy programming language.
+CuteHSP is a very easy programming language.  
 The executable platform is Windows / macOS / Linux / Raspberry Pi.
 
 
@@ -219,19 +219,21 @@ Below is a method to execute while editing a program with Geany.
    For example, enter 'C:\cutehsp_win\cutehspx.exe "%f"'.
 
 3. After that, you can execute the program being edited by "Execute" on the toolbar or F5 key.
+</pre>
 
 
 
-* CuteHSP Homepage *
+CuteHSP Homepage  
 http://cutehsp.blogspot.jp
 
 
 
-E-mail: cutehsp@outlook.jp
+E-mail:  
+cutehsp@outlook.jp
 
 
 
-* The MIT License *
+### The MIT License
 
 Copyright (c) 2017 Kikeroga
 
