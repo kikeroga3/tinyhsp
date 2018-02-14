@@ -9,8 +9,7 @@ Instructions
 --------------------------------------------------------------------------------
 [Usage]             [Description]
 end                 End the program.
-run p1              Discard the currently executing program, read the file p1,
--                   and execute it.
+run p1              Discard the currently executing program, read the file p1, and execute it.
 goto p1             Jump to label p1.
 gosub p1            Jump to label p1 of the subroutine.
 return              Return from the subroutine.
@@ -18,12 +17,9 @@ repeat p1           Repeats the range enclosed by repeat-loop.
 loop                End instruction of iterative processing.
 continue            It returns to the repeat command while repeating processing.
 break               Exit from iterative processing.
-if p1               If condition p1 is satisfied, the subsequent instructions of
--                   that line are executed.
-else                When the if condition is not satisfied, else instruction and
--                   after are executed.
-dim p1,p2           Create an array variable (integer) with variable name p1 and
--                   array number p2.
+if p1               If condition p1 is satisfied, the subsequent instructions of that line are executed.
+else                When the if condition is not satisfied, else instruction and after are executed.
+dim p1,p2           Create an array variable (integer) with variable name p1 and array number p2.
 ddim p1,p2          Create an array variable (real number) with variable name p1 and
 -                   array number p2.
 sdim p1,p2,p3       Create a string type array variable with variable name p1,
@@ -35,8 +31,7 @@ picload p1          Read the image file p1 and display it on the screen.
 input p1,p2,p3      Get key input value. p1: Variable name to store the input value.
 -                   p2: Maximum number of characters assigned to variable.
 -                   p3: Line feed code recognition flag (0=none, 1=LF, 2=CR+LF).
-beep p1,p2,p3,p4    p1 is the frequency, p2 is the playback length(ms), p3 is the
--                   waveform type, p4 is the volume (0 to 30000) and sounds.
+beep p1,p2,p3,p4    p1 is the frequency, p2 is the playback length(ms), p3 is the waveform type, p4 is the volume (0 to 30000) and sounds.
                       [Type of waveform (Default:2)]
                            0:Sine wave    1:sawtooth wave    2:Square wave
                            3:Triangular wave    4:White noise
@@ -49,10 +44,8 @@ title p1            Display character string p1 in title bar.
 pset p1,p2          Draw a dot on the coordinates (p1,p2).
 line p1,p2,p3,p4    Draw a line from coordinates (p1,p2) to coordinates (p3,p4).
 boxf p1,p2,p3,p4    Fill rectangle from coordinates (p1,p2) to coordinates (p3,p4).
-circle p1,p2,p3,p4  Draws a circle that fits within the rectangle from coordinates
--                   (p1,p2) to coordinates (p3,p4).
-paint p1,p2         Fill the closed region containing the coordinates (p1,p2)
--                   with the current color.
+circle p1,p2,p3,p4  Draws a circle that fits within the rectangle from coordinates (p1,p2) to coordinates (p3,p4).
+paint p1,p2         Fill the closed region containing the coordinates (p1,p2) with the current color.
 redraw p1           Set the redraw switch to ON (1) or OFF (0).	
 pos p1,p2           Set the coordinates (p1,p2) to the current position.
 color p1,p2,p3      Set the RGB color (p1,p2,p3) as the current color.
@@ -168,8 +161,7 @@ Specify program file name as argument.
 If you omit the program file name, "start.hs" is given as an argument.
 
 
-To the executable file of macOS / Linux version, please add execution authority with
-the following command.
+To the executable file of macOS / Linux version, please add execution authority with the following command.
 
 	chmod 777 cutehsp
 	chmod 777 cutehspx
@@ -243,15 +235,8 @@ E-mail: cutehsp@outlook.jp
 
 Copyright (c) 2017 Kikeroga
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- documentation files (the "Software"), to deal in the Software without restriction, including without limitation
- the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
- and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation  the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
- TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
- OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
