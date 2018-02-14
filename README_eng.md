@@ -4,10 +4,9 @@ CuteHSP is a very easy programming language.
 The executable platform is Windows / macOS / Linux / Raspberry Pi.
 
 
-<pre>
 Instructions
 --------------------------------------------------------------------------------
-[Usage]             [Description]
+<pre>
 end                 End the program.
 run p1              Discard the currently executing program, read the file p1, and execute it.
 goto p1             Jump to label p1.
@@ -57,12 +56,12 @@ stick p1            Store key information in numeric variable p1.
 			   64  Ctrl                 128  ESC
 			  256  Left mouse button    512  Right mouse button
 			 1024  TAB
---------------------------------------------------------------------------------
+</pre>
 
 
 Functions
 --------------------------------------------------------------------------------
-[Usage]         [Description]
+<pre>
 int(p1)         Return p1 as an integer value.
 double(p1)      Return p1 as a real number (double precision floating point).
 abs(p1)         Return p1 as absolute value.
@@ -70,12 +69,12 @@ str(p1)         Return p1 as a string.
 rnd(p1)         Returns a random number from 0 to p1-1.
 powf(p1,p2)     Returns the result of p1 raised to the power of p2.
 peek(p1,p2)     Get the byte value of p2 byte of character type variable p1.
---------------------------------------------------------------------------------
+</pre>
 
 
 System variables
 --------------------------------------------------------------------------------
-[Name]            [Description]
+<pre>
 stat              Status (integer) after instruction or function execution stored.
 refdval           The real type return value is stored in refdval.
 refstr            String type return value is stored.
@@ -85,7 +84,7 @@ mousex            X coordinate of mouse cursor.
 mousey            Y coordinate of mouse cursor.
 mousel            1 if the left mouse button is pressed, 0 if not pressed.
 mouser            1 if the right mouse button is pressed, 0 if not pressed.
---------------------------------------------------------------------------------
+</pre>
 
 
 
