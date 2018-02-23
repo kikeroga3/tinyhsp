@@ -1,31 +1,37 @@
-﻿//#define __HSPCUI__
+﻿#define __HSPCUI__
 //#define __HSPSTD__
-#define __HSPEXT__
+//#define __HSPEXT__
 
 /*
-上記のどれか１つを定義(コメントイン)する
+Define one of the above (comment in)
 
-# 定義の説明
-__HSPCUI__ : コンソール版
-__HSPSTD__ :   ミニマム版
-__HSPEXT__ : エクストラ版
+# Description of definitions
 
-# コンパイル方法
+__HSPCUI__ : Console version
+__HSPSTD__ : Minimum version
+__HSPEXT__ : Extra version
 
-Windows(MinGW)の場合:
-- コンソール版: gcc -static cutehsp.c -o cutehspcl -Os
--   ミニマム版: gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows -Os
-- エクストラ版: gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows -Os
+# Compiling method
 
-macOSの場合:
-- コンソール版: clang cutehsp.c -o cutehspcl -Os
--   ミニマム版: clang cutehsp.c -o cutehsp  -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -Os
-- エクストラ版: clang cutehsp.c -o cutehspx -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenAL -Os
+Windows(MinGW):
+- Console : gcc -static cutehsp.c -o cutehspcl -Os
+- Minimum : gcc -static cutehsp.c -o cutehsp  -lopengl32 -lglfw3dll            -mwindows -Os
+- Extra   : gcc -static cutehsp.c -o cutehspx -lopengl32 -lglfw3dll -lopenal32 -mwindows -Os
 
-Linuxの場合:
-- コンソール版: gcc cutehsp.c -o cutehspcl -lm -Os
--   ミニマム版: gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
-- エクストラ版: gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+macOS:
+- Console : clang cutehsp.c -o cutehspcl -Os
+- Minimum : clang cutehsp.c -o cutehsp  -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -Os
+- Extra   : clang cutehsp.c -o cutehspx -lglfw3 -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo -framework OpenAL -Os
+
+Linux:
+- Console : gcc cutehsp.c -o cutehspcl -lm -Os
+- Minimum : gcc cutehsp.c -o cutehsp           -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+- Extra   : gcc cutehsp.c -o cutehspx -lopenal -lglfw3 -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -lpthread -ldl -lm -Os
+
+RasPi3(Jessie):
+- Console : gcc cutehsp.c -o cutehspcl -lm -Os -std=c11
+- Minimum : gcc cutehsp.c -o cutehsp  -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp          -Os
+- Extra   : gcc cutehsp.c -o cutehspx -std=gnu99 -lglfw -lrt -lm -lXrandr -lXrender -lXi -lGL -lm -lpthread -ldl -ldrm -lXdamage -lXfixes -lX11-xcb -lxcb-glx -lxcb-dri2 -lXxf86vm -lXext -lX11 -lpthread -lxcb -lXau -lXdmcp -lopenal -Os
 
 */
 //=============================================================
@@ -90,9 +96,9 @@ Linuxの場合:
 #include "stb_image.h"
 #endif
 
-#define NHSP_CONFIG_MEMLEAK_DETECTION (0) // メモリリーク発見用ユーティリティを有効化
+#define NHSP_CONFIG_MEMLEAK_DETECTION (0) // Enable memory leak detection utility
 
-// グローバルな変数
+// Global variables
 char* filename;
 bool run_flag;
 #ifdef __HSPGUI__
@@ -116,32 +122,32 @@ bool close_flag;
 GLFWwindow* window;
 #ifdef __HSPEXT__
 // Extra
-stbtt_fontinfo font; //フォント情報
-unsigned char* font_ttf_buffer[2000000]; // フォント用バッファ
+stbtt_fontinfo font; // Font information
+unsigned char* font_ttf_buffer[2000000]; // Buffer for font
 int font_ascent = 0;
 float font_scale = 0.0;
 int font_baseline = 0;
-int font_size = 24; // フォントサイズ
-int font_threshold = 128; //しきい値
-double font_half_space_ratio = 0.4; //半角スペースの比率
-double font_full_space_ratio = 0.8; //全角スペースの比率
-bool font_smooth = true; //フォントのアンチエイリアシング
+int font_size = 24; // font size
+int font_threshold = 128; // Threshold
+double font_half_space_ratio = 0.4; // One-byte space ratio
+double font_full_space_ratio = 0.8; // Double-byte space ratio
+bool font_smooth = true; // Anti-aliasing of fonts
 // OpenAL
-ALCdevice* al_device; // デバイス
-ALCcontext* al_context; // コンテキスト
+ALCdevice* al_device; // device
+ALCcontext* al_context; // context
 #endif
 #endif
 
-// 全体
+// Overall
 void initialize_system();
 void destroy_system();
 
-// メモリ
-void* xmalloc(size_t size, const char* block_name/* = nullptr*/); //※ 引数の初期値
+// memory
+void* xmalloc(size_t size, const char* block_name/* = nullptr*/); // Initial value of argument
 void xfree(void* ptr);
 void* xrealloc(void* ptr, size_t size);
 
-// リスト
+// list
 typedef struct list_node_tag list_node_t;
 struct list_node_tag
 {
@@ -171,7 +177,7 @@ void list_erase(list_t* list, list_node_t* node);
 list_node_t* list_find(list_t* list, void* value);
 void list_free_all(list_t* list);
 
-// キーワード
+// keyword
 typedef enum
 {
 	KEYWORD_END = 0,
@@ -189,7 +195,7 @@ typedef enum
 
 int query_keyword(const char* s);
 
-// トークナイザ
+// Tokenizer
 typedef enum
 {
 	TOKEN_UNKNOWN = -1,
@@ -248,7 +254,7 @@ token_t* get_token(tokenize_context_t* c);
 void destroy_token(token_t* t);
 char* create_token_string(const char* str, size_t len);
 
-// パーサ
+// Parser
 typedef enum
 {
 	NODE_EMPTY = 0,
@@ -345,7 +351,7 @@ ast_node_t* parse_term(parse_context_t* c);
 ast_node_t* parse_primitive(parse_context_t* c);
 ast_node_t* parse_identifier_expression(parse_context_t* c);
 
-// 変数
+// Variable
 typedef enum
 {
 	VALUE_NONE,
@@ -374,9 +380,9 @@ void prepare_variable(variable_t* v, value_tag type, int granule_size, int lengt
 list_t* create_variable_table();
 void destroy_variable_table(list_t* table);
 variable_t* search_variable(list_t* table, const char* name);
-//移動
+// move
 
-// 値（即値）
+// Value (Immediate value)
 typedef struct value_tag__ value_t;
 struct value_tag__
 {
@@ -395,24 +401,24 @@ struct value_tag__
 	};
 };
 
-//移動
+// move
 void variable_set(list_t* table, const value_t* v, const char* name, int idx);
 void* variable_data_ptr(const variable_t* v, int idx);
 int variable_calc_int(const variable_t* r, int idx);
 double variable_calc_double(const variable_t* r, int idx);
 char* variable_calc_string(const variable_t* r, int idx);
 
-value_t* create_value(int v); //※ 同名の関数
+value_t* create_value(int v); // Function with the same name
 value_t* create_value2(double v);
 value_t* create_value3(const char* v);
 value_t* create_value4(variable_t* v, int idx);
 value_t* create_value5(const value_t* v);
 value_t* create_value_move(char* v);
 void destroy_value(value_t* t);
-void value_set(value_t* v, int i); //※ 同名の関数
+void value_set(value_t* v, int i); // Function with the same name
 void value_set2(value_t* v, double d);
 void value_set3(value_t* v, const char* s);
-void value_move(value_t* v, char* s); //※ 同名の関数
+void value_move(value_t* v, char* s); // Function with the same name
 void value_move2(value_t* to, value_t* from);
 value_tag value_get_primitive_tag(const value_t* r);
 bool value_calc_boolean(const value_t* r);
@@ -435,7 +441,7 @@ void value_mul(value_t* v, const value_t* r);
 void value_div(value_t* v, const value_t* r);
 void value_mod(value_t* v, const value_t* r);
 
-// スタック
+// Stack
 typedef struct value_stack_tag value_stack_t;
 struct value_stack_tag
 {
@@ -448,12 +454,12 @@ value_stack_t* create_value_stack();
 void destroy_value_stack(value_stack_t* st);
 void initialize_value_stack(value_stack_t* st);
 void uninitialize_value_stack(value_stack_t* st);
-void stack_push(value_stack_t* st, value_t* v); //※ 同名の関数
+void stack_push(value_stack_t* st, value_t* v); // Function with the same name
 void stack_push2(value_stack_t* st, const value_t* v);
 value_t* stack_peek(value_stack_t* st, int i);
 void stack_pop(value_stack_t* st, size_t n);
 
-// システム変数
+// System variable
 typedef enum
 {
 	SYSVAR_CNT,
@@ -472,7 +478,7 @@ typedef enum
 
 int query_sysvar(const char* s);
 
-// 実行環境
+// Execution environment
 typedef struct label_node_tag label_node_t;
 struct label_node_tag
 {
@@ -533,7 +539,7 @@ void load_script(execute_environment_t* e, const char* script);
 void evaluate(execute_environment_t* e, execute_status_t* s, ast_node_t* n);
 void execute(execute_environment_t* e);
 
-// ビルトイン
+// Built in
 typedef void(*command_delegate)(execute_environment_t* e, execute_status_t* s, int arg_num);
 typedef enum
 {
@@ -590,7 +596,7 @@ typedef enum
 int query_function(const char* s);
 function_delegate get_function_delegate(builtin_function_tag command);
 
-// エラー
+// Error
 void
 raise_error(const char* message, ...)
 {
@@ -603,9 +609,9 @@ raise_error(const char* message, ...)
 	vsprintf(c, message, args);
 
 #ifdef __HSPGUI__
-	// タイトルバーにエラー表示する
+	// Display an error in the title bar
 	glfwSetWindowTitle(window, c);
-	// 画面クローズまで待つ
+	// Wait until the screen closes
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 	}
@@ -621,7 +627,7 @@ raise_error(const char* message, ...)
 }
 
 //========================================================
-// 描画系ユーティリティ
+// Drawing utility
 
 #ifdef __HSPGUI__
 typedef struct {
@@ -668,7 +674,7 @@ void set_pixel_rgb_protect_alpha(uint8_t *pixel_data,
 	int32_t canvas_size_width, int32_t canvas_size_height,
 	int32_t protect_alpha)
 {
-	//点を打つ アルファ付き（透明度を保護する
+	// To hit a dot with alpha (Protecting transparency)
 	if (point_x<0 || point_y<0 || point_x >= canvas_size_width || point_y >= canvas_size_height) {
 		return;
 	}
@@ -702,19 +708,19 @@ void set_line_rgb(uint8_t *pixel_data,
 	uint8_t color_red, uint8_t color_green, uint8_t color_blue,
 	int32_t canvas_size_width, int32_t canvas_size_height)
 {
-	//let
+	// let
 	int deltax = abs(end_point_x - start_point_x);
 	int deltay = abs(end_point_y - start_point_y);
 	int xstep = (end_point_x > start_point_x) ? 1 : -1;
 	int ystep = (end_point_y > start_point_y) ? 1 : -1;
-	//var
+	// var
 	int x = start_point_x;
 	int y = start_point_y;
 	int error;
 	if (deltax >= deltay) {
 		error = 2 * deltay - deltax;
 		for (int i = 0; i <= deltax; ++i) {
-			if (x<0 || x>canvas_size_width || y<0 || y>canvas_size_height) {} //描画範囲を超える場合
+			if (x<0 || x>canvas_size_width || y<0 || y>canvas_size_height) {} // When it exceeds the drawing range
 			else {
 				set_pixel_rgb(pixel_data,
 					x, y,
@@ -758,7 +764,7 @@ void fill_rect_rgb_slow(uint8_t *pixel_data,
 	uint8_t color_red, uint8_t color_green, uint8_t color_blue,
 	int32_t canvas_size_width, int32_t canvas_size_height)
 {
-	//普通に描画する方法：若干遅い
+	// How to draw normally: Slightly slow
 	int minx = MIN(start_point_x, end_point_x);
 	int miny = MIN(start_point_y, end_point_y);
 	int diffx = MAX(start_point_x, end_point_x) - MIN(start_point_x, end_point_x) + 1;
@@ -786,9 +792,9 @@ void fill_circle_rgb(uint8_t *pixel_data,
 	double _x2 = end_point_x;
 	double _y2 = end_point_y;
 
-	//幅の半径を求める
+	// Find the radius of width
 	double widthRadius = (_x2 - _x1) / 2.0;
-	double heightRadius = (_y2 - _y1) / 2.0;//widthRadius / ratioHeight;
+	double heightRadius = (_y2 - _y1) / 2.0; // widthRadius / ratioHeight;
 	double x, y;
 	double ratioHeightReverse = (_y2 - _y1) / (_x2 - _x1);
 
@@ -809,13 +815,13 @@ void fill_circle_rgb(uint8_t *pixel_data,
 	}
 }
 
-// paint命令用
+// For paint instruction
 struct BufStr {
-	int sx; // 領域右端のX座標
-	int sy; // 領域のY座標
+	int sx; // X coordinate of the right end of the area
+	int sy; // Y coordinate of the region
 };
-struct BufStr buff[1024]; // シード登録用バッファ
-struct BufStr *sIdx, *eIdx;  // buffの先頭・末尾ポインタ
+struct BufStr buff[1024]; // Buffer for seed registration
+struct BufStr *sIdx, *eIdx; // Buffer start / end pointer
 
 #ifdef __HSPEXT__
 typedef struct {
@@ -832,7 +838,7 @@ load_image(char const *file_name,
 	uint8_t *image_pixels;
 	int image_width;
 	int image_height;
-	int image_bpp;//色数 3 or 4
+	int image_bpp; // Number of colors 3 or 4
 	image_pixels = stbi_load(file_name,
 		&image_width,
 		&image_height,
@@ -879,11 +885,11 @@ load_image(char const *file_name,
 
 void redraw()
 {
-	// 描画の準備
+	// Preparation for drawing
 	glClear(GL_COLOR_BUFFER_BIT);
 	glRasterPos2i(-1, -1);
 
-//Retina暫定対応
+// Retina interim correspondence
 #ifdef __MACOS__
 
 	int samplesPerPixel = 3;
@@ -913,14 +919,14 @@ void redraw()
 #endif
 
 	{
-		// ピクセルを描画
+		// Drawing pixels
 		glDrawPixels(screen_width, screen_height, GL_RGB, GL_UNSIGNED_BYTE, pixel_data);
 	}
-	// フロントバッファとバックバッファを交換する
+	// Exchange front and back buffers
 	glfwSwapBuffers(window);
 }
 
-// 文字列操作
+// String operation
 void
 init_str(char* str, int size)
 {
@@ -1037,7 +1043,7 @@ utf8_to_utf32(const uint8_t* input)
 	return 0;
 }
 
-// 乱数
+// Random number
 unsigned long xor128()
 {
 	static unsigned long x = 123456789, y = 362436069, z = 521288629, w = 88675123;
@@ -1051,7 +1057,7 @@ randf(double min, double max)
 	return ((max - min)*((float)xor128() / 0x100000000)) + min;
 }
 
-// 一の位で四捨五入
+// Rounding at ones place
 int round_one(int n) {
 	double tmp_d = (double)n;
 	if (tmp_d < 0) {
@@ -1072,12 +1078,12 @@ int round_one(int n) {
 #define NHSP_UNUA(v)
 #define NHSP_UNUSE(v) ((void)v)
 
-// 内部リンケージの人たち、ここから
+// People inside linkage, from here
 #if NHSP_CONFIG_MEMLEAK_DETECTION
 static list_t* s_memory_map_ = nullptr;
 #endif
 
-// メモリ
+// Memory
 void*
 zmalloc(size_t size)
 {
@@ -1125,7 +1131,7 @@ zunregister_memory(void* ptr)
 #endif
 }
 
-// 文字列
+// String
 char*
 create_string(size_t len)
 {
@@ -1185,7 +1191,7 @@ tol(char c) {
 }
 
 bool
-string_equal_igcase(const char* sl, const char* r, int len/* = -1*/) //※ 引数の初期値
+string_equal_igcase(const char* sl, const char* r, int len/* = -1*/) // Initial value of argument
 {
 	int iter = 0;
 	for (;;) {
@@ -1211,7 +1217,7 @@ string_equal_igcase(const char* sl, const char* r, int len/* = -1*/) //※ 引�
 	return true;
 }
 
-// 値
+// value
 void
 clear_value(value_t* t)
 {
@@ -1224,7 +1230,7 @@ clear_value(value_t* t)
 	}
 }
 
-// 実行環境ユーティリティ
+// Execution environment utility
 list_node_t*
 search_label(execute_environment_t* e, const char* name)
 {
@@ -1239,7 +1245,7 @@ search_label(execute_environment_t* e, const char* name)
 	return NULL;
 }
 
-// コマンド実体
+// Command entity
 void
 command_dim(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
@@ -1334,47 +1340,47 @@ command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) raise_error("mes: Invalid value.");
 
-	// 文字列を描画
+	// Draw a character string
 	{
 		char* src_str = m->svalue_;
 		char dest_str[8];
 		int codepoint_utf32;
-		int pos_x = 0; // 文字表示のX座標
+		int pos_x = 0; // X coordinate of character display
 		float xpos = 0.0;
 		int font_buffer_h = 128;
 		int font_buffer_w = 128;
 		int out_stride = 128;
 		unsigned char font_buffer[128][128];
 		for (int i = 0; i < utf8strlen(src_str); i++) {
-			// 文字を取得してutf16に変換
-			init_str(dest_str, 8); // 取得用の変数を初期化 
-			utf8char_at(dest_str, src_str, i); // 任意の位置の１文字を取得
-			codepoint_utf32 = (int)utf8_to_utf32((uint8_t*)dest_str); //utf8をutf32に変換
-																	  // 空白文字の処理
-																	  // 0x200B // ゼロ幅空白
-			if (codepoint_utf32 == 0x20 || // 半角スペース
-				codepoint_utf32 == 0xA0 || // 改行禁止スペース
-				codepoint_utf32 == 0x2002 || // n幅空白
-				codepoint_utf32 == 0x2003 || // m幅空白
+			// Get characters and convert to utf16
+			init_str(dest_str, 8); // Initialize variable for acquisition
+			utf8char_at(dest_str, src_str, i); // Acquire one character at an arbitrary position
+			codepoint_utf32 = (int)utf8_to_utf32((uint8_t*)dest_str); // Convert utf8 to utf32
+																	  // Processing whitespace
+																	  // 0x200B // zero width blank
+			if (codepoint_utf32 == 0x20 || // One-byte space
+				codepoint_utf32 == 0xA0 || // No line breaks
+				codepoint_utf32 == 0x2002 || // n Width Blank
+				codepoint_utf32 == 0x2003 || // m Width Blank
 				codepoint_utf32 == 0x2004 || // 1/3
 				codepoint_utf32 == 0x2005 || // 1/4
-				codepoint_utf32 == 0x2009 // 狭い空白
+				codepoint_utf32 == 0x2009 // A narrow blank
 				)
 			{
 				pos_x += (int)((float)font_size * font_half_space_ratio);
 				continue;
 			}
-			else if (codepoint_utf32 == 0x3000) { // 全角空白
+			else if (codepoint_utf32 == 0x3000) { // Em space
 				pos_x += (int)((float)font_size * font_full_space_ratio);
 				continue;
 			}
-			// font_bufferを初期化
+			// Initialize font_buffer
 			for (int y = 0; y < font_buffer_h; y++) {
 				for (int x = 0; x < font_buffer_w; x++) {
 					font_buffer[x][y] = 0;
 				}
 			}
-			// フォントをレンダリングする
+			// Render fonts
 			int font_advance = 0;
 			int lsb = 0;
 			int x0, y0, x1, y1 = 0;
@@ -1393,7 +1399,7 @@ command_mes(execute_environment_t* e, execute_status_t* s, int arg_num)
 				out_stride, // out_stride
 				font_scale, font_scale, x_shift, 0,
 				codepoint_utf32);
-			// １文字分を描画
+			// Draw one character
 			for (int y = 0; y < font_buffer_h; ++y) {
 				for (int x = 0; x < font_buffer_w; ++x) {
 					if (font_smooth) {
@@ -1484,49 +1490,49 @@ command_input(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	// 引数の数をチェックする
+	// Check the number of arguments
 	if (arg_num != 2) raise_error("bload: Invalid argument.");
 
 	const int arg_start = -arg_num;
 
-	// １つ目の引数を取得する
+	// Get the first argument
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING)
 		raise_error("bload: Argument should specify a string type.");
 
 	char* name = m->svalue_;
-	// ２つめの引数を取得する
+	// Get the second argument
 	const value_t* v = stack_peek(s->stack_, arg_start + 1);
 	if (v->type_ != VALUE_VARIABLE)
 		raise_error("bload: Argument should be a variable.");
 
-	// ファイルをオープンする
+	// Open a file
 	FILE* fp = fopen(name, "rb");
 	if (fp == NULL) {
 		raise_error("bload: file could not be opened [%s]", name);
 		exit(1);
 	}
-	// ファイルサイズを取得する
-	fseek(fp, 0, SEEK_END); // ファイル位置表示子をファイルの最後に位置付ける
+	// Get file size
+	fseek(fp, 0, SEEK_END); // Position the file position indicator at the end of the file
 	long size = ftell(fp);
 
-	// バイナリを一時的な変数に読み込む
-	fseek(fp, 0, SEEK_SET); // ファイル位置表示子をファイルの始めに位置付ける
+	// Read binary into temporary variable
+	fseek(fp, 0, SEEK_SET); // Position the file position indicator at the beginning of the file
 	uint8_t* tmp = (uint8_t*)calloc(size, sizeof(uint8_t));
 	long dmy = fread(tmp, sizeof(uint8_t), (int)size, fp);
 
-	// 指定された変数に一時的な変数から代入する
+	// Substitute specified variable from temporary variable
 	void* data_ptr = v->variable_->data_;
 	uint8_t* data_ptr_u8 = (uint8_t*)data_ptr;
 	for (int i = 0; i < size; i++) {
 		data_ptr_u8[i] = tmp[i];
 	}
 
-	// システム変数にファイルサイズを書き込む
+	// Write the file size to the system variable
 	s->strsize_ = size;
 
-	// 解放処理
+	// Release processing
 	free(tmp);
 	fclose(fp);
 	stack_pop(s->stack_, arg_num);
@@ -1535,12 +1541,12 @@ command_bload(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_bsave(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	// 引数の数をチェックする
+	// Check the number of arguments
 	if (arg_num != 2) raise_error("bsave: Invalid argument.");
 
 	const int arg_start = -arg_num;
 
-	// １つ目の引数を取得する
+	// Get the first argument
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
 	if (m->type_ != VALUE_STRING) {
@@ -1548,32 +1554,32 @@ command_bsave(execute_environment_t* e, execute_status_t* s, int arg_num)
 	}
 	char* fnm = m->svalue_;
 
-	// ２つめの引数を取得する
+	// Get the second argument
 	const value_t* v = stack_peek(s->stack_, arg_start + 1);
 	if (v->type_ != VALUE_VARIABLE) {
 		raise_error("bsave: Argument should be a variable.");
 	}
 
-	// ファイルをオープンする
+	// Open a file
 	FILE* fp = fopen(fnm, "wb");
 	if (fp == NULL) {
 		raise_error("bsave: file could not be opened [%s]", fnm);
 		exit(1);
 	}
 
-	// 指定した変数の内容をdata_ptrに代入する
+	// Substitute the contents of the specified variable into data_ptr
 	void* data_ptr = v->variable_->data_;
 
-	// データサイズを取得する
+	// Acquire data size
 	const long size = strlen(data_ptr);
 
-	// ファイルにdata_ptrの内容を書き込む
+	// Write the contents of data_ptr to the file
 	fwrite(data_ptr, size, 1, fp);
 
-	// 書き込んだサイズをシステム変数に代入
+	// Substitute written size into system variable
 	s->strsize_ = size;
 
-	// クローズ処理
+	// Close processing
 	fclose(fp);
 	stack_pop(s->stack_, arg_num);
 }
@@ -1581,23 +1587,23 @@ command_bsave(execute_environment_t* e, execute_status_t* s, int arg_num)
 void
 command_poke(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
-	// 引数の数をチェックする
+	// Check the number of arguments
 	if (arg_num != 3) raise_error("poke: Invalid argument.");
 
 	const int arg_start = -arg_num;
-	// １つ目の引数を取得する
+	// Get the first argument
 	const value_t* v = stack_peek(s->stack_, arg_start);
 	if (v->type_ != VALUE_VARIABLE) {
 		raise_error("poke: Argument should be a variable.");
 	}
-	// ２つめの引数を取得する
+	// Get the second argument
 	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
 	const int i = value_calc_int(p2);
-	// ３つめの引数を取得する
+	// Get the third argument
 	const value_t* p3 = stack_peek(s->stack_, arg_start + 2);
 	const int num = value_calc_int(p3);
 
-	// 指定された変数に代入
+	// Assign to the specified variable
 	void* data_ptr = v->variable_->data_;
 	char* tmp = (char*)data_ptr;
 	tmp[i] = num;
@@ -1629,8 +1635,8 @@ command_wait(execute_environment_t* e, execute_status_t* s, int arg_num)
 	double wait_time = 0.0;
 	const value_t* m = stack_peek(s->stack_, -1);
 	wait_time = value_calc_double(m);
-	glfwSetTime(0.0); // タイマーを初期化する
-	for (;;) { // ウィンドウを閉じるまで
+	glfwSetTime(0.0); // Initialize the timer
+	for (;;) { // Wait till you close the window
 		if (glfwWindowShouldClose(window)) {
 			s->is_end_ = true;
 			break;
@@ -1638,7 +1644,7 @@ command_wait(execute_environment_t* e, execute_status_t* s, int arg_num)
 		if (glfwGetTime() * 100 > wait_time) {
 			break;
 		}
-		glfwPollEvents(); // イベント待ち
+		glfwPollEvents(); // Waiting for an event
 	}
 	stack_pop(s->stack_, arg_num);
 }
@@ -1648,12 +1654,12 @@ command_stop(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num >= 1) raise_error("stop: Invalid argument.");
 
-	for (;;) { // ウィンドウを閉じるまで
+	for (;;) { // Wait till you close the window
 		if (glfwWindowShouldClose(window)) {
 			s->is_end_ = true;
 			break;
 		}
-		glfwPollEvents(); // イベント待ち
+		glfwPollEvents(); // Waiting for an event
 	}
 	stack_pop(s->stack_, arg_num);
 }
@@ -1677,7 +1683,7 @@ command_pset(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num > 2) raise_error("pset: Invalid argument.");
 
-	if (arg_num <= 0) { // 引数が省略されば場合
+	if (arg_num <= 0) { // If the argument is omitted
 		set_pixel_rgb(pixel_data,
 			current_pos_x, current_pos_y,
 			current_color_r, current_color_g, current_color_b,
@@ -1705,7 +1711,7 @@ command_redraw(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num > 1) raise_error("redraw: Invalid argument.");
 
-	if (arg_num <= 0) { // 引数が省略された
+	if (arg_num <= 0) { // If the argument is omitted
 		redraw_flag = true;
 		redraw();
 	}
@@ -1745,7 +1751,7 @@ command_color(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
 	if (arg_num > 3) raise_error("color: Invalid argument.");
 
-	if (arg_num <= 0) { // 引数が省略された場合
+	if (arg_num <= 0) { // If the argument is omitted
 		current_color_r = 0;
 		current_color_g = 0;
 		current_color_b = 0;
@@ -1840,7 +1846,7 @@ command_stick(execute_environment_t* e, execute_status_t* s, int arg_num)
 	if (current_mouse_down_right == 1)       key +=  512;
 	if (glfwGetKey(window, GLFW_KEY_TAB))    key += 1024;
 
-	// 指定された変数に代入
+	// Assign to the specified variable
 	void* data_ptr = v->variable_->data_;
 	int* tmp = (int*)data_ptr;
 	tmp[0] = key;
@@ -1872,7 +1878,7 @@ command_circle(execute_environment_t* e, execute_status_t* s, int arg_num)
 	stack_pop(s->stack_, arg_num);
 }
 
-// 点描画用関数
+// Point drawing function
 void dot_set(int x, int y, unsigned int col)
 {
 	unsigned int col_r = col / 65536;
@@ -1881,22 +1887,22 @@ void dot_set(int x, int y, unsigned int col)
 	set_pixel_rgb(pixel_data, x, y, col_r, col_g, col_b, screen_width, screen_height);
 }
 
-// 色コードの取得
+// Acquisition of color code
 unsigned int dot_get(int x, int y)
 {
 	color_t col = get_pixel_color(pixel_data, x, y, screen_width, screen_height);
 	return (65536 * col.red + 256 * col.green + col.blue);
 }
 
-// 線分からシードを探索してバッファに登録する
+// Search the seed from the line segment and register it in the buffer
 void scanLine(int lx, int rx, int y, unsigned int col)
 {
 	while (lx <= rx) {
-		// 非領域色を飛ばす
+		// Skip non-area colors
 		for (; lx <= rx ; lx++)
 			if (dot_get(lx, y) == col) break;
 		if (dot_get(lx, y) != col) break;
-		// 領域色を飛ばす
+		// Skip area colors
 		for (; lx <= rx ; lx++)
 			if (dot_get(lx, y) != col) break;
 		eIdx->sx = lx - 1;
@@ -1915,15 +1921,15 @@ command_paint(execute_environment_t* e, execute_status_t* s, int arg_num)
 	const int x = value_calc_int(p1);
 	const value_t* p2 = stack_peek(s->stack_, arg_start + 1);
 	const int y = value_calc_int(p2);
-	// 閉領域の色(領域色)
+	// Color of closed area (area color)
 	unsigned int col = dot_get(x, y);
-	// 塗り潰す時の色(描画色)
+	// Color when filling (drawing color)
 	unsigned int paintCol = 65536 * current_color_r + 256 * current_color_g + current_color_b;
 
-	// 領域色と描画色が等しければ処理不要
+	// Processing unnecessary if area color and drawing color are equal
 	if (col != paintCol) {
-		int lx, rx; // 塗り潰す線分の両端のX座標
-		int ly;     // 塗り潰す線分のY座標
+		int lx, rx; // X coordinate of both ends of the segment to be filled
+		int ly;     // Y coordinate of the segment to be filled
 		int i;
 
 		sIdx = buff;
@@ -1935,25 +1941,25 @@ command_paint(execute_environment_t* e, execute_status_t* s, int arg_num)
 			lx = rx = sIdx->sx;
 			ly = sIdx->sy;
 			if (++sIdx == &buff[1024]) sIdx = buff;
-			// 処理済のシードなら無視
+			// Ignored if processed seed
 			if (dot_get(lx, ly) != col) continue;
-			// 右方向の境界を探す
+			// Find the right boundary
 			while (rx < 639) {
 				if (dot_get(rx + 1, ly) != col) break;
 				rx++;
 			}
-			// 左方向の境界を探す
+			// Find the left boundary
 			while (lx > 0) {
 				if (dot_get(lx - 1, ly) != col) break;
 				lx--;
 			}
-			// lx-rxの線分を描画
+			// draw line segments of lx-rx
 			for (i = lx ; i <= rx ; i++)
 				dot_set(i, ly, paintCol);
-			// 真上のスキャンラインを走査する
+			// Scan the scan line directly above
 			if (ly - 1 >= 0)
 				scanLine(lx, rx, ly - 1, col);
-			// 真下のスキャンラインを走査する
+			// Scan the scan line directly beneath
 			if (ly + 1 <= 479)
 				scanLine(lx, rx, ly + 1, col);
 		} while ( sIdx != eIdx );
@@ -2000,7 +2006,7 @@ command_font(execute_environment_t* e, execute_status_t* s, int arg_num)
 		int offset = stbtt_GetFontOffsetForIndex((unsigned char *)font_ttf_buffer, 0);
 		stbtt_InitFont(&font, (unsigned char *)font_ttf_buffer, offset);
 	}
-	if (font_size != size) { // フォント情報の生成
+	if (font_size != size) { // Generate font information
 		font_size = size;
 		if (font_size > 100) {
 			raise_error("font：Maximum font size is 100.");
@@ -2028,7 +2034,7 @@ command_picload(execute_environment_t* e, execute_status_t* s, int arg_num)
 	if (m->type_ != VALUE_STRING) {
 		raise_error("picload: Invalid value.");
 	}
-	// 画像を読み込む
+	// Load images
 	load_image(m->svalue_, pixel_data,
 		current_pos_x, current_pos_y,
 		screen_width, screen_height);
@@ -2047,7 +2053,7 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 
 	const int arg_start = -arg_num;
 
-	// 引数が省略された場合
+	// If the argument is omitted
 	if (arg_num > 3) {
 		const value_t* p4 = stack_peek(s->stack_, arg_start + 3);
 		volume = value_calc_int(p4);
@@ -2065,31 +2071,31 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 		freq = value_calc_int(p1);
 	}
 
-	// 音を生成して再生
+	// Generate sound and play
 	double f = freq;
 	double fs = 44100.0;
 	ALuint buffer;
 	ALuint source;
 	ALsizei size = round_one((int)fs * duration / 500);
 	ALshort* data = (ALshort*)calloc(size, sizeof(ALshort));
-	alGenBuffers(1, &buffer); // 次の行は音のデータを作成している
+	alGenBuffers(1, &buffer); // The next line is creating sound data
 
-	// 音の生成
+	// Sound generation
 	double n = 0.0;
 	double tmp = 0;
 	for (int i = 0; i < size; i++) {
 		switch (waveform) {
-		case 0: // 正弦波
+		case 0: // sine wave
 			tmp = volume * sin(2.0 * M_PI * f * n / fs);
 			break;
-		case 1: // ノコギリ波
+		case 1: // Sawtooth wave
 		{
 			double cons = fs / f;
 			double cons2 = 2.0 * volume * f / fs;
 			tmp = cons2 * fmod(n, cons) - volume;
 			break;
 		}
-		case 2: // 矩形波
+		case 2: // Square wave
 			if (fmod(n, fs / f) < fs / (2.0 * f)) {
 				tmp = volume;
 			}
@@ -2097,7 +2103,7 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 				tmp = -volume;
 			}
 			break;
-		case 3: // 三角波
+		case 3: // Triangular wave
 			if (fmod(n, fs / f) < fs / (2.0 * f)) {
 				tmp = volume * (2.0 * (f / fs) * fmod(n, fs / f) - 1.0);
 			}
@@ -2105,7 +2111,7 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 				tmp = -(volume * (2.0 * (f / fs) * fmod(n, fs / f) - 1.0));
 			}
 			break;
-		case 4: // 白雑音
+		case 4: // White noise
 			tmp = volume * randf(-1, 1);
 			break;
 		}
@@ -2113,14 +2119,14 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 		n += 1.0;
 	}
 
-	alBufferData(buffer, AL_FORMAT_MONO16, data, size, 44100); // バッファにデータを格納
-	alGenSources(1, &source); // ソースを生成
-	alSourcei(source, AL_BUFFER, buffer); // ソースの値を設定
-	alSourcePlay(source); // ソースのバッファを再生
+	alBufferData(buffer, AL_FORMAT_MONO16, data, size, 44100); // Store data in buffer
+	alGenSources(1, &source); // Generate source
+	alSourcei(source, AL_BUFFER, buffer); // Set source value
+	alSourcePlay(source); // Play source buffer
 
-	// 再生が終了するまで待つ
-	glfwSetTime(0.0); // タイマーを初期化する
-	for (;;) { // ウィンドウを閉じるまで
+	// Wait for playback to end
+	glfwSetTime(0.0); // Initialize the timer
+	for (;;) { // Wait till you close the window
 		if (glfwWindowShouldClose(window)) {
 			s->is_end_ = true;
 			break;
@@ -2128,20 +2134,19 @@ command_beep(execute_environment_t* e, execute_status_t* s, int arg_num)
 		if (glfwGetTime() * 1000.0 > (double)duration) {
 			break;
 		}
-		glfwPollEvents(); // イベント待ち
+		glfwPollEvents(); // Waiting for an event
 	}
 
-	alSourceStop(source); // ソースのバッファを停止
-	alDeleteSources(1, &source); // ソースを消去
-	alDeleteBuffers(1, &buffer); //バッファを消去
+	alSourceStop(source); // Stop the source buffer
+	alDeleteSources(1, &source); // Clear source
+	alDeleteBuffers(1, &buffer); // Clear buffer
 	free(data);
-
 	stack_pop(s->stack_, arg_num);
 }
 #endif
 #endif
 
-// 関数実体
+// Function entity
 void
 function_int(execute_environment_t* e, execute_status_t* s, int arg_num)
 {
@@ -2223,10 +2228,10 @@ function_peek(execute_environment_t* e, execute_status_t* s, int arg_num)
 	if (arg_num != 2) raise_error("peek: Invalid argument.");
 
 	const int arg_start = -arg_num;
-	// ２つめの引数を取得する
+	// Get the second argument
 	const value_t* n = stack_peek(s->stack_, arg_start + 1);
 	const int i = value_calc_int(n);
-	// １つめの引数を取得する
+	// Get the first argument
 	value_t* m = stack_peek(s->stack_, arg_start);
 	value_isolate(m);
 	char* p = m->svalue_;
@@ -2236,9 +2241,9 @@ function_peek(execute_environment_t* e, execute_status_t* s, int arg_num)
 	stack_push(s->stack_, create_value(r));
 }
 
-// 外部リンケージを持つ人たち、ここから
+// People with external linkage, from here
 
-// 全体
+// Overall
 void
 initialize_system()
 {
@@ -2266,7 +2271,7 @@ destroy_system()
 #endif
 }
 
-// メモリ
+// memory
 void*
 xmalloc(size_t size, const char* block_name)
 {
@@ -2306,7 +2311,7 @@ xrealloc(void* ptr, size_t size)
 	return res;
 }
 
-// リスト
+// list
 list_node_t*
 create_list_node()
 {
@@ -2433,7 +2438,7 @@ list_free_all(list_t* list)
 	}
 }
 
-// キーワード
+// keyword
 int
 query_keyword(const char* s)
 {
@@ -2474,7 +2479,7 @@ query_keyword(const char* s)
 		},
 		{ -1, NULL },
 	};
-	// 全探索
+	// Full search
 	for (int i = 0; table[i].tag_ != -1; ++i) {
 		if (string_equal_igcase(s, table[i].word_, -1)) {
 			return table[i].tag_;
@@ -2483,7 +2488,7 @@ query_keyword(const char* s)
 	return -1;
 }
 
-// トークナイザ
+// Tokenizer
 int
 query_token_shadow(const char* ident, size_t len)
 {
@@ -2570,24 +2575,24 @@ restart:
 	case '\0':
 		res->tag_ = TOKEN_EOF;
 		break;
-		// 行終わり
+		// End of line
 	case '\r':
 	case '\f':
 		++p;
 		goto restart;
 	case '\n':
-		// この位置はマーキング
+		// This position is marked
 		++c->line_;
 		++p;
 		c->line_head_ = p;
 		res->tag_ = TOKEN_EOL;
 		break;
-		// ステートメント終わり
+		// Statement end
 	case ':':
 		++p;
 		res->tag_ = TOKEN_EOS;
 		break;
-		// 微妙な文字
+		// Subtle character
 	case '{':
 		++p;
 		res->tag_ = TOKEN_LBRACE;
@@ -2608,7 +2613,7 @@ restart:
 		++p;
 		res->tag_ = TOKEN_COMMA;
 		break;
-		// 演算子
+		// operator
 	case '|':
 		++p;
 		res->tag_ = TOKEN_OP_BOR;
@@ -2675,7 +2680,7 @@ restart:
 			res->tag_ = TOKEN_ASSIGN;
 		}
 		break;
-		// 文字列
+		// String
 	case '\"': {
 		++p;
 		const char* s = p;
@@ -2712,7 +2717,7 @@ restart:
 			goto restart;
 		}
 		else if (is_number(p[0])) {
-			// 数値
+			// Numerical value
 			if (p[0] == '0') {
 				++p;
 			}
@@ -2733,7 +2738,7 @@ restart:
 			}
 		}
 		else if (is_alpha(p[0])) {
-			// 何らかの識別子
+			// Any identifier
 			++p;
 			while (is_rest_ident(p[0])) {
 				++p;
@@ -2746,7 +2751,7 @@ restart:
 			}
 		}
 		else {
-			// もう読めない
+			// Cannot read anymore
 			raise_error("Unknown character[%c]@@ %d Row", p[0], c->line_);
 		}
 		break;
@@ -2758,7 +2763,7 @@ restart:
 	c->cursor_ += p - pp;
 	res->cursor_begin_ = prev_cursor;
 	res->cursor_end_ = c->cursor_;
-	// contentが埋まってないなら埋める
+	// Fill if content is not filled
 	if (res->content_ == NULL) {
 		const int len = res->cursor_end_ - res->cursor_begin_;
 		res->content_ = create_string(len);
@@ -2979,7 +2984,7 @@ destroy_ast(list_t* ast)
 ast_node_t*
 parse_statement(parse_context_t* c)
 {
-	// 何もない？
+	// nothing?
 	{
 		const token_t* token = read_token(c);
 		if (token->tag_ == TOKEN_EOF) {
@@ -2991,28 +2996,28 @@ parse_statement(parse_context_t* c)
 		unread_token(c, 1);
 	}
 	ast_node_t* statement = NULL;
-	// ラベルを試す
+	// Try a label
 	if (statement == NULL) {
 		statement = parse_label_safe(c);
 	}
-	// 制御構文を試す
+	// Try control syntax
 	if (statement == NULL) {
 		statement = parse_control_safe(c);
 	}
-	// コマンドを試す
+	// Try the command
 	if (statement == NULL) {
 		statement = parse_command_safe(c);
 	}
-	// それ以外は全て代入
+	// All other assignments
 	if (statement == NULL) {
 		statement = parse_assign_safe(c);
 	}
-	// ここまで来て何もないなら、パース不能
+	// Impossible to parse if nothing to come here
 	if (statement == NULL) {
 		const token_t* token = read_token(c);
 		raise_error("Statement cannot be parsed.@@ %d Row", token->appear_line_);
 	}
-	// 最後の改行チェック
+	// Last line feed check
 	const token_t* token = read_token(c);
 	if (!is_eos_like_token(token->tag_)) {
 		raise_error("Statement couldn't be parsed successfully.@@ %d Row", token->appear_line_);
@@ -3106,7 +3111,7 @@ parse_control_safe(parse_context_t* c)
 			for (;;) {
 				const token_t* pp = prev_token(c, 0);
 				if (pp->tag_ == TOKEN_RBRACE) {
-					// RBRACEは食われてた
+					// RBRACE was eaten
 					break;
 				}
 				ast_node_t* statement = parse_statement(c);
@@ -3128,7 +3133,7 @@ parse_control_safe(parse_context_t* c)
 			for (;;) {
 				const token_t* pp = prev_token(c, 0);
 				if (pp->tag_ == TOKEN_EOL) {
-					// EOLは食われてた
+					// EOL was eaten
 					repair_token = true;
 					break;
 				}
@@ -3145,7 +3150,7 @@ parse_control_safe(parse_context_t* c)
 					create_ast_node(NODE_BLOCK_STATEMENTS, true_statements, statement);
 			}
 		}
-		// elseはあるか？
+		// Is there an else?
 		const token_t* nn = read_token(c);
 		if (is_else_token(nn)) {
 			repair_token = false;
@@ -3155,7 +3160,7 @@ parse_control_safe(parse_context_t* c)
 				for (;;) {
 					const token_t* ppf = prev_token(c, 0);
 					if (ppf->tag_ == TOKEN_RBRACE) {
-						// RBRACEは食われてた
+						// RBRACE was eaten
 						break;
 					}
 					ast_node_t* statement = parse_statement(c);
@@ -3176,7 +3181,7 @@ parse_control_safe(parse_context_t* c)
 				for (;;) {
 					const token_t* pp = prev_token(c, 0);
 					if (pp->tag_ == TOKEN_EOL) {
-						// EOLは食われてた
+						// EOL was eaten
 						repair_token = true;
 						break;
 					}
@@ -3196,7 +3201,7 @@ parse_control_safe(parse_context_t* c)
 		else {
 			unread_token(c, 1);
 		}
-		// EOLを食いすぎてしまった場合用
+		// For those who eat too much EOL
 		if (repair_token) {
 			unread_token(c, 1);
 		}
@@ -3225,7 +3230,7 @@ parse_command_safe(parse_context_t* c)
 	if (next->tag_ == TOKEN_ASSIGN) {
 		is_not_command = true;
 	}
-	// "("チェック
+	// "(" check
 	if (!ident->right_space_ && next->tag_ == TOKEN_LPARENTHESIS) {
 		is_not_command = true;
 	}
@@ -3233,7 +3238,7 @@ parse_command_safe(parse_context_t* c)
 		unread_token(c, 2);
 		return NULL;
 	}
-	// あるなら引数の解析
+	// If there is, parse the argument
 	ast_node_t* args = NULL;
 	if (!is_eos_like_token(next->tag_)) {
 		unread_token(c, 1);
@@ -3297,7 +3302,7 @@ parse_variable_safe(parse_context_t* c)
 	ast_node_t* idx = parse_expression(c);
 	const token_t* nn = read_token(c);
 	if (nn->tag_ != TOKEN_RPARENTHESIS) {
-		// 多そうなので個別対処
+		// Since it seems so many, individual measures
 		if (nn->tag_ == TOKEN_COMMA) {
 			raise_error("Array variable is one dimension only.@@ %d Row", nn->appear_line_);
 		}
@@ -3309,7 +3314,7 @@ parse_variable_safe(parse_context_t* c)
 ast_node_t*
 parse_expression(parse_context_t* c)
 {
-	// ただの関数転送
+	// Function transfer
 	return parse_borand(c);
 }
 
@@ -3590,7 +3595,7 @@ parse_identifier_expression(parse_context_t* c)
 		unread_token(c, 1);
 		return create_ast_node2(NODE_IDENTIFIER_EXPR, ident, NULL);
 	}
-	// 引数なしの即閉じ？
+	// Immediate closure without arguments?
 	{
 		const token_t* nn = read_token(c);
 		if (nn->tag_ == TOKEN_RPARENTHESIS) {
@@ -3598,7 +3603,7 @@ parse_identifier_expression(parse_context_t* c)
 		}
 		unread_token(c, 1);
 	}
-	// 引数あり
+	// With argument
 	ast_node_t* idx = parse_arguments(c);
 	const token_t* nn = read_token(c);
 	if (nn->tag_ != TOKEN_RPARENTHESIS) {
@@ -3607,7 +3612,7 @@ parse_identifier_expression(parse_context_t* c)
 	return create_ast_node2(NODE_IDENTIFIER_EXPR, ident, idx);
 }
 
-// 変数
+// Variable
 variable_t*
 create_variable(const char* name)
 {
@@ -3849,7 +3854,7 @@ variable_calc_string(const variable_t* r, int idx)
 	return create_string3("");
 }
 
-// 値
+// Value
 static value_t*
 alloc_value()
 {
@@ -4407,7 +4412,7 @@ value_mod(value_t* v, const value_t* r)
 	destroy_value(t);
 }
 
-// スタック
+// Stack
 value_stack_t*
 create_value_stack()
 {
@@ -4426,7 +4431,7 @@ destroy_value_stack(value_stack_t* st)
 void
 initialize_value_stack(value_stack_t* st)
 {
-	const int l = 16; // 初期サイズ
+	const int l = 16; // Initial size
 	st->stack_ = (value_t**)xmalloc(sizeof(value_t*) * l, "");
 	st->top_ = 0;
 	st->max_ = l;
@@ -4446,7 +4451,7 @@ void
 stack_push(value_stack_t* st, value_t* v)
 {
 	if (st->top_ + 1 > st->max_) {
-		st->max_ = st->max_ * 2; // 貪欲
+		st->max_ = st->max_ * 2; // greedy
 		st->stack_ = (value_t**)xrealloc(st->stack_, sizeof(value_t*) * st->max_);
 	}
 	st->stack_[st->top_] = v;
@@ -4480,7 +4485,7 @@ stack_pop(value_stack_t* st, size_t n)
 	}
 }
 
-// システム変数
+// System variable
 int
 query_sysvar(const char* s)
 {
@@ -4520,7 +4525,7 @@ query_sysvar(const char* s)
 #endif
 		{ -1, NULL },
 	};
-	// 全探索
+	// Full search
 	for (int i = 0; table[i].tag_ != -1; ++i) {
 		if (string_equal_igcase(s, table[i].word_, -1)) {
 			return table[i].tag_;
@@ -4529,7 +4534,7 @@ query_sysvar(const char* s)
 	return -1;
 }
 
-// 実行環境
+// Execution environment
 execute_environment_t*
 create_execute_environment()
 {
@@ -4546,7 +4551,7 @@ void
 destroy_execute_environment(execute_environment_t* e)
 {
 	{
-		// 自分でallocしたものだけ先に消す
+		// Disappear only the ones you allocated first
 		list_node_t* node = e->statement_list_->head_;
 		while (node != NULL) {
 			ast_node_t* ast = (ast_node_t*)node->value_;
@@ -4652,7 +4657,7 @@ static void
 flatten(execute_environment_t* e, ast_node_t* node)
 {
 	bool is_add = true;
-	// 前処理
+	// Preprocessing
 	if (node->tag_ == NODE_BLOCK_STATEMENTS) {
 		if (node->left_) {
 			flatten(e, node->left_);
@@ -4663,7 +4668,7 @@ flatten(execute_environment_t* e, ast_node_t* node)
 		is_add = false;
 	}
 	else if (node->tag_ == NODE_IF) {
-		// 処理用のノードを付け足す
+		// Add node for processing
 		{
 			list_node_t* check_node = create_list_node();
 			ast_node_t* checker = create_ast_node(NODE_IF_CHECK, NULL, NULL);
@@ -4672,7 +4677,7 @@ flatten(execute_environment_t* e, ast_node_t* node)
 			check_node->value_ = checker;
 			list_append(e->statement_list_, check_node);
 		}
-		// 各ブロックを線形に貼りなおす
+		// Stick each block linearly
 		{
 			const ast_node_t* dispatcher = node->right_;
 			assert(dispatcher->tag_ == NODE_IF_DISPATCHER);
@@ -4682,25 +4687,25 @@ flatten(execute_environment_t* e, ast_node_t* node)
 			false_head->value_ = _cl();
 			list_node_t* tail = create_list_node();
 			tail->value_ = _cl();
-			// 分岐
+			// Branch
 			_aj(true_head, e);
 			_aj(false_head, e);
-			// 真
+			// true
 			list_append(e->statement_list_, true_head);
 			flatten(e, dispatcher->left_);
 			_aj(tail, e);
-			// 偽
+			// false
 			list_append(e->statement_list_, false_head);
 			if (dispatcher->right_) {
 				flatten(e, dispatcher->right_);
 				_aj(tail, e);
 			}
-			// 合流
+			// Confluence
 			list_append(e->statement_list_, tail);
 		}
 		is_add = false;
 	}
-	// 後処理
+	// Post processing
 	if (is_add) {
 		list_node_t* list_node = create_list_node();
 		list_node->value_ = node;
@@ -4715,7 +4720,7 @@ flatten(execute_environment_t* e, ast_node_t* node)
 			list_append(e->label_table_, label_node);
 		}
 		else if (node->tag_ == NODE_REPEAT) {
-			// 処理用のノードを付け足す
+			// Add node for processing
 			list_node_t* check_node = create_list_node();
 			ast_node_t* checker = create_ast_node(NODE_REPEAT_CHECK, NULL, NULL);
 			checker->flag_ |= NODE_FLAG_ADDITIONAL;
@@ -4729,11 +4734,11 @@ static void
 walk(execute_environment_t* e, ast_node_t* node)
 {
 	if (node->tag_ == NODE_VARIABLE ||
-		node->tag_ == NODE_IDENTIFIER_EXPR //変数配列の可能性あり
+		node->tag_ == NODE_IDENTIFIER_EXPR // Possible variable array
 		) {
 		char* var_name = node->token_->content_;
 		if (search_variable(e->variable_table_, var_name) == NULL) {
-			// 適当な変数として初期化しておく
+			// Initialize as an appropriate variable
 			value_t* v = (value_t*)calloc(1, sizeof(value_t));
 			v->variable_ = (variable_t*)calloc(1, sizeof(variable_t));
 			v->type_ = VALUE_INT;
@@ -4761,7 +4766,7 @@ load_script(execute_environment_t* e, const char* script)
 
 	uninitialize_tokenize_context(&tokenizer);
 
-	// ASTを繋げたりラベルを持っておいたり
+	// Connecting AST and holding a label
 	{
 		list_node_t* st = ast->head_;
 		while (st != NULL) {
@@ -4770,7 +4775,7 @@ load_script(execute_environment_t* e, const char* script)
 			st = st->next_;
 		}
 	}
-	// 特定の部分木マッチング
+	// Specific subtree matching
 	{
 		list_node_t* st = ast->head_;
 		while (st != NULL) {
@@ -4780,7 +4785,7 @@ load_script(execute_environment_t* e, const char* script)
 		}
 	}
 
-	// パーサーとASTを保存しておく
+	// Save the parser and AST
 	{
 		list_node_t* parser_node = create_list_node();
 		parser_node->value_ = parser;
@@ -4796,7 +4801,7 @@ load_script(execute_environment_t* e, const char* script)
 void
 evaluate(execute_environment_t* e, execute_status_t* s, ast_node_t* n)
 {
-	// もう実行おわってる
+	// It's already over
 	if (s->is_end_) {
 		return;
 	}
@@ -4827,7 +4832,7 @@ evaluate(execute_environment_t* e, execute_status_t* s, ast_node_t* n)
 		}
 		const int arg_num = s->stack_->top_ - top;
 		delegate(e, s, arg_num);
-		assert(s->stack_->top_ == top); // 戻り値がないことを確認
+		assert(s->stack_->top_ == top); // Confirm there is no return value
 		break;
 	}
 	case NODE_ARGUMENTS: {
@@ -4990,21 +4995,21 @@ evaluate(execute_environment_t* e, execute_status_t* s, ast_node_t* n)
 		const int arg_num = s->stack_->top_ - top;
 		const int function = query_function(ident);
 		if (function >= 0) {
-			// 関数呼び出し
+			// Function call
 			const function_delegate delegate =
 				get_function_delegate((builtin_function_tag)function);
 			assert(delegate != NULL);
 			delegate(e, s, arg_num);
-			assert(s->stack_->top_ == top + 1); // 戻り値が入っていることを確認する
+			assert(s->stack_->top_ == top + 1); // Confirm that return value is included
 		}
 		else {
-			// システム変数
+			// System variable
 			const int sysvar = query_sysvar(ident);
 			if (sysvar >= 0) {
 				if (arg_num > 0) {
 					raise_error("cannot arrays in the system variable.", ident);
 				}
-				// 後々のことも考えて、一応
+				// The following is dealt with considering later things
 				stack_pop(s->stack_, arg_num);
 				switch (sysvar) {
 				case SYSVAR_CNT:
@@ -5046,7 +5051,7 @@ evaluate(execute_environment_t* e, execute_status_t* s, ast_node_t* n)
 				}
 			}
 			else {
-				// 配列変数
+				// Array variable
 				if (arg_num > 1) {
 					raise_error("Function not found, Array variable is one dimension only.@@ %s", ident);
 				}
@@ -5260,19 +5265,19 @@ execute(execute_environment_t* e)
 		evaluate(e, &s, ex);
 		assert(top == s.stack_->top_);
 		if (s.is_end_) {
-			// もう実行終わったらしい、帰る
+			// Since it seems that execution has ended, return
 			break;
 		}
 		s.node_cur_ = s.node_cur_->next_;
 		if (s.node_cur_ == NULL) {
-			// もう実行できるastがない、帰る
+			// Since there is no ast that can be executed anymore, return
 			break;
 		}
 	}
 	uninitialize_execute_status(&s);
 }
 
-// ビルトイン
+// Built in
 int
 query_command(const char* s)
 {
@@ -5363,7 +5368,7 @@ query_command(const char* s)
 #endif
 		{ -1, NULL },
 	};
-	// 全探索
+	// Full search
 	for (int i = 0; table[i].tag_ != -1; ++i) {
 		if (string_equal_igcase(s, table[i].word_, -1)) {
 			return table[i].tag_;
@@ -5444,7 +5449,7 @@ query_function(const char* s)
 		},
 		{ -1, NULL },
 	};
-	// 全探索
+	// Full search
 	for (int i = 0; table[i].tag_ != -1; ++i) {
 		if (string_equal_igcase(s, table[i].word_, -1)) {
 			return table[i].tag_;
@@ -5473,10 +5478,10 @@ get_function_delegate(builtin_function_tag function)
 void
 mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 {
-	if (button == 0) { // 左クリック
+	if (button == 0) { // Left click
 		current_mouse_down_left = action;
 	}
-	else if (button == 1) { // 右クリック
+	else if (button == 1) { // Right click
 		current_mouse_down_right = action;
 	}
 	else {
@@ -5528,16 +5533,16 @@ main(int argc, char* argv[])
 {
 
 #ifdef __HSPEXT__
-	// OpenALを準備する
+	// Prepare OpenAL
 	{
-		al_device = alcOpenDevice(NULL); // デバイスを開く
-		al_context = alcCreateContext(al_device, NULL); // コンテキストを作成
-		alcMakeContextCurrent(al_context); // コンテキストをカレントにする
+		al_device = alcOpenDevice(NULL); // Open the device
+		al_context = alcCreateContext(al_device, NULL); // Create context
+		alcMakeContextCurrent(al_context); // Make the context current
 	}
 #endif
 
 #ifdef __HSPGUI__
-	// 描画処理
+	// Drawing processing
 	{
 		current_color_r = 0;
 		current_color_g = 0;
@@ -5553,9 +5558,9 @@ main(int argc, char* argv[])
 			pixel_data[i] = 255;
 		}
 
-		// GLFWライブラリの初期化
+		// Initialization of GLFW library
 		{
-			//初期化して、ウインドウを生成する
+			// Initialize and generate a window
 			glfwInit();
 			window = glfwCreateWindow(screen_width,
 				screen_height,
@@ -5565,39 +5570,39 @@ main(int argc, char* argv[])
 			glfwMakeContextCurrent(window);
 		}
 
-		// コールバック関数を登録する
+		// Register callback function
 		glfwSetMouseButtonCallback(window, mouse_button_callback);
 		glfwSetCursorPosCallback(window, cursor_position_callback);
 		glfwSetKeyCallback(window, key_callback);
 
-		// １度だけスクリーンを初期化する
+		// Initialize the screen only once
 		{
-			// 描画の準備
+			// Preparation for drawing
 			glClear(GL_COLOR_BUFFER_BIT);
 			glRasterPos2i(-1, -1);
 
-			// ピクセルを描画
+			// Drawing pixels
 			glDrawPixels(screen_width,
 				screen_height,
 				GL_RGB,
 				GL_UNSIGNED_BYTE,
 				pixel_data);
 
-			// フロントバッファとバックバッファを交換する
+			// Exchange front and back buffers
 			glfwSwapBuffers(window);
 		}
 	}
 #endif
 
-	// オプション
+	// Option
 	filename = "start.hs";
 	if (argc >= 2) filename = argv[1];
 
 re_run:
 
-	// システムここから
+	// System From Here
 	initialize_system();
-	// ファイル読み込み
+	// Reading files
 	size_t script_size = 0;
 	char* script = NULL;
 	{
@@ -5608,7 +5613,7 @@ re_run:
 		}
 		fseek(file, 0, SEEK_END);
 		const size_t initial_size = ftell(file);
-		size_t buffer_size = initial_size + 4; // 初期バッファ
+		size_t buffer_size = initial_size + 4; // Initial buffer
 		script = (char*)xmalloc(buffer_size + 1, "");
 		fseek(file, 0, SEEK_SET);
 		for (;;) {
@@ -5628,32 +5633,32 @@ re_run:
 	}
 	assert(script != NULL);
 
-	// 乱数の初期化
+	// Initialization of random number
 	{
 		unsigned int seed = (unsigned int)time(NULL);
 		srand(seed);
 	}
-	// 実行
+	// Execution
 	{
 		execute_environment_t* env = create_execute_environment();
 		load_script(env, script);
 		execute(env);
 		destroy_execute_environment(env);
 	}
-	// run命令の判定
+	// Determining the run instruction
 	if (run_flag) {
 		run_flag = false;
 		goto re_run;
 	}
 
-	// 各種解放
+	// Various releases
 #ifdef __HSPGUI__
 	glfwTerminate(); //GLFW
 #ifdef __HSPEXT__
-//	free(font_ttf_buffer); //フォントバッファを解放
-	alcMakeContextCurrent(NULL); // 現在のコンテキストの解除(OpenAL)
-	alcDestroyContext(al_context); // コンテキストの消去(OpenAL)
-	alcCloseDevice(al_device); // デバイスを閉じる(OpenAL)
+//	free(font_ttf_buffer); // Release font buffer
+	alcMakeContextCurrent(NULL); // Release current context (OpenAL)
+	alcDestroyContext(al_context); // Clear context (OpenAL)
+	alcCloseDevice(al_device); // Close device (OpenAL)
 #endif
 #endif
 
