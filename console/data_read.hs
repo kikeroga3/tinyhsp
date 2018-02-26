@@ -3,10 +3,9 @@
 	sdim data,1000
 	dim n,256
 
-	; n(i) <- data
 	data="0,0,-50,2,-40,0,50,2,40,0,50,2,0,0,-50,2,0,20,50,2,20,0,50,2,0,0,-50,2,-20,0,50,2,0,20,50,3,"
 
-	gosub *data_read
+	gosub *data_read	; n(i) <- data
 
 	repeat p3
 		mes "n("+cnt+")="+n(cnt)
